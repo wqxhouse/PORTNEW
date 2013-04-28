@@ -1,0 +1,45 @@
+﻿<Window x:Class="WineMVVM.View.UserInfoDetails"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ignore="http://www.ignore.com"
+        mc:Ignorable="d ignore"
+        DataContext="{Binding UserInfoDetails, Source={StaticResource Locator}}" d:DesignWidth="265" SizeToContent="WidthAndHeight">
+
+    <Grid>
+        <Label Content="ID:" Height="28" HorizontalAlignment="Left" Margin="12,12,0,0" Name="ID" VerticalAlignment="Top" />
+        <Label Content="Username:" Height="28" HorizontalAlignment="Left" Margin="12,46,0,0" Name="USERNAME" VerticalAlignment="Top" />
+        <Label Content="Password:" Height="28" HorizontalAlignment="Left" Margin="12,80,0,0" Name="PASSWORD" VerticalAlignment="Top" />
+        <Label Content="Reg_ip:" Height="28" HorizontalAlignment="Left" Margin="12,182,0,0" Name="REG_IP" VerticalAlignment="Top" />
+        <Label Content="RegDate:" Height="28" HorizontalAlignment="Left" Margin="12,148,0,0" Name="REG_DATE" VerticalAlignment="Top" />
+        <Label Content="Email:" Height="28" HorizontalAlignment="Left" Margin="12,114,0,0" Name="EMAIL" VerticalAlignment="Top" />
+        <TextBox Height="23" 
+                 HorizontalAlignment="Left" Margin="89,51,0,0" 
+                 Name="userName_block" VerticalAlignment="Top" Width="120" 
+                 Text="{Binding Path=Username, UpdateSourceTrigger=PropertyChanged}"/>
+
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="89,85,0,0" 
+                 Name="password_Block" VerticalAlignment="Top" Width="120" 
+                 Text="{Binding Path=UserForm.Password, UpdateSourceTrigger=PropertyChanged}"/>
+
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="89,119,0,0" 
+                 Text="{Binding Path=UserForm.Email, UpdateSourceTrigger=PropertyChanged}"
+                 Name="email_block" VerticalAlignment="Top" Width="120" />
+
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="89,153,0,0" 
+                   Text="{Binding Path=UserForm.RegDate}"
+                   Name="regDate_block" VerticalAlignment="Top" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="89,17,0,0" 
+                   Text="{Binding Path=UserForm.Id}"
+                   Name="id_block"  VerticalAlignment="Top" />
+
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="89,187,0,0" 
+                   Text="{Binding Path=UserForm.Ip}"
+                   Name="regIp_block" VerticalAlignment="Top" />
+
+        <Button Content="OK" Height="23" HorizontalAlignment="Left" Margin="87,257,0,0" Name="OK_button" VerticalAlignment="Top" Width="75"  />
+        <Button Content="Cancel" Height="23" HorizontalAlignment="Right" Margin="0,257,0,0" Name="Cancel_button" VerticalAlignment="Top" Width="75"  />
+        
+    </Grid>
+</Window>

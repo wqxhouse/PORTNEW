@@ -1,0 +1,33 @@
+﻿<Window x:Class="WineMVVM.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ignore="http://www.ignore.com"
+        xmlns:view="clr-namespace:WineMVVM.View"
+        mc:Ignorable="d ignore"
+        Height="396.6"
+        Width="578"
+        Title="WineApp Management"
+        DataContext="{Binding Main, Source={StaticResource Locator}}">
+    
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Skins/MainSkin.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid x:Name="LayoutRoot">
+    	<Grid.RowDefinitions>
+    		<RowDefinition Height="64.176"/>
+    		<RowDefinition Height="322.424"/>
+    	</Grid.RowDefinitions>
+       
+            <view:ControllerMenu HorizontalAlignment="Left" Margin="271,36,0,39.047" Width="0" d:LayoutOverrides="VerticalAlignment" />
+            <view:UserInfoPanel Grid.Row="1" Margin="0,0,8,24.972" />
+       
+
+    </Grid>
+</Window>
