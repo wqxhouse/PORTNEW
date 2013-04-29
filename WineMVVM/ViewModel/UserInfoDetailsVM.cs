@@ -3,6 +3,8 @@ using System;
 using GalaSoft.MvvmLight.Messaging;
 using System.Collections.ObjectModel;
 using GalaSoft.MvvmLight.Command;
+using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace WineMVVM.ViewModel
 {
@@ -12,23 +14,46 @@ namespace WineMVVM.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class UserInfoDetailsVM : ViewModelBase
+    public class UserInfoDetailsVM : ViewModelBase, IDataErrorInfo
     {
-
-        public RelayCommand ConfirmCmd { get; private set; }
         private Database.User _userInstance;
+        
+        #region Commands
+        private RelayCommand<bool?> _confirmCmd;
+
+        /// <summary>
+        /// Gets the ConfirmCmd.
+        /// </summary>
+        public RelayCommand<bool?> ConfirmCmd
+        {
+            get
+            {
+                return _confirmCmd
+                    ?? (_confirmCmd = new RelayCommand<bool?>(
+                                          (dialogResult) =>
+                                          {
+                                              
+                                              dialogResult = true;
+                                          }));
+            }
+        }
+        #endregion
+
+        private void sendBackModifiedUser()
+        {
+            Messenger.Default.Send<Database.User>(_userInstance, "modifiedUser");
+        }
 
         /// <summary>
         /// Initializes a new instance of the UserInfoDetails class.
         /// </summary>
-        public UserInfoDetailsVM()
+        public UserInfoDetailsVM(Database.User users)
         {
             if (!IsInDesignMode)
             {
-                //Messenger.Default.Register<ObservableCollection<Database.User>>(this, "UserInfo"
-                Messenger.Default.Register<Database.User>(this, "selectedUser", getUserInfo);
-
-                ConfirmCmd = new RelayCommand(Confirm, () => { return ValidateData(); });
+                ////get user info from selected column in the UserInfoPanel
+                //Messenger.Default.Register<Database.User>(this, "selectedUser", getUserInfo);
+                getUserInfo(users);
             }
         }
 
@@ -43,12 +68,9 @@ namespace WineMVVM.ViewModel
             _regIp = user.reg_ip;
         }
 
-        private bool ValidateData(){
-            throw new NotImplementedException();
-        }
-
 
         #region Property
+
         /// <summary>
         /// The <see cref="ID" /> property's name.
         /// </summary>
@@ -94,6 +116,7 @@ namespace WineMVVM.ViewModel
                 }
 
                 RaisePropertyChanging(UserNamePropertyName);
+                this.ClearError("Name");
                 _userName = value;
                 RaisePropertyChanged(UserNamePropertyName);
 
@@ -127,6 +150,7 @@ namespace WineMVVM.ViewModel
                 }
 
                 RaisePropertyChanging(PasswordPropertyName);
+                this.ClearError("Name");
                 _password = value;
                 RaisePropertyChanged(PasswordPropertyName);
             }
@@ -159,6 +183,7 @@ namespace WineMVVM.ViewModel
                 }
 
                 RaisePropertyChanging(EmailPropertyName);
+                this.ClearError("Name");
                 _email = value;
                 RaisePropertyChanged(EmailPropertyName);
 
@@ -205,13 +230,79 @@ namespace WineMVVM.ViewModel
         }
         #endregion
 
+        #region IDataErrorInfo Members
 
-        #region Commands
-        private void Confirm()
+        public string Error
         {
-            Messenger.Default.Send<Database.User>(_userInstance, "modifiedUser");
+            get { return null; }
+        }
+
+        public string this[string columnName]
+        {
+            get
+            {
+                if (this.errors.ContainsKey(columnName))
+                {
+                    return this.errors[columnName];
+                }
+                return string.Empty;
+            }
+        }
+
+        #endregion
+
+
+        #region Validation
+        private Dictionary<string, string> errors = new Dictionary<string, string>();
+
+        public void SetError(string propertyName, string errorMessage)
+        {
+            errors[propertyName] = errorMessage;
+            this.RaisePropertyChanged(propertyName);
+        }
+
+        private void ClearError(string propertyName)
+        {
+            this.errors.Remove(propertyName);
+        }
+
+        private void ClearAllErrors()
+        {
+            List<string> properties = new List<string>();
+            foreach (KeyValuePair<string, string> error in this.errors)
+            {
+                properties.Add(error.Key);
+            }
+            this.errors.Clear();
+            foreach (string property in properties)
+            {
+                this.RaisePropertyChanged(property);
+            }
+        }
+
+        private bool ValidateData()
+        {
+            bool isValid = true;
+			this.ClearAllErrors();
+			if (string.IsNullOrEmpty(this.UserName))
+			{
+				isValid = false;
+				this.SetError("Name", "need a name");
+			}
+            if(string.IsNullOrEmpty(this.Password))
+			{
+				isValid = false;
+				this.SetError("Password", "need a password");
+			}
+			if(string.IsNullOrEmpty(this.Email))
+			{
+				isValid = false;
+				this.SetError("Email", "need an email");
+			}
+			return isValid;
         }
         #endregion
+
 
     }
 }

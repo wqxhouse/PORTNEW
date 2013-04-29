@@ -15,6 +15,17 @@ namespace WineMVVM.View
             ViewModel.ViewModelLocatorHelper.CreateStaticViewModelLocatorForDesigner(this, new ViewModel.ViewModelLocator());
 
             InitializeComponent();
+            
+        }
+
+        private void Cancel_button_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = false;
+        }
+
+        private void OK_button_Click(object sender, RoutedEventArgs e)
+        { 
+            this.DialogResult = true;       
         }
     }
 }

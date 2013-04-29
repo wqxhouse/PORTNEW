@@ -7,7 +7,12 @@
         mc:Ignorable="d ignore"
         DataContext="{Binding UserInfoDetails, Source={StaticResource Locator}}" d:DesignWidth="265" SizeToContent="WidthAndHeight">
 
+    
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="263" />
+            <RowDefinition Height="17" />
+        </Grid.RowDefinitions>
         <Label Content="ID:" Height="28" HorizontalAlignment="Left" Margin="12,12,0,0" Name="ID" VerticalAlignment="Top" />
         <Label Content="Username:" Height="28" HorizontalAlignment="Left" Margin="12,46,0,0" Name="USERNAME" VerticalAlignment="Top" />
         <Label Content="Password:" Height="28" HorizontalAlignment="Left" Margin="12,80,0,0" Name="PASSWORD" VerticalAlignment="Top" />
@@ -17,29 +22,29 @@
         <TextBox Height="23" 
                  HorizontalAlignment="Left" Margin="89,51,0,0" 
                  Name="userName_block" VerticalAlignment="Top" Width="120" 
-                 Text="{Binding Path=Username, UpdateSourceTrigger=PropertyChanged}"/>
+                 Text="{Binding UserName, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
 
         <TextBox Height="23" HorizontalAlignment="Left" Margin="89,85,0,0" 
                  Name="password_Block" VerticalAlignment="Top" Width="120" 
-                 Text="{Binding Path=UserForm.Password, UpdateSourceTrigger=PropertyChanged}"/>
+                 Text="{Binding Password, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
 
         <TextBox Height="23" HorizontalAlignment="Left" Margin="89,119,0,0" 
-                 Text="{Binding Path=UserForm.Email, UpdateSourceTrigger=PropertyChanged}"
+                 Text="{Binding Email, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
                  Name="email_block" VerticalAlignment="Top" Width="120" />
 
-        <TextBlock Height="23" HorizontalAlignment="Left" Margin="89,153,0,0" 
-                   Text="{Binding Path=UserForm.RegDate}"
+        <TextBlock Height="23" Margin="89,153,23,0" 
+                   Text="{Binding RegDate, Mode=OneWay}"
                    Name="regDate_block" VerticalAlignment="Top" />
-        <TextBlock Height="23" HorizontalAlignment="Left" Margin="89,17,0,0" 
-                   Text="{Binding Path=UserForm.Id}"
+        <TextBlock Height="23" Margin="89,17,40,0" 
+                   Text="{Binding ID, Mode=OneWay}"
                    Name="id_block"  VerticalAlignment="Top" />
 
-        <TextBlock Height="23" HorizontalAlignment="Left" Margin="89,187,0,0" 
-                   Text="{Binding Path=UserForm.Ip}"
+        <TextBlock Height="23" Margin="89,187,40,0" 
+                   Text="{Binding RegIp, Mode=OneWay}"
                    Name="regIp_block" VerticalAlignment="Top" />
 
-        <Button Content="OK" Height="23" HorizontalAlignment="Left" Margin="87,257,0,0" Name="OK_button" VerticalAlignment="Top" Width="75"  />
-        <Button Content="Cancel" Height="23" HorizontalAlignment="Right" Margin="0,257,0,0" Name="Cancel_button" VerticalAlignment="Top" Width="75"  />
+        <Button Content="OK" Height="23" HorizontalAlignment="Left" Margin="69,240,0,0" Name="OK_button" VerticalAlignment="Top" Width="75" Command="{Binding ConfirmCmd, Mode=OneWay}"  />
+        <Button Content="Cancel" Height="23" HorizontalAlignment="Right" Margin="0,240,12,0" Name="Cancel_button" VerticalAlignment="Top" Width="75"  Click="Cancel_button_Click" />
         
     </Grid>
 </Window>

@@ -21,7 +21,27 @@ namespace WineMVVM.ViewModel
         private ObservableCollection<Database.User> _users;
         private readonly IUserDataService _dataService;
 
-        public RelayCommand EditUserCmd;
+        private RelayCommand<object> _sendSelectedUserInfoCmd;
+
+        /// <summary>
+        /// Gets the SendSelectedUserInfoCmd.
+        /// </summary>
+        public RelayCommand<object> SendSelectedUserInfoCmd
+        {
+            get
+            {
+                return _sendSelectedUserInfoCmd
+                    ?? (_sendSelectedUserInfoCmd = new RelayCommand<object>(
+                                          selectedItem =>
+                                          {
+                                              var user = (Database.User)selectedItem;
+                                              Messenger.Default.Send<Database.User>(user, "selectedUserToPanelVM");
+                                              
+                                          }));
+            }
+
+            
+        }
 
         /// <summary>
         /// The <see cref="Users" /> property's name.
@@ -97,23 +117,11 @@ namespace WineMVVM.ViewModel
                 });
                 #endregion
 
-
-                #region Commands
-                EditUserCmd = new RelayCommand(EditUser, obj => { return true; });
-                #endregion
+                
             }
         }
 
-        public void EditUser(object selectedItem)
-        {
-            //Messenger.Default.Send<ObservableCollection<Database.User>>(Users, "UserList");
-            //Messenger.Default.Send(
-            //    new NotificationMessageAction<ObservableCollection<Database.User>>
-            //        ("EditCallBack", collection => { Users = new ObservableCollection<Database.User>(collection); }));
-
-            var user = (Database.User)selectedItem;
-            Messenger.Default.Send<Database.User>(user, "selectedUser");
-        }
         
+
     }
 }
