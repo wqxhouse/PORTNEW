@@ -35,7 +35,9 @@ namespace WineMVVM.ViewModel
                                           selectedItem =>
                                           {
                                               var user = (Database.User)selectedItem;
-                                              Messenger.Default.Send<Database.User>(user, "selectedUserToPanelVM");
+                                              Messenger.Default.Send<NotificationMessage>(new NotificationMessage("ShowDetailWindow"));
+                                              Messenger.Default.Send<Database.User>(user, "selectedUser");
+                                              
                                               
                                           }));
             }

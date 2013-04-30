@@ -17,15 +17,17 @@ namespace WineMVVM.View
             ViewModel.ViewModelLocatorHelper.CreateStaticViewModelLocatorForDesigner(this, new ViewModel.ViewModelLocator());
 
             InitializeComponent();
-            Messenger.Default.Register<Database.User>(this, PushUserInfoToDetailVM);
+            Messenger.Default.Register<NotificationMessage>(this, OpenUserDetailWindow);
         }
 
-        private void PushUserInfoToDetailVM(Database.User users)
+        private void OpenUserDetailWindow(NotificationMessage msg)
         {
-           
-            var details = new UserInfoDetails();
-            details.ShowDialog();
-            
+            if (msg.Notification == "ShowDetailWindow")
+            {
+
+                var details = new UserInfoDetails();
+                details.ShowDialog();
+            }
         }
     }
 }

@@ -47,13 +47,13 @@ namespace WineMVVM.ViewModel
         /// <summary>
         /// Initializes a new instance of the UserInfoDetails class.
         /// </summary>
-        public UserInfoDetailsVM(Database.User users)
+        public UserInfoDetailsVM()
         {
             if (!IsInDesignMode)
             {
                 ////get user info from selected column in the UserInfoPanel
-                //Messenger.Default.Register<Database.User>(this, "selectedUser", getUserInfo);
-                getUserInfo(users);
+                Messenger.Default.Register<Database.User>(this, "selectedUser", getUserInfo);
+                //getUserInfo(users);
             }
         }
 
@@ -66,6 +66,21 @@ namespace WineMVVM.ViewModel
             _email = user.email;
             _regDate = user.reg_date;
             _regIp = user.reg_ip;
+
+            /* Needs improvement
+             * Current objective: fire raiseproperitychanged to reflect
+             * changes when the private field is set via messenger injection
+             * since we require the properity field to be readonly
+             * we cannot set properity directly
+             * Here is a compromise way to update the changes onto Views
+             * via raisepropertychanged
+             */
+            RaisePropertyChanged(IDPropertyName);
+            RaisePropertyChanged(UserNamePropertyName);
+            RaisePropertyChanged(PasswordPropertyName);
+            RaisePropertyChanged(EmailPropertyName);
+            RaisePropertyChanged(RegDatePropertyName);
+            RaisePropertyChanged(RegIpPropertyName);
         }
 
 
