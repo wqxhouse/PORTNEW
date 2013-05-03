@@ -92,10 +92,14 @@
       <DependentUpon>WineModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Design\DesignDataService.cs" />
-    <Compile Include="Model\IPostDataService.cs" />
-    <Compile Include="Model\PostDataService.cs" />
-    <Compile Include="Model\UserDataService.cs" />
-    <Compile Include="Model\IUserDataService.cs" />
+    <Compile Include="Navigation\DialogResult.cs" />
+    <Compile Include="Navigation\IModalWindowView.cs" />
+    <Compile Include="Service\IModelDialogService.cs" />
+    <Compile Include="Service\IPostDataService.cs" />
+    <Compile Include="Service\ModalDialogService.cs" />
+    <Compile Include="Service\PostDataService.cs" />
+    <Compile Include="Service\UserDataService.cs" />
+    <Compile Include="Service\IUserDataService.cs" />
     <Compile Include="ViewModel\ControllerMenuVM.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\UserInfoDetailsVM.cs" />

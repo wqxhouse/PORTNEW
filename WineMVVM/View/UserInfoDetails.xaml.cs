@@ -5,7 +5,7 @@ namespace WineMVVM.View
     /// <summary>
     /// Description for UserInfoDetails.
     /// </summary>
-    public partial class UserInfoDetails : Window
+    public partial class UserInfoDetails : Navigation.IModalWindowView
     {
         /// <summary>
         /// Initializes a new instance of the UserInfoDetails class.

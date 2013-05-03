@@ -12,7 +12,7 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
-using WineMVVM.Model;
+using WineMVVM.Service;
 
 namespace WineMVVM.ViewModel
 {
@@ -36,12 +36,16 @@ namespace WineMVVM.ViewModel
             else
             {
                 SimpleIoc.Default.Register<IUserDataService, UserDataService>();
+                SimpleIoc.Default.Register<IModalDialogService, ModalDialogService>();
+                
             }
 
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<ControllerMenuVM>();
             SimpleIoc.Default.Register<UserInfoPanelVM>();
             SimpleIoc.Default.Register<UserInfoDetailsVM>();
+
+            SimpleIoc.Default.Register<Navigation.IModalWindowView, View.UserInfoDetails>();
         }
 
         /// <summary>

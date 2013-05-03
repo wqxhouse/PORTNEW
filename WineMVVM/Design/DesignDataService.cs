@@ -1,5 +1,5 @@
 ﻿using System;
-using WineMVVM.Model;
+using WineMVVM.Service;
 using System.Collections.Generic;
 
 namespace WineMVVM.Design

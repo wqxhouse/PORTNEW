@@ -1,5 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
-using WineMVVM.Model;
+using WineMVVM.Service;
 
 namespace WineMVVM.ViewModel
 {

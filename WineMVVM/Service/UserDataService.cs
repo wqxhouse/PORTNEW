@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Collections.ObjectModel;
 
-namespace WineMVVM.Model
+namespace WineMVVM.Service
 {
     public class UserDataService : IUserDataService
     {

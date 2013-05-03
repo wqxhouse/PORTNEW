@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using GalaSoft.MvvmLight.Command;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Windows;
 
 namespace WineMVVM.ViewModel
 {
@@ -17,7 +18,7 @@ namespace WineMVVM.ViewModel
     public class UserInfoDetailsVM : ViewModelBase, IDataErrorInfo
     {
         private Database.User _userInstance;
-        
+      
         #region Commands
         private RelayCommand<bool?> _confirmCmd;
 
@@ -39,34 +40,30 @@ namespace WineMVVM.ViewModel
         }
         #endregion
 
-        private void sendBackModifiedUser()
-        {
-            Messenger.Default.Send<Database.User>(_userInstance, "modifiedUser");
-        }
-
         /// <summary>
         /// Initializes a new instance of the UserInfoDetails class.
         /// </summary>
-        public UserInfoDetailsVM()
+        public UserInfoDetailsVM(Database.User user)
         {
             if (!IsInDesignMode)
             {
                 ////get user info from selected column in the UserInfoPanel
-                Messenger.Default.Register<Database.User>(this, "selectedUser", getUserInfo);
-                //getUserInfo(users);
+                //Messenger.Default.Register<Database.User>(this, "selectedUser", expandUserInfo);
+                expandUserInfo(user);
             }
         }
 
-        private void getUserInfo(Database.User user)
+
+        private void expandUserInfo(Database.User user)
         {
-            _userInstance = user;
+            
             _id = user.user_id;
             _userName = user.nickname;
             _password = user.password;
             _email = user.email;
             _regDate = user.reg_date;
             _regIp = user.reg_ip;
-
+            
             /* Needs improvement
              * Current objective: fire raiseproperitychanged to reflect
              * changes when the private field is set via messenger injection
@@ -74,17 +71,51 @@ namespace WineMVVM.ViewModel
              * we cannot set properity directly
              * Here is a compromise way to update the changes onto Views
              * via raisepropertychanged
-             */
+             
+            /*
             RaisePropertyChanged(IDPropertyName);
             RaisePropertyChanged(UserNamePropertyName);
             RaisePropertyChanged(PasswordPropertyName);
             RaisePropertyChanged(EmailPropertyName);
             RaisePropertyChanged(RegDatePropertyName);
             RaisePropertyChanged(RegIpPropertyName);
+             */
         }
+    
 
 
         #region Property
+
+        /// <summary>
+        /// The <see cref="UserInstance" /> property's name.
+        /// </summary>
+        public const string UserInstancePropertyName = "UserInstance";
+
+   
+
+        /// <summary>
+        /// Sets and gets the UserInstance property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public Database.User UserInstance
+        {
+            get
+            {
+                return _userInstance;
+            }
+
+            set
+            {
+                if (_userInstance == value)
+                {
+                    return;
+                }
+
+                RaisePropertyChanging(UserInstancePropertyName);
+                _userInstance = value;
+                RaisePropertyChanged(UserInstancePropertyName);
+            }
+        }
 
         /// <summary>
         /// The <see cref="ID" /> property's name.
@@ -132,7 +163,7 @@ namespace WineMVVM.ViewModel
 
                 RaisePropertyChanging(UserNamePropertyName);
                 this.ClearError("Name");
-                _userName = value;
+                _userName = (string)value.Clone();
                 RaisePropertyChanged(UserNamePropertyName);
 
                 Messenger.Default.Send<string>(UserName, "UserName");
@@ -166,7 +197,7 @@ namespace WineMVVM.ViewModel
 
                 RaisePropertyChanging(PasswordPropertyName);
                 this.ClearError("Name");
-                _password = value;
+                _password = (string)value.Clone();
                 RaisePropertyChanged(PasswordPropertyName);
             }
         }
@@ -199,7 +230,7 @@ namespace WineMVVM.ViewModel
 
                 RaisePropertyChanging(EmailPropertyName);
                 this.ClearError("Name");
-                _email = value;
+                _email = (string)value.Clone();
                 RaisePropertyChanged(EmailPropertyName);
 
                 Messenger.Default.Send<string>(Email, "Email");
@@ -318,6 +349,16 @@ namespace WineMVVM.ViewModel
         }
         #endregion
 
+        #region To Database model conversion
+        public Database.User ToDataBaseModel()
+        {
+            _userInstance.nickname = this.UserName;
+            _userInstance.password = this.Password;
+            _userInstance.email = this.Email;
+            return _userInstance;
+
+        }
+        #endregion
 
     }
 }

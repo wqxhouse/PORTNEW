@@ -3,9 +3,10 @@ using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System;
 using System.Windows;
-using WineMVVM.Model;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using System.Linq;
+using Microsoft.Practices.ServiceLocation;
 
 namespace WineMVVM.ViewModel
 {
@@ -19,14 +20,15 @@ namespace WineMVVM.ViewModel
     {
 
         private ObservableCollection<Database.User> _users;
-        private readonly IUserDataService _dataService;
+        private readonly Service.IUserDataService _dataService;
+        private readonly Service.IModalDialogService _dialogService;
 
         private RelayCommand<object> _sendSelectedUserInfoCmd;
 
         /// <summary>
-        /// Gets the SendSelectedUserInfoCmd.
+        /// Gets the EditUser.
         /// </summary>
-        public RelayCommand<object> SendSelectedUserInfoCmd
+        public RelayCommand<object> EditUser
         {
             get
             {
@@ -34,12 +36,29 @@ namespace WineMVVM.ViewModel
                     ?? (_sendSelectedUserInfoCmd = new RelayCommand<object>(
                                           selectedItem =>
                                           {
-                                              var user = (Database.User)selectedItem;
-                                              Messenger.Default.Send<NotificationMessage>(new NotificationMessage("ShowDetailWindow"));
-                                              Messenger.Default.Send<Database.User>(user, "selectedUser");
-                                              
-                                              
-                                          }));
+                                              Navigation.IModalWindowView userDetailView = ServiceLocator.Current.GetInstance<Navigation.IModalWindowView>();
+                                              var userSelected = (Database.User)selectedItem;
+                                              //Messenger.Default.Send<Database.User>(user, "dataToDetailService");
+                                              //Messenger.Default.Send<NotificationMessage>(new NotificationMessage("ShowDetailWindow"));           
+                                              this._dialogService.ShowDialog<UserInfoDetailsVM>
+                                                  (userDetailView, new UserInfoDetailsVM(userSelected),
+                                                  modifiedUser =>
+                                                  {
+                                                      if (userDetailView.DialogResult.HasValue && userDetailView.DialogResult.Value)
+                                                      {
+                                                          var oldItem = this.Users.FirstOrDefault(u => u.user_id == userSelected.user_id);
+                                                          var oldPos = this.Users.IndexOf(oldItem);
+                                                          if (oldPos > -1)
+                                                          {
+                                                              this.Users.RemoveAt(oldPos);
+                                                              this.Users.Insert(oldPos, modifiedUser.ToDataBaseModel());
+                                                          }
+                                                      }
+                                                  });
+                                                    
+                                                   
+                                            }));
+                                               
             }
 
             
@@ -78,7 +97,7 @@ namespace WineMVVM.ViewModel
         /// <summary>
         /// Initializes a new instance of the UserInfoPanelVM class.
         /// </summary>
-        public UserInfoPanelVM(IUserDataService service)
+        public UserInfoPanelVM(Service.IUserDataService user_dataservice, Service.IModalDialogService dialog_service)
         {
             
             if (IsInDesignMode)
@@ -105,7 +124,7 @@ namespace WineMVVM.ViewModel
             else
             {
                 #region DataService
-                _dataService = service;
+                _dataService = user_dataservice;
                 _dataService.GetData((users, error) =>
                 {
                     if (error != null)
@@ -117,6 +136,9 @@ namespace WineMVVM.ViewModel
                         Users = new ObservableCollection<Database.User>(users);
                     }
                 });
+
+                _dialogService = dialog_service;
+
                 #endregion
 
                 

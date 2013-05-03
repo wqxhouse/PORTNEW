@@ -4,10 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ignore="http://www.ignore.com"
-        mc:Ignorable="d ignore"
-        DataContext="{Binding UserInfoDetails, Source={StaticResource Locator}}" d:DesignWidth="265" SizeToContent="WidthAndHeight">
+        mc:Ignorable="d ignore" d:DesignWidth="266" SizeToContent="WidthAndHeight">
+    <!--DataContext="{Binding UserInfoDetails, Source={StaticResource Locator}}" d:DesignWidth="265" SizeToContent="WidthAndHeight"-->
 
-    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="263" />
@@ -22,7 +21,7 @@
         <TextBox Height="23" 
                  HorizontalAlignment="Left" Margin="89,51,0,0" 
                  Name="userName_block" VerticalAlignment="Top" Width="120" 
-                 Text="{Binding UserName, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                 Text="{Binding UserName}"/>
 
         <TextBox Height="23" HorizontalAlignment="Left" Margin="89,85,0,0" 
                  Name="password_Block" VerticalAlignment="Top" Width="120" 
