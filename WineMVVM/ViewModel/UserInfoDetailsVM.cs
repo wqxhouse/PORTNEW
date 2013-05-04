@@ -43,20 +43,21 @@ namespace WineMVVM.ViewModel
         /// <summary>
         /// Initializes a new instance of the UserInfoDetails class.
         /// </summary>
-        public UserInfoDetailsVM(Database.User user)
+        public UserInfoDetailsVM()
         {
             if (!IsInDesignMode)
             {
                 ////get user info from selected column in the UserInfoPanel
-                //Messenger.Default.Register<Database.User>(this, "selectedUser", expandUserInfo);
-                expandUserInfo(user);
+                Messenger.Default.Register<Database.User>(this, "selectedUser", expandUserInfo);
             }
         }
 
 
         private void expandUserInfo(Database.User user)
         {
-            
+            //note that modifying _userInstance directly affects the database
+            //due to shallow copy
+            _userInstance = user;
             _id = user.user_id;
             _userName = user.nickname;
             _password = user.password;
@@ -326,7 +327,7 @@ namespace WineMVVM.ViewModel
             }
         }
 
-        private bool ValidateData()
+        public bool ValidateData()
         {
             bool isValid = true;
 			this.ClearAllErrors();
@@ -350,8 +351,15 @@ namespace WineMVVM.ViewModel
         #endregion
 
         #region To Database model conversion
-        public Database.User ToDataBaseModel()
+
+        /* note that modifying _userInstance directly affects the database entity 
+         * due to shallow copy
+         * this operation both save changes to the database entity 
+         * also it returns the modified entity in order to update the view of UserInfoPanel
+         */
+        public Database.User SaveDataBaseEntity()
         {
+            
             _userInstance.nickname = this.UserName;
             _userInstance.password = this.Password;
             _userInstance.email = this.Email;

@@ -43,9 +43,11 @@ namespace WineMVVM.ViewModel
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<ControllerMenuVM>();
             SimpleIoc.Default.Register<UserInfoPanelVM>();
-            SimpleIoc.Default.Register<UserInfoDetailsVM>();
 
-            SimpleIoc.Default.Register<Navigation.IModalWindowView, View.UserInfoDetails>();
+            //Do not lazy load UserInfoDetailsVM since it involves getting Data from startUp.
+            SimpleIoc.Default.Register<UserInfoDetailsVM>(true);
+
+            //SimpleIoc.Default.Register<Navigation.IModalWindowView, View.UserInfoDetails>();
         }
 
         /// <summary>

@@ -23,45 +23,77 @@ namespace WineMVVM.ViewModel
         private readonly Service.IUserDataService _dataService;
         private readonly Service.IModalDialogService _dialogService;
 
-        private RelayCommand<object> _sendSelectedUserInfoCmd;
+        //private RelayCommand<object> _sendSelectedUserInfoCmd;
 
         /// <summary>
         /// Gets the EditUser.
         /// </summary>
-        public RelayCommand<object> EditUser
+        /// 
+        //public RelayCommand<object> EditUser
+        //{
+        //    get
+        //    {
+        //        return _sendSelectedUserInfoCmd
+        //            ?? (_sendSelectedUserInfoCmd = new RelayCommand<object>(
+        //                                  selectedItem =>
+        //                                  {
+        //                                      Navigation.IModalWindowView userDetailView = ServiceLocator.Current.GetInstance<Navigation.IModalWindowView>();
+        //                                      var userSelected = (Database.User)selectedItem;
+        //                                      //Messenger.Default.Send<Database.User>(user, "dataToDetailService");
+        //                                      //Messenger.Default.Send<NotificationMessage>(new NotificationMessage("ShowDetailWindow"));           
+        //                                      this._dialogService.ShowDialog<UserInfoDetailsVM>
+        //                                          (userDetailView, new UserInfoDetailsVM(userSelected),
+        //                                          modifiedUser =>
+        //                                          {
+        //                                              if (userDetailView.DialogResult.HasValue && userDetailView.DialogResult.Value)
+        //                                              {
+        //                                                  var oldItem = this.Users.FirstOrDefault(u => u.user_id == userSelected.user_id);
+        //                                                  var oldPos = this.Users.IndexOf(oldItem);
+        //                                                  if (oldPos > -1)
+        //                                                  {
+        //                                                      this.Users.RemoveAt(oldPos);
+        //                                                      this.Users.Insert(oldPos, modifiedUser.ToDataBaseModel());
+        //                                                  }
+        //                                              }
+        //                                          });
+                                                    
+                                                   
+        //                                    }));
+                                               
+        //    }
+
+            
+        //}
+
+        /// <summary>
+        /// The <see cref="SelectedUser" /> property's name.
+        /// </summary>
+        public const string SelectedUserPropertyName = "SelectedUser";
+
+        private Database.User _selectedUser;
+
+        /// <summary>
+        /// Sets and gets the SelectedUser property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public Database.User SelectedUser
         {
             get
             {
-                return _sendSelectedUserInfoCmd
-                    ?? (_sendSelectedUserInfoCmd = new RelayCommand<object>(
-                                          selectedItem =>
-                                          {
-                                              Navigation.IModalWindowView userDetailView = ServiceLocator.Current.GetInstance<Navigation.IModalWindowView>();
-                                              var userSelected = (Database.User)selectedItem;
-                                              //Messenger.Default.Send<Database.User>(user, "dataToDetailService");
-                                              //Messenger.Default.Send<NotificationMessage>(new NotificationMessage("ShowDetailWindow"));           
-                                              this._dialogService.ShowDialog<UserInfoDetailsVM>
-                                                  (userDetailView, new UserInfoDetailsVM(userSelected),
-                                                  modifiedUser =>
-                                                  {
-                                                      if (userDetailView.DialogResult.HasValue && userDetailView.DialogResult.Value)
-                                                      {
-                                                          var oldItem = this.Users.FirstOrDefault(u => u.user_id == userSelected.user_id);
-                                                          var oldPos = this.Users.IndexOf(oldItem);
-                                                          if (oldPos > -1)
-                                                          {
-                                                              this.Users.RemoveAt(oldPos);
-                                                              this.Users.Insert(oldPos, modifiedUser.ToDataBaseModel());
-                                                          }
-                                                      }
-                                                  });
-                                                    
-                                                   
-                                            }));
-                                               
+                return _selectedUser;
             }
 
-            
+            set
+            {
+                if (_selectedUser == value)
+                {
+                    return;
+                }
+
+                RaisePropertyChanging(SelectedUserPropertyName);
+                _selectedUser = value;
+                RaisePropertyChanged(SelectedUserPropertyName);
+            }
         }
 
         /// <summary>

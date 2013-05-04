@@ -67,7 +67,9 @@
     	<ListView Height="268" HorizontalAlignment="Left" Margin="12,12,0,0" 
     		x:Name="UserList" VerticalAlignment="Top" Width="537" 
     		IsSynchronizedWithCurrentItem="True"
-    		ItemsSource="{Binding Users}">
+    		ItemsSource="{Binding Users}"
+            MouseDoubleClick="UserList_MouseDoubleClick"
+            SelectedItem="{Binding SelectedUser, UpdateSourceTrigger=PropertyChanged}">
     		<ListView.View>
     			<GridView>
     				<GridViewColumn Width="40" Header="Id"
@@ -84,17 +86,14 @@
     					DisplayMemberBinding="{Binding reg_ip}" />
 
     			</GridView>
-				
-				
     		</ListView.View>
-			
-			
-				 
-    		<i:Interaction.Triggers>
+
+
+                <!--<i:Interaction.Triggers>
     			<i:EventTrigger EventName="MouseDoubleClick">
-    				<Custom:EventToCommand Command="{Binding SendSelectedUserInfoCmd, Mode=OneWay}" CommandParameter="{Binding SelectedItem, ElementName=UserList}"/>
+    				<Custom:EventToCommand Command="{Binding EditUser, Mode=OneWay}" CommandParameter="{Binding SelectedItem, ElementName=UserList}"/>
     			</i:EventTrigger>
-    		</i:Interaction.Triggers>
+    		</i:Interaction.Triggers>-->
 			
 			
 				 

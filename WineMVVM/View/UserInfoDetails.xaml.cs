@@ -7,6 +7,8 @@ namespace WineMVVM.View
     /// </summary>
     public partial class UserInfoDetails : Navigation.IModalWindowView
     {
+        ViewModel.UserInfoDetailsVM detailVM;
+
         /// <summary>
         /// Initializes a new instance of the UserInfoDetails class.
         /// </summary>
@@ -15,6 +17,9 @@ namespace WineMVVM.View
             ViewModel.ViewModelLocatorHelper.CreateStaticViewModelLocatorForDesigner(this, new ViewModel.ViewModelLocator());
 
             InitializeComponent();
+
+            //get reference via datacontext
+            detailVM = (ViewModel.UserInfoDetailsVM)DataContext;
             
         }
 
@@ -24,8 +29,12 @@ namespace WineMVVM.View
         }
 
         private void OK_button_Click(object sender, RoutedEventArgs e)
-        { 
-            this.DialogResult = true;       
+        {
+            if (detailVM.ValidateData())
+            {
+                this.DialogResult = true;
+            }
+            
         }
     }
 }

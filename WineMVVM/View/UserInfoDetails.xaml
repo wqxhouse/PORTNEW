@@ -4,8 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ignore="http://www.ignore.com"
-        mc:Ignorable="d ignore" d:DesignWidth="266" SizeToContent="WidthAndHeight">
-    <!--DataContext="{Binding UserInfoDetails, Source={StaticResource Locator}}" d:DesignWidth="265" SizeToContent="WidthAndHeight"-->
+        mc:Ignorable="d ignore" d:DesignWidth="266" SizeToContent="WidthAndHeight"
+        DataContext="{Binding UserInfoDetails, Source={StaticResource Locator}}" >
+    
 
     <Grid>
         <Grid.RowDefinitions>
@@ -21,14 +22,14 @@
         <TextBox Height="23" 
                  HorizontalAlignment="Left" Margin="89,51,0,0" 
                  Name="userName_block" VerticalAlignment="Top" Width="120" 
-                 Text="{Binding UserName}"/>
+                 Text="{Binding UserName, ValidatesOnDataErrors=true}"/>
 
         <TextBox Height="23" HorizontalAlignment="Left" Margin="89,85,0,0" 
                  Name="password_Block" VerticalAlignment="Top" Width="120" 
-                 Text="{Binding Password, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
+                 Text="{Binding Password, ValidatesOnDataErrors=True}" />
 
         <TextBox Height="23" HorizontalAlignment="Left" Margin="89,119,0,0" 
-                 Text="{Binding Email, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                 Text="{Binding Email, ValidatesOnDataErrors=True}"
                  Name="email_block" VerticalAlignment="Top" Width="120" />
 
         <TextBlock Height="23" Margin="89,153,23,0" 
@@ -42,7 +43,7 @@
                    Text="{Binding RegIp, Mode=OneWay}"
                    Name="regIp_block" VerticalAlignment="Top" />
 
-        <Button Content="OK" Height="23" HorizontalAlignment="Left" Margin="69,240,0,0" Name="OK_button" VerticalAlignment="Top" Width="75" Command="{Binding ConfirmCmd, Mode=OneWay}"  />
+        <Button Content="OK" Height="23" HorizontalAlignment="Left" Margin="69,240,0,0" Name="OK_button" VerticalAlignment="Top" Width="75" Click="OK_button_Click" />
         <Button Content="Cancel" Height="23" HorizontalAlignment="Right" Margin="0,240,12,0" Name="Cancel_button" VerticalAlignment="Top" Width="75"  Click="Cancel_button_Click" />
         
     </Grid>

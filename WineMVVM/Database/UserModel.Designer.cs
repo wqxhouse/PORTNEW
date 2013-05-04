@@ -8,12 +8,13 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.ComponentModel;
+using System.Data.EntityClient;
 using System.Data.Objects;
 using System.Data.Objects.DataClasses;
-using System.Data.EntityClient;
-using System.ComponentModel;
-using System.Xml.Serialization;
+using System.Linq;
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 [assembly: EdmSchemaAttribute()]
 #region EDM 关系源元数据
@@ -121,6 +122,7 @@ namespace WineMVVM.Database
         private ObjectSet<Reply> _Replies;
 
         #endregion
+
         #region AddTo 方法
     
         /// <summary>
@@ -148,11 +150,11 @@ namespace WineMVVM.Database
         }
 
         #endregion
+
     }
-    
 
     #endregion
-    
+
     #region 实体
     
     /// <summary>
@@ -187,6 +189,7 @@ namespace WineMVVM.Database
         }
 
         #endregion
+
         #region 基元属性
     
         /// <summary>
@@ -337,6 +340,7 @@ namespace WineMVVM.Database
         partial void Onpost_ipChanged();
 
         #endregion
+
     
         #region 导航属性
     
@@ -401,6 +405,7 @@ namespace WineMVVM.Database
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -435,6 +440,7 @@ namespace WineMVVM.Database
         }
 
         #endregion
+
         #region 基元属性
     
         /// <summary>
@@ -585,6 +591,7 @@ namespace WineMVVM.Database
         partial void Onpost_ipChanged();
 
         #endregion
+
     
         #region 导航属性
     
@@ -665,6 +672,7 @@ namespace WineMVVM.Database
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -699,6 +707,7 @@ namespace WineMVVM.Database
         }
 
         #endregion
+
         #region 基元属性
     
         /// <summary>
@@ -849,6 +858,7 @@ namespace WineMVVM.Database
         partial void Onreg_ipChanged();
 
         #endregion
+
     
         #region 导航属性
     
@@ -897,8 +907,10 @@ namespace WineMVVM.Database
         }
 
         #endregion
+
     }
 
     #endregion
+
     
 }
