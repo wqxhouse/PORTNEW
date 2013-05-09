@@ -11,7 +11,7 @@ namespace WineMVVM.View
     public partial class UserInfoPanel
     {
         //used to get reference already existed by datacontext
-        ViewModel.UserInfoPanelVM panel;
+        ViewModel.UserInfoPanelVM2 panel;
 
         /// <summary>
         /// Initializes a new instance of the UserInfoPanel class.
@@ -24,7 +24,7 @@ namespace WineMVVM.View
             InitializeComponent();
 
             //get the reference already existed
-            panel = (ViewModel.UserInfoPanelVM)DataContext;
+            panel = (ViewModel.UserInfoPanelVM2)DataContext;
         }
 
         private void UserList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -40,7 +40,7 @@ namespace WineMVVM.View
             var detailVM = ServiceLocator.Current.GetInstance<ViewModel.UserInfoDetailsVM>();
             //pass selcted user data to the detailVM.
             //PostCondition: detailVM received the SelectedUser data and expanded to its members
-            Messenger.Default.Send<Database.User>(panel.SelectedUser, "selectedUser");
+            Messenger.Default.Send<WineDataDomain.User>(panel.SelectedUser, "selectedUser");
 
             //this will automatically attach userinfodetails view to detailVM since datacontext
             UserInfoDetails detailWindow = new UserInfoDetails();
@@ -50,9 +50,9 @@ namespace WineMVVM.View
                 if (detailWindow.DialogResult == true)
                 {
                     // Confirm changes
-                    //this operation both save changes to the database entity 
-                    //also it returns the modified entity in order to update the view of UserInfoPanel
-                    panel.SelectedUser = detailVM.SaveDataBaseEntity();
+                    //this operation both save changes 
+                    //also it returns the modified in order to update the view of UserInfoPanel
+                    panel.SelectedUser = detailVM.SaveChanges();
                 }
 
             };

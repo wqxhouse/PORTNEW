@@ -6,10 +6,10 @@
         xmlns:ignore="http://www.ignore.com"
         xmlns:view="clr-namespace:WineMVVM.View"
         mc:Ignorable="d ignore"
-        Height="396.6"
+        Height="435"
         Width="578"
         Title="WineApp Management"
-        DataContext="{Binding Main, Source={StaticResource Locator}}">
+        DataContext="{Binding Main, Source={StaticResource Locator}}" xmlns:navigation="http://schemas.actiprosoftware.com/winfx/xaml/navigation">
     
     <Window.Resources>
         <ResourceDictionary>
@@ -26,8 +26,6 @@
     	</Grid.RowDefinitions>
        
             <view:ControllerMenu HorizontalAlignment="Left" Margin="271,36,0,39.047" Width="0" d:LayoutOverrides="VerticalAlignment" />
-            <view:UserInfoPanel Grid.Row="1" Margin="0,0,8,24.972" />
-       
-
+            <view:UserInfoPanel Grid.Row="1" Margin="0,0,8,-9" />
     </Grid>
 </Window>

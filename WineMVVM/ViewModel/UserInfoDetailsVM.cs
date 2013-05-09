@@ -17,7 +17,7 @@ namespace WineMVVM.ViewModel
     /// </summary>
     public class UserInfoDetailsVM : ViewModelBase, IDataErrorInfo
     {
-        private Database.User _userInstance;
+        private WineDataDomain.User _userInstance;
       
         #region Commands
         private RelayCommand<bool?> _confirmCmd;
@@ -48,39 +48,24 @@ namespace WineMVVM.ViewModel
             if (!IsInDesignMode)
             {
                 ////get user info from selected column in the UserInfoPanel
-                Messenger.Default.Register<Database.User>(this, "selectedUser", expandUserInfo);
+                Messenger.Default.Register<WineDataDomain.User>(this, "selectedUser", expandUserInfo);
             }
         }
 
 
-        private void expandUserInfo(Database.User user)
+        private void expandUserInfo(WineDataDomain.User user)
         {
             //note that modifying _userInstance directly affects the database
             //due to shallow copy
             _userInstance = user;
-            _id = user.user_id;
-            _userName = user.nickname;
-            _password = user.password;
-            _email = user.email;
-            _regDate = user.reg_date;
-            _regIp = user.reg_ip;
+            _id = user.ID;
+            _userName = user.UserName;
+            _password = user.PassWord;
+            _email = user.Email;
+            _regDate = user.RegDate;
+       
             
-            /* Needs improvement
-             * Current objective: fire raiseproperitychanged to reflect
-             * changes when the private field is set via messenger injection
-             * since we require the properity field to be readonly
-             * we cannot set properity directly
-             * Here is a compromise way to update the changes onto Views
-             * via raisepropertychanged
-             
-            /*
-            RaisePropertyChanged(IDPropertyName);
-            RaisePropertyChanged(UserNamePropertyName);
-            RaisePropertyChanged(PasswordPropertyName);
-            RaisePropertyChanged(EmailPropertyName);
-            RaisePropertyChanged(RegDatePropertyName);
-            RaisePropertyChanged(RegIpPropertyName);
-             */
+
         }
     
 
@@ -98,7 +83,7 @@ namespace WineMVVM.ViewModel
         /// Sets and gets the UserInstance property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
-        public Database.User UserInstance
+        public WineDataDomain.User UserInstance
         {
             get
             {
@@ -112,7 +97,6 @@ namespace WineMVVM.ViewModel
                     return;
                 }
 
-                RaisePropertyChanging(UserInstancePropertyName);
                 _userInstance = value;
                 RaisePropertyChanged(UserInstancePropertyName);
             }
@@ -357,12 +341,12 @@ namespace WineMVVM.ViewModel
          * this operation both save changes to the database entity 
          * also it returns the modified entity in order to update the view of UserInfoPanel
          */
-        public Database.User SaveDataBaseEntity()
+        public WineDataDomain.User SaveChanges()
         {
             
-            _userInstance.nickname = this.UserName;
-            _userInstance.password = this.Password;
-            _userInstance.email = this.Email;
+            _userInstance.UserName = this.UserName;
+            _userInstance.PassWord = this.Password;
+            _userInstance.Email = this.Email;
             return _userInstance;
 
         }

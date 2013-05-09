@@ -16,12 +16,13 @@ namespace WineMVVM.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class UserInfoPanelVM : ViewModelBase
+    public sealed class UserInfoPanelVM : ViewModelBase
     {
 
         private ObservableCollection<Database.User> _users;
         private readonly Service.IUserDataService _dataService;
-        private readonly Service.IModalDialogService _dialogService;
+        
+       // private readonly Service.IModalDialogService _dialogService;
 
         //private RelayCommand<object> _sendSelectedUserInfoCmd;
 
@@ -129,7 +130,7 @@ namespace WineMVVM.ViewModel
         /// <summary>
         /// Initializes a new instance of the UserInfoPanelVM class.
         /// </summary>
-        public UserInfoPanelVM(Service.IUserDataService user_dataservice, Service.IModalDialogService dialog_service)
+        public UserInfoPanelVM(Service.IUserDataService user_dataservice)
         {
             
             if (IsInDesignMode)
@@ -169,7 +170,7 @@ namespace WineMVVM.ViewModel
                     }
                 });
 
-                _dialogService = dialog_service;
+                
 
                 #endregion
 
