@@ -1,12 +1,13 @@
 ﻿using System.Windows;
 
-namespace WineMVVM.View
+namespace WineMVVM.Background.View
 {
     /// <summary>
     /// Description for UserInfoDetails.
     /// </summary>
-    public partial class UserInfoDetails : Navigation.IModalWindowView
+    public partial class UserInfoDetails
     {
+
         ViewModel.UserInfoDetailsVM detailVM;
 
         /// <summary>

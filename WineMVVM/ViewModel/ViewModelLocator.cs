@@ -1,7 +1,7 @@
 ﻿/*
   In App.xaml:
   <Application.Resources>
-      <vm:ViewModelLocatorTemplate xmlns:vm="clr-namespace:WineMVVM.ViewModel"
+      <vm:ViewModelLocatorTemplate xmlns:vm="clr-namespace:WineMVVM.Background.ViewModel"
                                    x:Key="Locator" />
   </Application.Resources>
   
@@ -12,11 +12,11 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
-using WineMVVM.Service;
+
 using System.Configuration;
 using System;
 
-namespace WineMVVM.ViewModel
+namespace WineMVVM.Background.ViewModel
 {
     /// <summary>
     /// This class contains static references to all the view models in the
@@ -33,7 +33,7 @@ namespace WineMVVM.ViewModel
 
             if (ViewModelBase.IsInDesignModeStatic)
             {
-                SimpleIoc.Default.Register<IUserDataService, Design.DesignDataService>();
+                SimpleIoc.Default.Register<WineDataDomain.IUserRepository, Design.DesignDataService>();
             }
             else
             {
@@ -42,7 +42,7 @@ namespace WineMVVM.ViewModel
                 //Correct dependancy, ServiceDataLib -> Domain <- Client
                 SimpleIoc.Default.Register<WineDataDomain.IUserRepository, ServiceDataLib.SqlUserRepository>();
                 //SimpleIoc.Default.Register<WineDataDomain.UserRepository, >();
-                //SimpleIoc.Default.Register<IUserDataService, UserDataService>();
+                //SimpleIoc.Default.Register<WineDataDomain.IUserRepository, UserDataService>();
                 //SimpleIoc.Default.Register<IModalDialogService, ModalDialogService>();
                 
             }

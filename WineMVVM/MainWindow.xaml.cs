@@ -1,7 +1,7 @@
 ﻿using System.Windows;
-using WineMVVM.ViewModel;
+using WineMVVM.Background.ViewModel;
 
-namespace WineMVVM
+namespace WineMVVM.Background
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WineMVVM.Properties
+namespace WineMVVM.Background.Properties
 {
     using System;
 

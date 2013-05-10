@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace WineMVVM.View
+namespace WineMVVM.Background.View
 {
     /// <summary>
     /// Description for ControllerMenu.

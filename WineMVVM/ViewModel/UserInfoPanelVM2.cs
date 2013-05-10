@@ -8,7 +8,7 @@ using GalaSoft.MvvmLight.Messaging;
 using System.Linq;
 using Microsoft.Practices.ServiceLocation;
 
-namespace WineMVVM.ViewModel
+namespace WineMVVM.Background.ViewModel
 {
     /// <summary>
     /// This class contains properties that a View can data bind to.
@@ -21,59 +21,8 @@ namespace WineMVVM.ViewModel
 
         private ObservableCollection<WineDataDomain.User> _users;
         private ObservableCollection<WineDataDomain.User> _modifiedUsers;
-        //private readonly Service.IUserDataService _dataService;
-
-        //private readonly WineDataDomain.UserRepository _repo;
-        //private readonly WineDataDomain.UserDataService _userDataService;
 
         private readonly WineDataDomain.IUserRepository _repo;
-
-        
-
-
-        // private readonly Service.IModalDialogService _dialogService;
-
-        //private RelayCommand<object> _sendSelectedUserInfoCmd;
-
-        /// <summary>
-        /// Gets the EditUser.
-        /// </summary>
-        /// 
-        //public RelayCommand<object> EditUser
-        //{
-        //    get
-        //    {
-        //        return _sendSelectedUserInfoCmd
-        //            ?? (_sendSelectedUserInfoCmd = new RelayCommand<object>(
-        //                                  selectedItem =>
-        //                                  {
-        //                                      Navigation.IModalWindowView userDetailView = ServiceLocator.Current.GetInstance<Navigation.IModalWindowView>();
-        //                                      var userSelected = (Database.User)selectedItem;
-        //                                      //Messenger.Default.Send<Database.User>(user, "dataToDetailService");
-        //                                      //Messenger.Default.Send<NotificationMessage>(new NotificationMessage("ShowDetailWindow"));           
-        //                                      this._dialogService.ShowDialog<UserInfoDetailsVM>
-        //                                          (userDetailView, new UserInfoDetailsVM(userSelected),
-        //                                          modifiedUser =>
-        //                                          {
-        //                                              if (userDetailView.DialogResult.HasValue && userDetailView.DialogResult.Value)
-        //                                              {
-        //                                                  var oldItem = this.Users.FirstOrDefault(u => u.user_id == userSelected.user_id);
-        //                                                  var oldPos = this.Users.IndexOf(oldItem);
-        //                                                  if (oldPos > -1)
-        //                                                  {
-        //                                                      this.Users.RemoveAt(oldPos);
-        //                                                      this.Users.Insert(oldPos, modifiedUser.ToDataBaseModel());
-        //                                                  }
-        //                                              }
-        //                                          });
-
-
-        //                                    }));
-
-        //    }
-
-
-        //}
 
         /// <summary>
         /// The <see cref="SelectedUser" /> property's name.

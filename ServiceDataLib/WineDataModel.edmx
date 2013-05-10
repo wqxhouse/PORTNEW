@@ -1,0 +1,899 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="WineDataModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="WineDataModelStoreContainer">
+          <EntitySet Name="Colors" EntityType="WineDataModel.Store.Colors" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Countries" EntityType="WineDataModel.Store.Countries" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="FriendStatuses" EntityType="WineDataModel.Store.FriendStatuses" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Moods" EntityType="WineDataModel.Store.Moods" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Posts" EntityType="WineDataModel.Store.Posts" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Regions" EntityType="WineDataModel.Store.Regions" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Replies" EntityType="WineDataModel.Store.Replies" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="sim_mat" EntityType="WineDataModel.Store.sim_mat" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Tastes" EntityType="WineDataModel.Store.Tastes" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Users" EntityType="WineDataModel.Store.Users" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Wines" EntityType="WineDataModel.Store.Wines" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="WMMWs" EntityType="WineDataModel.Store.WMMWs" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Years" EntityType="WineDataModel.Store.Years" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_CountryRegion" Association="WineDataModel.Store.FK_CountryRegion">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="Regions" EntitySet="Regions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MoodWMMW" Association="WineDataModel.Store.FK_MoodWMMW">
+            <End Role="Moods" EntitySet="Moods" />
+            <End Role="WMMWs" EntitySet="WMMWs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PostReply" Association="WineDataModel.Store.FK_PostReply">
+            <End Role="Posts" EntitySet="Posts" />
+            <End Role="Replies" EntitySet="Replies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserPost" Association="WineDataModel.Store.FK_UserPost">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Posts" EntitySet="Posts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserReply" Association="WineDataModel.Store.FK_UserReply">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Replies" EntitySet="Replies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WineColor" Association="WineDataModel.Store.FK_WineColor">
+            <End Role="Colors" EntitySet="Colors" />
+            <End Role="Wines" EntitySet="Wines" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WineCountry" Association="WineDataModel.Store.FK_WineCountry">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="Wines" EntitySet="Wines" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WineRegion" Association="WineDataModel.Store.FK_WineRegion">
+            <End Role="Regions" EntitySet="Regions" />
+            <End Role="Wines" EntitySet="Wines" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WineTaste" Association="WineDataModel.Store.FK_WineTaste">
+            <End Role="Tastes" EntitySet="Tastes" />
+            <End Role="Wines" EntitySet="Wines" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WineWMMW" Association="WineDataModel.Store.FK_WineWMMW">
+            <End Role="Wines" EntitySet="Wines" />
+            <End Role="WMMWs" EntitySet="WMMWs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WineYear" Association="WineDataModel.Store.FK_WineYear">
+            <End Role="Years" EntitySet="Years" />
+            <End Role="Wines" EntitySet="Wines" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Colors">
+          <Key>
+            <PropertyRef Name="color_id" />
+          </Key>
+          <Property Name="color_id" Type="int" Nullable="false" />
+          <Property Name="color_description" Type="nchar" Nullable="false" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Countries">
+          <Key>
+            <PropertyRef Name="country_id" />
+          </Key>
+          <Property Name="country_id" Type="int" Nullable="false" />
+          <Property Name="country_name" Type="nchar" Nullable="false" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="FriendStatuses">
+          <Key>
+            <PropertyRef Name="FriendStatusId" />
+          </Key>
+          <Property Name="FriendStatusId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="FromUserId" Type="int" Nullable="false" />
+          <Property Name="ToUserId" Type="int" Nullable="false" />
+          <Property Name="StatusId" Type="tinyint" Nullable="false" />
+          <Property Name="SentTime" Type="datetime" Nullable="false" />
+          <Property Name="ResponseTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Moods">
+          <Key>
+            <PropertyRef Name="mood_id" />
+          </Key>
+          <Property Name="mood_id" Type="int" Nullable="false" />
+          <Property Name="mood_description" Type="nchar" Nullable="false" MaxLength="10" />
+          <Property Name="wine_code" Type="nchar" Nullable="false" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Posts">
+          <Key>
+            <PropertyRef Name="post_id" />
+          </Key>
+          <Property Name="post_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="wine_code" Type="int" Nullable="false" />
+          <Property Name="user_code" Type="int" Nullable="false" />
+          <Property Name="texts" Type="varchar(max)" Nullable="false" />
+          <Property Name="post_date" Type="datetime" Nullable="false" />
+          <Property Name="post_ip" Type="varchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Regions">
+          <Key>
+            <PropertyRef Name="region_id" />
+          </Key>
+          <Property Name="region_id" Type="int" Nullable="false" />
+          <Property Name="country_code" Type="int" Nullable="false" />
+          <Property Name="name" Type="nchar" Nullable="false" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Replies">
+          <Key>
+            <PropertyRef Name="reply_id" />
+          </Key>
+          <Property Name="reply_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="post_code" Type="int" Nullable="false" />
+          <Property Name="texts" Type="varchar(max)" Nullable="false" />
+          <Property Name="user_code" Type="int" Nullable="false" />
+          <Property Name="post_date" Type="datetime" Nullable="false" />
+          <Property Name="post_ip" Type="nchar" Nullable="false" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="sim_mat">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="agePercent" Type="decimal" Nullable="false" Precision="4" Scale="1" />
+          <Property Name="wine_sim" Type="nvarchar" Nullable="false" MaxLength="40" />
+          <Property Name="simPercent" Type="decimal" Nullable="false" Precision="4" Scale="1" />
+        </EntityType>
+        <EntityType Name="Tastes">
+          <Key>
+            <PropertyRef Name="taste_id" />
+          </Key>
+          <Property Name="taste_id" Type="int" Nullable="false" />
+          <Property Name="color_code" Type="int" Nullable="false" />
+          <Property Name="taste_description" Type="nchar" Nullable="false" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="nickname" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="password" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="email" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="reg_date" Type="datetime" Nullable="false" />
+          <Property Name="reg_ip" Type="nvarchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Wines">
+          <Key>
+            <PropertyRef Name="wine_id" />
+          </Key>
+          <Property Name="wine_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="mood_code" Type="int" Nullable="false" />
+          <Property Name="taste_code" Type="int" Nullable="false" />
+          <Property Name="color_code" Type="int" Nullable="false" />
+          <Property Name="years_code" Type="int" Nullable="false" />
+          <Property Name="country_code" Type="int" Nullable="false" />
+          <Property Name="region_code" Type="int" Nullable="false" />
+          <Property Name="name" Type="nchar" Nullable="false" MaxLength="20" />
+          <Property Name="description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="pic_url" Type="nchar" Nullable="false" MaxLength="50" />
+          <Property Name="price" Type="nchar" Nullable="false" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="WMMWs">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="WineId" Type="int" Nullable="false" />
+          <Property Name="MoodId" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="Years">
+          <Key>
+            <PropertyRef Name="year_id" />
+          </Key>
+          <Property Name="year_id" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_CountryRegion">
+          <End Role="Countries" Type="WineDataModel.Store.Countries" Multiplicity="1" />
+          <End Role="Regions" Type="WineDataModel.Store.Regions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Countries">
+              <PropertyRef Name="country_id" />
+            </Principal>
+            <Dependent Role="Regions">
+              <PropertyRef Name="country_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MoodWMMW">
+          <End Role="Moods" Type="WineDataModel.Store.Moods" Multiplicity="1" />
+          <End Role="WMMWs" Type="WineDataModel.Store.WMMWs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Moods">
+              <PropertyRef Name="mood_id" />
+            </Principal>
+            <Dependent Role="WMMWs">
+              <PropertyRef Name="MoodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PostReply">
+          <End Role="Posts" Type="WineDataModel.Store.Posts" Multiplicity="1" />
+          <End Role="Replies" Type="WineDataModel.Store.Replies" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Posts">
+              <PropertyRef Name="post_id" />
+            </Principal>
+            <Dependent Role="Replies">
+              <PropertyRef Name="post_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserPost">
+          <End Role="Users" Type="WineDataModel.Store.Users" Multiplicity="1" />
+          <End Role="Posts" Type="WineDataModel.Store.Posts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="Posts">
+              <PropertyRef Name="user_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserReply">
+          <End Role="Users" Type="WineDataModel.Store.Users" Multiplicity="1" />
+          <End Role="Replies" Type="WineDataModel.Store.Replies" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="Replies">
+              <PropertyRef Name="user_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WineColor">
+          <End Role="Colors" Type="WineDataModel.Store.Colors" Multiplicity="1" />
+          <End Role="Wines" Type="WineDataModel.Store.Wines" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Colors">
+              <PropertyRef Name="color_id" />
+            </Principal>
+            <Dependent Role="Wines">
+              <PropertyRef Name="color_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WineCountry">
+          <End Role="Countries" Type="WineDataModel.Store.Countries" Multiplicity="1" />
+          <End Role="Wines" Type="WineDataModel.Store.Wines" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Countries">
+              <PropertyRef Name="country_id" />
+            </Principal>
+            <Dependent Role="Wines">
+              <PropertyRef Name="country_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WineRegion">
+          <End Role="Regions" Type="WineDataModel.Store.Regions" Multiplicity="1" />
+          <End Role="Wines" Type="WineDataModel.Store.Wines" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Regions">
+              <PropertyRef Name="region_id" />
+            </Principal>
+            <Dependent Role="Wines">
+              <PropertyRef Name="region_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WineTaste">
+          <End Role="Tastes" Type="WineDataModel.Store.Tastes" Multiplicity="1" />
+          <End Role="Wines" Type="WineDataModel.Store.Wines" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tastes">
+              <PropertyRef Name="taste_id" />
+            </Principal>
+            <Dependent Role="Wines">
+              <PropertyRef Name="taste_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WineWMMW">
+          <End Role="Wines" Type="WineDataModel.Store.Wines" Multiplicity="1" />
+          <End Role="WMMWs" Type="WineDataModel.Store.WMMWs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Wines">
+              <PropertyRef Name="wine_id" />
+            </Principal>
+            <Dependent Role="WMMWs">
+              <PropertyRef Name="WineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WineYear">
+          <End Role="Years" Type="WineDataModel.Store.Years" Multiplicity="1" />
+          <End Role="Wines" Type="WineDataModel.Store.Wines" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Years">
+              <PropertyRef Name="year_id" />
+            </Principal>
+            <Dependent Role="Wines">
+              <PropertyRef Name="years_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="WineDataModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="WineDataEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Colors" EntityType="WineDataModel.Color" />
+          <EntitySet Name="Countries" EntityType="WineDataModel.Country" />
+          <EntitySet Name="FriendStatuses" EntityType="WineDataModel.FriendStatus" />
+          <EntitySet Name="Moods" EntityType="WineDataModel.Mood" />
+          <EntitySet Name="Posts" EntityType="WineDataModel.Post" />
+          <EntitySet Name="Regions" EntityType="WineDataModel.Region" />
+          <EntitySet Name="Replies" EntityType="WineDataModel.Reply" />
+          <EntitySet Name="sim_mat" EntityType="WineDataModel.sim_mat" />
+          <EntitySet Name="Tastes" EntityType="WineDataModel.Taste" />
+          <EntitySet Name="Users" EntityType="WineDataModel.User" />
+          <EntitySet Name="Wines" EntityType="WineDataModel.Wine" />
+          <EntitySet Name="WMMWs" EntityType="WineDataModel.WMMW" />
+          <EntitySet Name="Years" EntityType="WineDataModel.Year" />
+          <AssociationSet Name="FK_WineColor" Association="WineDataModel.FK_WineColor">
+            <End Role="Colors" EntitySet="Colors" />
+            <End Role="Wines" EntitySet="Wines" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CountryRegion" Association="WineDataModel.FK_CountryRegion">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="Regions" EntitySet="Regions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WineCountry" Association="WineDataModel.FK_WineCountry">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="Wines" EntitySet="Wines" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MoodWMMW" Association="WineDataModel.FK_MoodWMMW">
+            <End Role="Moods" EntitySet="Moods" />
+            <End Role="WMMWs" EntitySet="WMMWs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PostReply" Association="WineDataModel.FK_PostReply">
+            <End Role="Posts" EntitySet="Posts" />
+            <End Role="Replies" EntitySet="Replies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserPost" Association="WineDataModel.FK_UserPost">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Posts" EntitySet="Posts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WineRegion" Association="WineDataModel.FK_WineRegion">
+            <End Role="Regions" EntitySet="Regions" />
+            <End Role="Wines" EntitySet="Wines" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserReply" Association="WineDataModel.FK_UserReply">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Replies" EntitySet="Replies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WineTaste" Association="WineDataModel.FK_WineTaste">
+            <End Role="Tastes" EntitySet="Tastes" />
+            <End Role="Wines" EntitySet="Wines" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WineWMMW" Association="WineDataModel.FK_WineWMMW">
+            <End Role="Wines" EntitySet="Wines" />
+            <End Role="WMMWs" EntitySet="WMMWs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WineYear" Association="WineDataModel.FK_WineYear">
+            <End Role="Years" EntitySet="Years" />
+            <End Role="Wines" EntitySet="Wines" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Color">
+          <Key>
+            <PropertyRef Name="color_id" />
+          </Key>
+          <Property Name="color_id" Type="Int32" Nullable="false" />
+          <Property Name="color_description" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="true" />
+          <NavigationProperty Name="Wines" Relationship="WineDataModel.FK_WineColor" FromRole="Colors" ToRole="Wines" />
+        </EntityType>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="country_id" />
+          </Key>
+          <Property Name="country_id" Type="Int32" Nullable="false" />
+          <Property Name="country_name" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="true" />
+          <NavigationProperty Name="Regions" Relationship="WineDataModel.FK_CountryRegion" FromRole="Countries" ToRole="Regions" />
+          <NavigationProperty Name="Wines" Relationship="WineDataModel.FK_WineCountry" FromRole="Countries" ToRole="Wines" />
+        </EntityType>
+        <EntityType Name="FriendStatus">
+          <Key>
+            <PropertyRef Name="FriendStatusId" />
+          </Key>
+          <Property Name="FriendStatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FromUserId" Type="Int32" Nullable="false" />
+          <Property Name="ToUserId" Type="Int32" Nullable="false" />
+          <Property Name="StatusId" Type="Byte" Nullable="false" />
+          <Property Name="SentTime" Type="DateTime" Nullable="false" />
+          <Property Name="ResponseTime" Type="DateTime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Mood">
+          <Key>
+            <PropertyRef Name="mood_id" />
+          </Key>
+          <Property Name="mood_id" Type="Int32" Nullable="false" />
+          <Property Name="mood_description" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="true" />
+          <Property Name="wine_code" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="true" />
+          <NavigationProperty Name="WMMWs" Relationship="WineDataModel.FK_MoodWMMW" FromRole="Moods" ToRole="WMMWs" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="post_id" />
+          </Key>
+          <Property Name="post_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="wine_code" Type="Int32" Nullable="false" />
+          <Property Name="user_code" Type="Int32" Nullable="false" />
+          <Property Name="texts" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="post_date" Type="DateTime" Nullable="false" />
+          <Property Name="post_ip" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Replies" Relationship="WineDataModel.FK_PostReply" FromRole="Posts" ToRole="Replies" />
+          <NavigationProperty Name="User" Relationship="WineDataModel.FK_UserPost" FromRole="Posts" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Region">
+          <Key>
+            <PropertyRef Name="region_id" />
+          </Key>
+          <Property Name="region_id" Type="Int32" Nullable="false" />
+          <Property Name="country_code" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="true" />
+          <NavigationProperty Name="Country" Relationship="WineDataModel.FK_CountryRegion" FromRole="Regions" ToRole="Countries" />
+          <NavigationProperty Name="Wines" Relationship="WineDataModel.FK_WineRegion" FromRole="Regions" ToRole="Wines" />
+        </EntityType>
+        <EntityType Name="Reply">
+          <Key>
+            <PropertyRef Name="reply_id" />
+          </Key>
+          <Property Name="reply_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="post_code" Type="Int32" Nullable="false" />
+          <Property Name="texts" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="user_code" Type="Int32" Nullable="false" />
+          <Property Name="post_date" Type="DateTime" Nullable="false" />
+          <Property Name="post_ip" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="true" />
+          <NavigationProperty Name="Post" Relationship="WineDataModel.FK_PostReply" FromRole="Replies" ToRole="Posts" />
+          <NavigationProperty Name="User" Relationship="WineDataModel.FK_UserReply" FromRole="Replies" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="sim_mat">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="agePercent" Type="Decimal" Nullable="false" Precision="4" Scale="1" />
+          <Property Name="wine_sim" Type="String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="false" />
+          <Property Name="simPercent" Type="Decimal" Nullable="false" Precision="4" Scale="1" />
+        </EntityType>
+        <EntityType Name="Taste">
+          <Key>
+            <PropertyRef Name="taste_id" />
+          </Key>
+          <Property Name="taste_id" Type="Int32" Nullable="false" />
+          <Property Name="color_code" Type="Int32" Nullable="false" />
+          <Property Name="taste_description" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="true" />
+          <NavigationProperty Name="Wines" Relationship="WineDataModel.FK_WineTaste" FromRole="Tastes" ToRole="Wines" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nickname" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="reg_date" Type="DateTime" Nullable="false" />
+          <Property Name="reg_ip" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Posts" Relationship="WineDataModel.FK_UserPost" FromRole="Users" ToRole="Posts" />
+          <NavigationProperty Name="Replies" Relationship="WineDataModel.FK_UserReply" FromRole="Users" ToRole="Replies" />
+        </EntityType>
+        <EntityType Name="Wine">
+          <Key>
+            <PropertyRef Name="wine_id" />
+          </Key>
+          <Property Name="wine_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="mood_code" Type="Int32" Nullable="false" />
+          <Property Name="taste_code" Type="Int32" Nullable="false" />
+          <Property Name="color_code" Type="Int32" Nullable="false" />
+          <Property Name="years_code" Type="Int32" Nullable="false" />
+          <Property Name="country_code" Type="Int32" Nullable="false" />
+          <Property Name="region_code" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="true" />
+          <Property Name="description" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="pic_url" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="true" />
+          <Property Name="price" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="true" />
+          <NavigationProperty Name="Color" Relationship="WineDataModel.FK_WineColor" FromRole="Wines" ToRole="Colors" />
+          <NavigationProperty Name="Country" Relationship="WineDataModel.FK_WineCountry" FromRole="Wines" ToRole="Countries" />
+          <NavigationProperty Name="Region" Relationship="WineDataModel.FK_WineRegion" FromRole="Wines" ToRole="Regions" />
+          <NavigationProperty Name="Taste" Relationship="WineDataModel.FK_WineTaste" FromRole="Wines" ToRole="Tastes" />
+          <NavigationProperty Name="WMMWs" Relationship="WineDataModel.FK_WineWMMW" FromRole="Wines" ToRole="WMMWs" />
+          <NavigationProperty Name="Year" Relationship="WineDataModel.FK_WineYear" FromRole="Wines" ToRole="Years" />
+        </EntityType>
+        <EntityType Name="WMMW">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="WineId" Type="Int32" Nullable="false" />
+          <Property Name="MoodId" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Mood" Relationship="WineDataModel.FK_MoodWMMW" FromRole="WMMWs" ToRole="Moods" />
+          <NavigationProperty Name="Wine" Relationship="WineDataModel.FK_WineWMMW" FromRole="WMMWs" ToRole="Wines" />
+        </EntityType>
+        <EntityType Name="Year">
+          <Key>
+            <PropertyRef Name="year_id" />
+          </Key>
+          <Property Name="year_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Wines" Relationship="WineDataModel.FK_WineYear" FromRole="Years" ToRole="Wines" />
+        </EntityType>
+        <Association Name="FK_WineColor">
+          <End Role="Colors" Type="WineDataModel.Color" Multiplicity="1" />
+          <End Role="Wines" Type="WineDataModel.Wine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Colors">
+              <PropertyRef Name="color_id" />
+            </Principal>
+            <Dependent Role="Wines">
+              <PropertyRef Name="color_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CountryRegion">
+          <End Role="Countries" Type="WineDataModel.Country" Multiplicity="1" />
+          <End Role="Regions" Type="WineDataModel.Region" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Countries">
+              <PropertyRef Name="country_id" />
+            </Principal>
+            <Dependent Role="Regions">
+              <PropertyRef Name="country_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WineCountry">
+          <End Role="Countries" Type="WineDataModel.Country" Multiplicity="1" />
+          <End Role="Wines" Type="WineDataModel.Wine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Countries">
+              <PropertyRef Name="country_id" />
+            </Principal>
+            <Dependent Role="Wines">
+              <PropertyRef Name="country_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MoodWMMW">
+          <End Role="Moods" Type="WineDataModel.Mood" Multiplicity="1" />
+          <End Role="WMMWs" Type="WineDataModel.WMMW" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Moods">
+              <PropertyRef Name="mood_id" />
+            </Principal>
+            <Dependent Role="WMMWs">
+              <PropertyRef Name="MoodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PostReply">
+          <End Role="Posts" Type="WineDataModel.Post" Multiplicity="1" />
+          <End Role="Replies" Type="WineDataModel.Reply" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Posts">
+              <PropertyRef Name="post_id" />
+            </Principal>
+            <Dependent Role="Replies">
+              <PropertyRef Name="post_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserPost">
+          <End Role="Users" Type="WineDataModel.User" Multiplicity="1" />
+          <End Role="Posts" Type="WineDataModel.Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="Posts">
+              <PropertyRef Name="user_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WineRegion">
+          <End Role="Regions" Type="WineDataModel.Region" Multiplicity="1" />
+          <End Role="Wines" Type="WineDataModel.Wine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Regions">
+              <PropertyRef Name="region_id" />
+            </Principal>
+            <Dependent Role="Wines">
+              <PropertyRef Name="region_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserReply">
+          <End Role="Users" Type="WineDataModel.User" Multiplicity="1" />
+          <End Role="Replies" Type="WineDataModel.Reply" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="Replies">
+              <PropertyRef Name="user_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WineTaste">
+          <End Role="Tastes" Type="WineDataModel.Taste" Multiplicity="1" />
+          <End Role="Wines" Type="WineDataModel.Wine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tastes">
+              <PropertyRef Name="taste_id" />
+            </Principal>
+            <Dependent Role="Wines">
+              <PropertyRef Name="taste_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WineWMMW">
+          <End Role="Wines" Type="WineDataModel.Wine" Multiplicity="1" />
+          <End Role="WMMWs" Type="WineDataModel.WMMW" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Wines">
+              <PropertyRef Name="wine_id" />
+            </Principal>
+            <Dependent Role="WMMWs">
+              <PropertyRef Name="WineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WineYear">
+          <End Role="Years" Type="WineDataModel.Year" Multiplicity="1" />
+          <End Role="Wines" Type="WineDataModel.Wine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Years">
+              <PropertyRef Name="year_id" />
+            </Principal>
+            <Dependent Role="Wines">
+              <PropertyRef Name="years_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="WineDataModelStoreContainer" CdmEntityContainer="WineDataEntities">
+          <EntitySetMapping Name="Colors">
+            <EntityTypeMapping TypeName="WineDataModel.Color">
+              <MappingFragment StoreEntitySet="Colors">
+                <ScalarProperty Name="color_id" ColumnName="color_id" />
+                <ScalarProperty Name="color_description" ColumnName="color_description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Countries">
+            <EntityTypeMapping TypeName="WineDataModel.Country">
+              <MappingFragment StoreEntitySet="Countries">
+                <ScalarProperty Name="country_id" ColumnName="country_id" />
+                <ScalarProperty Name="country_name" ColumnName="country_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FriendStatuses">
+            <EntityTypeMapping TypeName="WineDataModel.FriendStatus">
+              <MappingFragment StoreEntitySet="FriendStatuses">
+                <ScalarProperty Name="FriendStatusId" ColumnName="FriendStatusId" />
+                <ScalarProperty Name="FromUserId" ColumnName="FromUserId" />
+                <ScalarProperty Name="ToUserId" ColumnName="ToUserId" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="SentTime" ColumnName="SentTime" />
+                <ScalarProperty Name="ResponseTime" ColumnName="ResponseTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Moods">
+            <EntityTypeMapping TypeName="WineDataModel.Mood">
+              <MappingFragment StoreEntitySet="Moods">
+                <ScalarProperty Name="mood_id" ColumnName="mood_id" />
+                <ScalarProperty Name="mood_description" ColumnName="mood_description" />
+                <ScalarProperty Name="wine_code" ColumnName="wine_code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Posts">
+            <EntityTypeMapping TypeName="WineDataModel.Post">
+              <MappingFragment StoreEntitySet="Posts">
+                <ScalarProperty Name="post_id" ColumnName="post_id" />
+                <ScalarProperty Name="wine_code" ColumnName="wine_code" />
+                <ScalarProperty Name="user_code" ColumnName="user_code" />
+                <ScalarProperty Name="texts" ColumnName="texts" />
+                <ScalarProperty Name="post_date" ColumnName="post_date" />
+                <ScalarProperty Name="post_ip" ColumnName="post_ip" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Regions">
+            <EntityTypeMapping TypeName="WineDataModel.Region">
+              <MappingFragment StoreEntitySet="Regions">
+                <ScalarProperty Name="region_id" ColumnName="region_id" />
+                <ScalarProperty Name="country_code" ColumnName="country_code" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Replies">
+            <EntityTypeMapping TypeName="WineDataModel.Reply">
+              <MappingFragment StoreEntitySet="Replies">
+                <ScalarProperty Name="reply_id" ColumnName="reply_id" />
+                <ScalarProperty Name="post_code" ColumnName="post_code" />
+                <ScalarProperty Name="texts" ColumnName="texts" />
+                <ScalarProperty Name="user_code" ColumnName="user_code" />
+                <ScalarProperty Name="post_date" ColumnName="post_date" />
+                <ScalarProperty Name="post_ip" ColumnName="post_ip" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sim_mat">
+            <EntityTypeMapping TypeName="WineDataModel.sim_mat">
+              <MappingFragment StoreEntitySet="sim_mat">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="agePercent" ColumnName="agePercent" />
+                <ScalarProperty Name="wine_sim" ColumnName="wine_sim" />
+                <ScalarProperty Name="simPercent" ColumnName="simPercent" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tastes">
+            <EntityTypeMapping TypeName="WineDataModel.Taste">
+              <MappingFragment StoreEntitySet="Tastes">
+                <ScalarProperty Name="taste_id" ColumnName="taste_id" />
+                <ScalarProperty Name="color_code" ColumnName="color_code" />
+                <ScalarProperty Name="taste_description" ColumnName="taste_description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="WineDataModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="nickname" ColumnName="nickname" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="reg_date" ColumnName="reg_date" />
+                <ScalarProperty Name="reg_ip" ColumnName="reg_ip" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Wines">
+            <EntityTypeMapping TypeName="WineDataModel.Wine">
+              <MappingFragment StoreEntitySet="Wines">
+                <ScalarProperty Name="wine_id" ColumnName="wine_id" />
+                <ScalarProperty Name="mood_code" ColumnName="mood_code" />
+                <ScalarProperty Name="taste_code" ColumnName="taste_code" />
+                <ScalarProperty Name="color_code" ColumnName="color_code" />
+                <ScalarProperty Name="years_code" ColumnName="years_code" />
+                <ScalarProperty Name="country_code" ColumnName="country_code" />
+                <ScalarProperty Name="region_code" ColumnName="region_code" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="pic_url" ColumnName="pic_url" />
+                <ScalarProperty Name="price" ColumnName="price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WMMWs">
+            <EntityTypeMapping TypeName="WineDataModel.WMMW">
+              <MappingFragment StoreEntitySet="WMMWs">
+                <ScalarProperty Name="WineId" ColumnName="WineId" />
+                <ScalarProperty Name="MoodId" ColumnName="MoodId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Years">
+            <EntityTypeMapping TypeName="WineDataModel.Year">
+              <MappingFragment StoreEntitySet="Years">
+                <ScalarProperty Name="year_id" ColumnName="year_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="WineDataModel">
+        <EntityTypeShape EntityType="WineDataModel.Color" Width="1.5" PointX="3" PointY="5.5" Height="1.5879931640624996" IsExpanded="true" />
+        <EntityTypeShape EntityType="WineDataModel.Country" Width="1.5" PointX="0.75" PointY="2.25" Height="1.7790128580729157" IsExpanded="true" />
+        <EntityTypeShape EntityType="WineDataModel.FriendStatus" Width="1.5" PointX="9.75" PointY="0.75" Height="2.1610522460937496" IsExpanded="true" />
+        <EntityTypeShape EntityType="WineDataModel.Mood" Width="1.5" PointX="5.25" PointY="7.25" Height="1.7790128580729165" IsExpanded="true" />
+        <EntityTypeShape EntityType="WineDataModel.Post" Width="1.5" PointX="10" PointY="6" Height="2.5430916341145826" IsExpanded="true" />
+        <EntityTypeShape EntityType="WineDataModel.Region" Width="1.5" PointX="3" PointY="2.125" Height="1.9700325520833322" IsExpanded="true" />
+        <EntityTypeShape EntityType="WineDataModel.Reply" Width="1.5" PointX="12.25" PointY="6" Height="2.5430916341145817" IsExpanded="true" />
+        <EntityTypeShape EntityType="WineDataModel.sim_mat" Width="1.5" PointX="7.75" PointY="9.75" Height="1.7790128580729174" IsExpanded="true" />
+        <EntityTypeShape EntityType="WineDataModel.Taste" Width="1.5" PointX="3" PointY="7.875" Height="1.7790128580729174" IsExpanded="true" />
+        <EntityTypeShape EntityType="WineDataModel.User" Width="1.5" PointX="7.75" PointY="6" Height="2.5430916341145853" IsExpanded="true" />
+        <EntityTypeShape EntityType="WineDataModel.Wine" Width="1.5" PointX="5.25" PointY="1" Height="4.2622688802083317" IsExpanded="true" />
+        <EntityTypeShape EntityType="WineDataModel.WMMW" Width="1.5" PointX="7.5" PointY="2.125" Height="1.9700325520833317" IsExpanded="true" />
+        <EntityTypeShape EntityType="WineDataModel.Year" Width="1.5" PointX="3" PointY="10.375" Height="1.3969734700520888" IsExpanded="true" />
+        <AssociationConnector Association="WineDataModel.FK_WineColor" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="6.29399658203125" />
+          <ConnectorPoint PointX="4.791666666666667" PointY="6.2939965820312489" />
+          <ConnectorPoint PointX="4.958333333333333" PointY="6.29399658203125" />
+          <ConnectorPoint PointX="4.979166666666667" PointY="6.2939965820312489" />
+          <ConnectorPoint PointX="5.145833333333333" PointY="6.29399658203125" />
+          <ConnectorPoint PointX="6" PointY="6.29399658203125" />
+          <ConnectorPoint PointX="6" PointY="5.2622688802083317" />
+        </AssociationConnector>
+        <AssociationConnector Association="WineDataModel.FK_CountryRegion" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="3.1395064290364578" />
+          <ConnectorPoint PointX="3" PointY="3.1395064290364578" />
+        </AssociationConnector>
+        <AssociationConnector Association="WineDataModel.FK_WineCountry" ManuallyRouted="false">
+          <ConnectorPoint PointX="1.5" PointY="4.0290128580729156" />
+          <ConnectorPoint PointX="1.5" PointY="4.7099007161458317" />
+          <ConnectorPoint PointX="4.791666666666667" PointY="4.7099007161458308" />
+          <ConnectorPoint PointX="4.958333333333333" PointY="4.7099007161458317" />
+          <ConnectorPoint PointX="4.979166666666667" PointY="4.7099007161458308" />
+          <ConnectorPoint PointX="5.145833333333333" PointY="4.7099007161458317" />
+          <ConnectorPoint PointX="5.25" PointY="4.7099007161458317" />
+        </AssociationConnector>
+        <AssociationConnector Association="WineDataModel.FK_MoodWMMW" ManuallyRouted="false">
+          <ConnectorPoint PointX="6.75" PointY="8.8173022460937514" />
+          <ConnectorPoint PointX="7.59375" PointY="8.8173022460937514" />
+          <ConnectorPoint PointX="7.59375" PointY="4.0950325520833317" />
+        </AssociationConnector>
+        <AssociationConnector Association="WineDataModel.FK_PostReply" ManuallyRouted="false">
+          <ConnectorPoint PointX="11.5" PointY="7.2715458170572909" />
+          <ConnectorPoint PointX="12.25" PointY="7.2715458170572909" />
+        </AssociationConnector>
+        <AssociationConnector Association="WineDataModel.FK_UserPost" ManuallyRouted="false">
+          <ConnectorPoint PointX="9.25" PointY="7.2715458170572909" />
+          <ConnectorPoint PointX="10" PointY="7.2715458170572909" />
+        </AssociationConnector>
+        <AssociationConnector Association="WineDataModel.FK_WineRegion" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="3.1100162760416659" />
+          <ConnectorPoint PointX="4.791666666666667" PointY="3.1100162760416654" />
+          <ConnectorPoint PointX="4.958333333333333" PointY="3.1100162760416659" />
+          <ConnectorPoint PointX="5.25" PointY="3.1100162760416659" />
+        </AssociationConnector>
+        <AssociationConnector Association="WineDataModel.FK_UserReply" ManuallyRouted="false">
+          <ConnectorPoint PointX="9.25" PointY="8.5430916341145853" />
+          <ConnectorPoint PointX="9.6249999999999964" PointY="8.9180916341145817" />
+          <ConnectorPoint PointX="11.875" PointY="8.9180916341145817" />
+          <ConnectorPoint PointX="12.25" PointY="8.5430916341145817" />
+        </AssociationConnector>
+        <AssociationConnector Association="WineDataModel.FK_WineTaste" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="7.875" />
+          <ConnectorPoint PointX="4.875" PointY="7.5" />
+          <ConnectorPoint PointX="4.875" PointY="2.0237561380208389" />
+          <ConnectorPoint PointX="5.25" PointY="2.0237561380208389" />
+        </AssociationConnector>
+        <AssociationConnector Association="WineDataModel.FK_WineWMMW" ManuallyRouted="false">
+          <ConnectorPoint PointX="6.75" PointY="3.1100162760416659" />
+          <ConnectorPoint PointX="7.5" PointY="3.1100162760416659" />
+        </AssociationConnector>
+        <AssociationConnector Association="WineDataModel.FK_WineYear" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="10.437325508663863" />
+          <ConnectorPoint PointX="5.0625" PointY="9.8748255086638626" />
+          <ConnectorPoint PointX="5.0625" PointY="3.9099584960937488" />
+          <ConnectorPoint PointX="5.25" PointY="3.9099584960937488" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

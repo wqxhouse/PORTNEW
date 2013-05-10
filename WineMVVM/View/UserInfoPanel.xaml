@@ -4,10 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ignore="http://www.ignore.com"
-		xmlns:conv="clr-namespace:WineMVVM.Converter"
+		xmlns:conv="clr-namespace:WineMVVM.Background.Converter"
 		xmlns:GalaSoft_MvvmLight_Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WPF4"
 		xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
-        xmlns:Custom="http://www.galasoft.ch/mvvmlight" x:Class="WineMVVM.View.UserInfoPanel"
+        xmlns:Custom="http://www.galasoft.ch/mvvmlight" x:Class="WineMVVM.Background.View.UserInfoPanel"
         mc:Ignorable="d ignore" d:DesignWidth="550">
 	
 	<UserControl.Resources>
@@ -67,7 +67,7 @@
     		IsSynchronizedWithCurrentItem="True"
     		ItemsSource="{Binding Users}"
             MouseDoubleClick="UserList_MouseDoubleClick"
-            SelectedItem="{Binding SelectedUser, UpdateSourceTrigger=PropertyChanged}" Margin="12,12,0,0">
+            SelectedItem="{Binding SelectedUser, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="12,12,0,0">
     		<ListView.View>
     			<GridView>
     				<GridViewColumn Width="40" Header="Id"

@@ -1,7 +1,7 @@
 ﻿using GalaSoft.MvvmLight;
-using WineMVVM.Service;
 
-namespace WineMVVM.ViewModel
+
+namespace WineMVVM.Background.ViewModel
 {
     /// <summary>
     /// This class contains properties that the main View can data bind to.

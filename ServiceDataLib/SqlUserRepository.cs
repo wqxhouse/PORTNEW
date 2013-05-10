@@ -3,18 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.ServiceModel;
+using System.Data.SqlClient;
+using System.Data.EntityClient;
+using System.Data;
+
 
 namespace ServiceDataLib
 {
     public class SqlUserRepository : WineDataDomain.IUserRepository
     {
-        private readonly UsersEntities _usersContext;
+        private readonly WineDataEntities _usersContext;
 
         public SqlUserRepository()
         {
             try
             {
-                _usersContext = new UsersEntities();
+
+                string conn = Conn.BuildConnectionString();
+                _usersContext = new WineDataEntities(conn);
             }
             catch
             {
@@ -22,6 +28,8 @@ namespace ServiceDataLib
                 _usersContext = null;
             }
         }
+
+       
 
         public void GetAllUserData(Action<IEnumerable<WineDataDomain.User>, Exception> callback)
         {
@@ -39,7 +47,7 @@ namespace ServiceDataLib
                 if (userList == null)
                 {
                     throw new FaultException(string.Format
-                                ("Empty "));
+                                ("Query ptr failed"));
                 }
 
                 var domainUserList =
@@ -49,6 +57,11 @@ namespace ServiceDataLib
                 callback(domainUserList, null);
 
             }
+            catch (EntityException e)
+            {
+                callback(null, e.InnerException);
+            }
+
             catch (Exception e)
             {
                 callback(null, e);
@@ -74,7 +87,7 @@ namespace ServiceDataLib
 
                 if (friendList == null)
                 {
-                    throw new FaultException(string.Format("Empty"));
+                    throw new FaultException(string.Format("Query ptr failed"));
                 }
 
                 var domainFriendList = 
@@ -83,6 +96,10 @@ namespace ServiceDataLib
 
                 callback(domainFriendList, null);
 
+            }
+            catch (EntityException e)
+            {
+                callback(null, e.InnerException);
             }
             catch (Exception e)
             {
@@ -117,6 +134,10 @@ namespace ServiceDataLib
             {
                 _usersContext.SaveChanges();
                 callback("Update Successfully!", null);
+            }
+            catch (EntityException e)
+            {
+                callback(null, e.InnerException);
             }
             catch(Exception e)
             {

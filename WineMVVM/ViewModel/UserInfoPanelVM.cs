@@ -8,7 +8,7 @@ using GalaSoft.MvvmLight.Messaging;
 using System.Linq;
 using Microsoft.Practices.ServiceLocation;
 
-namespace WineMVVM.ViewModel
+namespace WineMVVM.Background.ViewModel
 {
     /// <summary>
     /// This class contains properties that a View can data bind to.
@@ -19,8 +19,8 @@ namespace WineMVVM.ViewModel
     public sealed class UserInfoPanelVM : ViewModelBase
     {
 
-        private ObservableCollection<Database.User> _users;
-        private readonly Service.IUserDataService _dataService;
+        private ObservableCollection<WineDataDomain.User> _users;
+        private readonly WineDataDomain.IUserRepository _dataService;
         
        // private readonly Service.IModalDialogService _dialogService;
 
@@ -39,8 +39,8 @@ namespace WineMVVM.ViewModel
         //                                  selectedItem =>
         //                                  {
         //                                      Navigation.IModalWindowView userDetailView = ServiceLocator.Current.GetInstance<Navigation.IModalWindowView>();
-        //                                      var userSelected = (Database.User)selectedItem;
-        //                                      //Messenger.Default.Send<Database.User>(user, "dataToDetailService");
+        //                                      var userSelected = (WineDataDomain.User)selectedItem;
+        //                                      //Messenger.Default.Send<WineDataDomain.User>(user, "dataToDetailService");
         //                                      //Messenger.Default.Send<NotificationMessage>(new NotificationMessage("ShowDetailWindow"));           
         //                                      this._dialogService.ShowDialog<UserInfoDetailsVM>
         //                                          (userDetailView, new UserInfoDetailsVM(userSelected),
@@ -71,13 +71,13 @@ namespace WineMVVM.ViewModel
         /// </summary>
         public const string SelectedUserPropertyName = "SelectedUser";
 
-        private Database.User _selectedUser;
+        private WineDataDomain.User _selectedUser;
 
         /// <summary>
         /// Sets and gets the SelectedUser property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
-        public Database.User SelectedUser
+        public WineDataDomain.User SelectedUser
         {
             get
             {
@@ -106,7 +106,7 @@ namespace WineMVVM.ViewModel
         /// Sets and gets the Users property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
-        public ObservableCollection<Database.User> Users
+        public ObservableCollection<WineDataDomain.User> Users
         {
             get
             {
@@ -130,24 +130,24 @@ namespace WineMVVM.ViewModel
         /// <summary>
         /// Initializes a new instance of the UserInfoPanelVM class.
         /// </summary>
-        public UserInfoPanelVM(Service.IUserDataService user_dataservice)
+        public UserInfoPanelVM(WineDataDomain.IUserRepository user_dataservice)
         {
             
             if (IsInDesignMode)
             {
                 #region Populate Data
-                Users = new ObservableCollection<Database.User>();
+                Users = new ObservableCollection<WineDataDomain.User>();
 
                 for (var index = 0; index < 15; index++)
                 {
-                    var newUser = new Database.User
+                    var newUser = new WineDataDomain.User
                     {
-                        user_id = index,
-                        nickname = "SampleName",
-                        password = "SamplePassWD",
-                        email = "Sample@Email",
-                        reg_date = new DateTime(),
-                        reg_ip = "127.0.0.1"
+                        ID = index,
+                        UserName = "SampleName",
+                        PassWord = "SamplePassWD",
+                        Email = "Sample@Email",
+                        RegDate = new DateTime(),
+                       
                     };
 
                     Users.Add(newUser);
@@ -158,7 +158,7 @@ namespace WineMVVM.ViewModel
             {
                 #region DataService
                 _dataService = user_dataservice;
-                _dataService.GetData((users, error) =>
+                _dataService.GetAllUserData((users, error) =>
                 {
                     if (error != null)
                     {
@@ -166,7 +166,7 @@ namespace WineMVVM.ViewModel
                     }
                     else
                     {
-                        Users = new ObservableCollection<Database.User>(users);
+                        Users = new ObservableCollection<WineDataDomain.User>(users);
                     }
                 });
 

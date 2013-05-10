@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
 
-namespace WineMVVM.ViewModel
+namespace WineMVVM.Background.ViewModel
 {
     /// <summary>
     /// This class contains properties that a View can data bind to.
@@ -57,12 +57,12 @@ namespace WineMVVM.ViewModel
         {
             //note that modifying _userInstance directly affects the database
             //due to shallow copy
-            _userInstance = user;
-            _id = user.ID;
-            _userName = user.UserName;
-            _password = user.PassWord;
-            _email = user.Email;
-            _regDate = user.RegDate;
+            _userInstance = user.DeepCopy();
+            _id = _userInstance.ID;
+            _userName = _userInstance.UserName;
+            _password = _userInstance.PassWord;
+            _email = _userInstance.Email;
+            _regDate = _userInstance.RegDate;
        
             
 

@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using GalaSoft.MvvmLight.Threading;
 
-namespace WineMVVM
+namespace WineMVVM.Background
 {
     /// <summary>
     /// Interaction logic for App.xaml

@@ -1,14 +1,25 @@
 ﻿using System;
-using WineMVVM.Service;
+
 using System.Collections.Generic;
 
-namespace WineMVVM.Design
+namespace WineMVVM.Background.Design
 {
-    public class DesignDataService : IUserDataService
+    public class DesignDataService : WineDataDomain.IUserRepository
     {
-        public void GetData(Action<IEnumerable<Database.User>, Exception> callback)
+
+        public void GetAllUserData(Action<IEnumerable<WineDataDomain.User>, Exception> callback)
         {
-            
+            throw new NotImplementedException();
+        }
+
+        public void GetFriendData(Action<IEnumerable<WineDataDomain.FriendList>, Exception> callback)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateUser(IEnumerable<WineDataDomain.User> user, Action<string, Exception> callback)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -3,7 +3,7 @@ using GalaSoft.MvvmLight.Messaging;
 using System.Windows.Input;
 using Microsoft.Practices.ServiceLocation;
 
-namespace WineMVVM.View
+namespace WineMVVM.Background.View
 {
     /// <summary>
     /// Description for UserInfoPanel.
@@ -52,7 +52,10 @@ namespace WineMVVM.View
                     // Confirm changes
                     //this operation both save changes 
                     //also it returns the modified in order to update the view of UserInfoPanel
-                    panel.SelectedUser = detailVM.SaveChanges();
+                   
+                    panel.SelectedUser = new WineDataDomain.User { UserName = "1", Email = "1", ID = 1, RegDate = new System.DateTime(), PassWord = "1" };
+                        //detailVM.SaveChanges();
+                    
                 }
 
             };

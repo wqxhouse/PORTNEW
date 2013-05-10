@@ -11,7 +11,7 @@ using System.Windows.Shapes;
 using System.Windows.Data;
 
 
-namespace WineMVVM.Converter
+namespace WineMVVM.Background.Converter
 {
     [ValueConversion(typeof(string), typeof(DateTime))]
     public class DateTimeConverter : IValueConverter

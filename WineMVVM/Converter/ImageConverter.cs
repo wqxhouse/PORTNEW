@@ -12,7 +12,7 @@ using System.Windows.Data;
 using System.Windows.Media.Imaging;
 using System.IO;
 
-namespace WineMVVM.Converter
+namespace WineMVVM.Background.Converter
 {
     public class ImageConverter : IValueConverter
     {

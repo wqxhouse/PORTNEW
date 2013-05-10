@@ -14,9 +14,17 @@ namespace WineDataDomain
         public string Email { get; set; }
         public DateTime RegDate { get; set; }
 
-        public User GetFriendList()
+        public User DeepCopy()
         {
-            return null; 
+            return new User
+            {
+                ID = this.ID,
+                UserName = this.UserName,
+                PassWord = this.PassWord,
+                Email = this.Email,
+                //struct can be deepcopied
+                RegDate = this.RegDate
+            };
         }
 
         

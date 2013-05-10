@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WineMVVM", "WineMVVM\WineMVVM.csproj", "{098059F9-1AD7-4F51-B667-D3EF90A51263}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WineMVVM.Background", "WineMVVM\WineMVVM.Background.csproj", "{098059F9-1AD7-4F51-B667-D3EF90A51263}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceDataLib", "ServiceDataLib\ServiceDataLib.csproj", "{DF9A4370-74D1-45D5-B959-BAF9D0875849}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WineDomainLogic", "WineDomainLogic", "{3B6E95F0-6731-4C7C-B6FE-2EA7E623C9B3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WineDataDomain", "WineDataDomain\WineDataDomain.csproj", "{A4895ACE-46CA-4493-84EB-D635CC6D73BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PORTAPP", "PORTAPP\PORTAPP.csproj", "{4B7A1111-DDA4-4367-A575-01BD8D02C2D4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,12 +35,17 @@ Global
 		{A4895ACE-46CA-4493-84EB-D635CC6D73BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4895ACE-46CA-4493-84EB-D635CC6D73BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A4895ACE-46CA-4493-84EB-D635CC6D73BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B7A1111-DDA4-4367-A575-01BD8D02C2D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B7A1111-DDA4-4367-A575-01BD8D02C2D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B7A1111-DDA4-4367-A575-01BD8D02C2D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B7A1111-DDA4-4367-A575-01BD8D02C2D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{098059F9-1AD7-4F51-B667-D3EF90A51263} = {485CF78D-BF06-4DFC-9D81-1ED56C99E748}
+		{4B7A1111-DDA4-4367-A575-01BD8D02C2D4} = {485CF78D-BF06-4DFC-9D81-1ED56C99E748}
 		{DF9A4370-74D1-45D5-B959-BAF9D0875849} = {43E4EC34-23A2-4A6C-8989-0EAA4996B3FB}
 		{A4895ACE-46CA-4493-84EB-D635CC6D73BF} = {3B6E95F0-6731-4C7C-B6FE-2EA7E623C9B3}
 	EndGlobalSection
