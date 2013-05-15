@@ -1,12 +1,12 @@
 ﻿using System;
-
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
-namespace WineMVVM.Background.Design
+namespace PORTAPP.Design
 {
-    public class DesignDataService : WineDataDomain.IUserRepository
+    public class DesignUserRepository : WineDataDomain.IUserRepository
     {
-
         public void GetAllUserData(Action<IEnumerable<WineDataDomain.User>, Exception> callback)
         {
             throw new NotImplementedException();
@@ -21,7 +21,6 @@ namespace WineMVVM.Background.Design
         {
             throw new NotImplementedException();
         }
-
 
         public void IsExistedUser(string username, Action<bool, Exception> callback)
         {

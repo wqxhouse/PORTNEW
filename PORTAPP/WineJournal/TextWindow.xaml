@@ -1,0 +1,15 @@
+﻿<docking:DocumentWindow x:Class="PORTAPP.WineJournal.TextWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="JournalEditorTextWindow"
+        xmlns:docking="http://schemas.actiprosoftware.com/winfx/xaml/docking"
+        xmlns:syntaxEditor="http://schemas.actiprosoftware.com/winfx/xaml/syntaxeditor"
+        xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes"
+        >
+    <Grid>
+        <syntaxEditor:SyntaxEditor x:Name="editor" 
+                                     BorderThickness="0" 
+                                     IsLineNumberMarginVisible="False" 
+                                     CanSplitHorizontally="False" />
+    </Grid>
+</docking:DocumentWindow>

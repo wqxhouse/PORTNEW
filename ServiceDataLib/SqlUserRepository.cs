@@ -7,6 +7,8 @@ using System.Data.SqlClient;
 using System.Data.EntityClient;
 using System.Data;
 
+//TODO: Password needs encreption and salt 
+
 
 namespace ServiceDataLib
 {
@@ -142,6 +144,56 @@ namespace ServiceDataLib
             catch(Exception e)
             {
                 callback(null, e);
+            }
+        }
+
+
+        public void IsExistedUser(string username, Action<bool, Exception> callback)
+        {
+            var user = from u in _usersContext.Users
+                       where u.nickname == username
+                       select u;
+
+
+            if (user.Count() == 0)
+            {
+                callback(false, null);
+            }
+            else if (user.Count() == 1)
+            {
+                callback(true, null);
+            }
+            else
+            {
+                callback(false, new FaultException(string.Format("BUG:Database has multiple user with the same name, need to fix")));
+            }
+        }
+
+        public void IsExistedUser(string username, string password, Action<bool, Exception> callback)
+        {
+            if (username == String.Empty || password == null)
+            {
+                callback(false, new FaultException(string.Format("BUG: Empty string for query. Need to fix validation")));
+            }
+
+            var user = from u in _usersContext.Users
+                       where u.nickname == username
+                       select u;
+
+            if (user.Count() == 0)
+            {
+                callback(false, new FaultException(string.Format("BUG: No matching records!")));
+            }
+            else if (user.Count() == 1)
+            {
+                if(user.ToList()[0].password == password)
+                {
+                    callback(true, null);
+                }
+            }
+            else
+            {
+                callback(false, new FaultException(string.Format("BUG:Database has multiple user with the same name, need to fix")));
             }
         }
     }
