@@ -42,19 +42,26 @@ namespace PORTAPP.ViewModel
                 SimpleIoc.Default.Register<UserSystem.IUserState, UserSystem.UserState>();
             }
 
+            #region pre-initialized ViewModels
             SimpleIoc.Default.Register<LogWindowVM>(true);
-            
+
             SimpleIoc.Default.Register<WineJournal.WineJournalVM>(true);
             SimpleIoc.Default.Register<WineCellar.WineCellarVM>(true);
             SimpleIoc.Default.Register<WineCellar.WineRackVM>(true);
             SimpleIoc.Default.Register<CommentBoard.CommentBoardVM>(true);
+            SimpleIoc.Default.Register<WineJournal.JournalEditorVM>(true);
+            #endregion
+
+            #region lazy-loaded VMs
+            
+            #endregion
 
 
-            //This needs to place at the last position, 
+            //Cautious: This needs to place at the last position, 
             //since this is not lazy loading and 
             //the ctor of MainViewModel needs the instances of VMs
             //above
-            SimpleIoc.Default.Register<MainViewModel>(true);
+            //SimpleIoc.Default.Register<MainViewModel>(true);
         
         }
 
@@ -148,6 +155,20 @@ namespace PORTAPP.ViewModel
             get
             {
                 return ServiceLocator.Current.GetInstance<LogWindowVM>();
+            }
+        }
+
+        /// <summary>
+        /// Gets the JournalEditor property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public WineJournal.JournalEditorVM JournalEditor
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<WineJournal.JournalEditorVM>();
             }
         }
 

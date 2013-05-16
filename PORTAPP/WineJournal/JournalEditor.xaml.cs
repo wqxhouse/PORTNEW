@@ -7,6 +7,7 @@ using System.IO;
 using System.Windows.Media.Imaging;
 using Microsoft.Win32;
 using ActiproSoftware.Windows.Controls.Docking;
+using GalaSoft.MvvmLight.Messaging;
 
 namespace PORTAPP.WineJournal
 {
@@ -19,8 +20,10 @@ namespace PORTAPP.WineJournal
     public partial class JournalEditor
     {
 
-        private int					documentIndex			= 1;
+        private int	documentIndex = 1;
 		private TextWindow	primaryDocumentWindow;
+
+        private JournalEditorVM editorVM;
 
 		/////////////////////////////////////////////////////////////////////////////////////////////////////
 		// OBJECT
@@ -31,10 +34,14 @@ namespace PORTAPP.WineJournal
 		/// </summary>
 		public JournalEditor() {
 			InitializeComponent();
-			
+
+            editorVM = (JournalEditorVM)DataContext;
+
 			// Create an initial document
-			this.CreateTextDocumentWindow(null).Text = "This demo shows how an enhanced Notepad-like application can be \r\ncreated with stunning visual themes and additional functionality.";
-		}
+            this.CreateTextDocumentWindow(null).Text = editorVM.Text;
+
+        
+        }
 
 		/////////////////////////////////////////////////////////////////////////////////////////////////////
 		// NON-PUBLIC PROCEDURES

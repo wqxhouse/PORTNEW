@@ -12,6 +12,7 @@
         xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
         xmlns:transition="clr-namespace:PORTAPP.Skins"
         xmlns:transitionEffects="clr-namespace:TransitionEffects;assembly=TransitionEffects"
+        xmlns:visualWrapper="clr-namespace:VisualTargetDemo;assembly=UIThreading"
         DataContext="{Binding Main, Source={StaticResource Locator}}"
         xmlns:view="clr-namespace:PORTAPP" Height="600" Width="800">
 
@@ -32,9 +33,9 @@
     </Window.Resources>-->
 
 
-    <telerik:RadBusyIndicator BusyContent="{Binding BusyContent}" IsBusy="{Binding IsBusy}" >
-        <DockPanel>
-            <Border DockPanel.Dock="Top" BorderBrush="Black" BorderThickness="0,0,1,0">
+    <Grid>
+        <DockPanel d:IsLocked="True">
+            <Border DockPanel.Dock="Top" BorderBrush="Black" BorderThickness="0,0,1,0" d:IsLocked="True">
                 <ItemsControl ItemsSource="{Binding PageViewModels}" Height="70">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -56,21 +57,24 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </Border>
+            <Grid d:IsLocked="True"></Grid>
 
-
-            <!--<ContentControl Content="{Binding CurrentPageViewModel}" />-->
-            <shared:TransitionPresenter x:Name="presenter">
-                <shared:TransitionPresenter.Transition>
-                    <transition:EffectTransition>
-                        <transition:EffectTransition.Effect>
-                            <transitionEffects:BloodTransitionEffect />
-                        </transition:EffectTransition.Effect>
-                    </transition:EffectTransition>
-                </shared:TransitionPresenter.Transition>
-            </shared:TransitionPresenter>
+            <Grid d:IsLocked="True">
+                <!--<ContentControl Content="{Binding CurrentPageViewModel}" />-->
+                <shared:TransitionPresenter x:Name="presenter" d:IsLocked="True">
+                    <shared:TransitionPresenter.Transition>
+                        <transition:EffectTransition>
+                            <transition:EffectTransition.Effect>
+                                <transitionEffects:BloodTransitionEffect />
+                            </transition:EffectTransition.Effect>
+                        </transition:EffectTransition>
+                    </shared:TransitionPresenter.Transition>
+                </shared:TransitionPresenter>
+                
+            </Grid>
         </DockPanel>
-    </telerik:RadBusyIndicator>
-
+        <visualWrapper:VisualWrapper x:Name="busyIndicator" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+    </Grid>
 
 
 </Window>

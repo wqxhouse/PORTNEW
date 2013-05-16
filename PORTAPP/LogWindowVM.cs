@@ -17,10 +17,11 @@ namespace PORTAPP
     {
 
         private WineDataDomain.IUserRepository _repo;
+        private UserSystem.IUserState _userState;
         /// <summary>
         /// Initializes a new instance of the LogWindowVM class.
         /// </summary>
-        public LogWindowVM(WineDataDomain.IUserRepository repo)
+        public LogWindowVM(UserSystem.IUserState userState, WineDataDomain.IUserRepository repo)
         {
             if (IsInDesignMode)
             {
@@ -33,6 +34,7 @@ namespace PORTAPP
             }
             else
             {
+                _userState = userState;
                 _repo = repo;
                 
             }
@@ -103,7 +105,7 @@ namespace PORTAPP
             }
         }
 
-#endregion
+        #endregion
 
         #region Cmd
         private RelayCommand _loginCmd;
@@ -128,6 +130,12 @@ namespace PORTAPP
                     if (isExisted)
                     {
                         MessageBox.Show("DEBUG: Logged In.");
+
+
+                        //Change UserState! 
+                        _userState.getUserState().IsLoggedIn = true;
+                        _userState.getUserState().LoggedInUserName = _username;
+
                         Messenger.Default.Send<NotificationMessage>(
                             new NotificationMessage("Logged In"), "ToLogWindow_LogInfo");
                     }

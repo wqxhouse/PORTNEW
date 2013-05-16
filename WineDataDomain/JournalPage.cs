@@ -9,6 +9,8 @@ namespace WineDataDomain
 {
     public class JournalPage
     {
+        public int JournalID { get; set; }
+
         /// <summary>
 		/// Gets or sets the header.
 		/// </summary>

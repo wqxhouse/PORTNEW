@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System;
 using System.Threading;
 using System.Windows.Input;
+using System.Windows.Media;
+using VisualTargetDemo;
 
 namespace PORTAPP
 {
@@ -14,7 +16,9 @@ namespace PORTAPP
     {
 
         private ViewModel.MainViewModel mainVM;
-        BackgroundWorker worker;
+        private BusyIndicator.BusyClass busyVM;
+
+        private static AutoResetEvent s_event = new AutoResetEvent(false);
 
         /// <summary>
         /// Initializes a new instance of the MainWindow class.
@@ -22,108 +26,149 @@ namespace PORTAPP
         public MainWindow()
         {
             InitializeComponent();
-            worker = new BackgroundWorker();
+
             mainVM = (ViewModel.MainViewModel)DataContext;
 
+            busyVM = new BusyIndicator.BusyClass();
+            busyIndicator.Child = InitIndicatorThread();
+
             Messenger.Default.Register<PropertyChangedMessage<IPageViewModel>>(this, InitViews);
-                
+
+
+            #region Process JournalEditing
+            Messenger.Default.Register<WineDataDomain.JournalPage>(this, "To_MainWindow_WinePresenter",
+                (journalPage) =>
+                {
+
+                    //redirect the page number to JournalEditor
+                    Messenger.Default.Send<WineDataDomain.JournalPage>(journalPage, "ToJournalEditorVM_journalPage");
+
+                    //attach presenter
+                    presenter.Content = new WineJournal.JournalEditor();
+                });
+
+
+            #endregion
+
+
 
         }
 
-        private void InitViews(PropertyChangedMessage<IPageViewModel> msg){
+        //multithread for UI
+        private HostVisual InitIndicatorThread()
+        {
+            HostVisual hostVisual = new HostVisual();
+
+            Thread thread = new Thread(new ParameterizedThreadStart(IndicatorThread));
+            thread.ApartmentState = ApartmentState.STA;
+            thread.IsBackground = true;
+            thread.Start(hostVisual);
+
+            s_event.WaitOne();
+
+            return hostVisual;
+        }
+
+        private void IndicatorThread(object arg)
+        {
+
+            HostVisual hostVisual = (HostVisual)arg;
+            VisualTargetPresentationSource visualTargetPS = new VisualTargetPresentationSource(hostVisual);
+            s_event.Set();
+
+            visualTargetPS.RootVisual = CreateIndicatorElement();
+            System.Windows.Threading.Dispatcher.Run();
+        }
+
+        private FrameworkElement CreateIndicatorElement()
+        {
+            BusyIndicator.BusyView bv = new BusyIndicator.BusyView(busyVM);
+            bv.BeginInit();
+            bv.EndInit();
+            return bv;
+        }
+
+
+        private void InitViews(PropertyChangedMessage<IPageViewModel> msg)
+        {
             var vm = msg.NewValue;
 
             if (vm is WineCellar.WineCellarVM)
             {
-                worker.DoWork += (s, e) => 
-                {   
-                    mainVM.IsBusy = true;
-                    mainVM.BusyContent = "Loading WineCellar";
-                    var view = new WineCellar.WineCellar(); 
-                    presenter.Content = mainVM.CurrentPageViewModel;
-                        
-                };
-                worker.RunWorkerCompleted += (s, e) => { mainVM.IsBusy = false; };
 
-                worker.RunWorkerAsync();
-            }
-            else if (vm is WineCellar.WineRackVM)
-            {
-                worker.DoWork += (s, e) =>
-                {
-                    mainVM.IsBusy = true;
-                    mainVM.BusyContent = "Loading WineCellar";
-                    presenter.Content = new WineCellar.WineRack();
-                };
-                worker.RunWorkerCompleted += (s, e) => { mainVM.IsBusy = false; };
+                busyVM.IsBusy = true;
+                busyVM.BusyContent = "Loading WineCellar";
 
-                worker.RunWorkerAsync();
-            }
-            else if (vm is WineJournal.WineJournalVM)
-            {
-                //var view = new WineJournal.WineJournal();
-                //worker.DoWork += (s, e) =>
-                //{
-                //    try
-                //    {
-                        
-                //        mainVM.IsBusy = true;
-                //        mainVM.BusyContent = "Loading WineJournal";
-                //        var view = new WineJournal.WineJournal();
-                //        //presenter.Content = mainVM.CurrentPageViewModel;
-                //        System.Windows.Threading.Dispatcher.Run();
-                //        presenter.Dispatcher.BeginInvoke((Action<WineJournal.WineJournal>)((ss) => { presenter.Content = ss; }), new WineJournal.WineJournal());
-                //        // MessageBox.Show("hh");
-                //    }
-                //    catch (Exception ex)
-                //    {
-                //    }
-                //};
-                //worker.RunWorkerCompleted += (s, e) => { mainVM.IsBusy = false; };
-
-                //worker.RunWorkerAsync();
-                //Thread thread = new Thread(() =>
-                //    {
-                //        new WineJournal.WineJournal();
-                //        presenter.Dispatcher.BeginInvoke((Action<WineJournal.WineJournal>)((ss) => { presenter.Content = ss; }), new WineJournal.WineJournal());
-                //        System.Windows.Threading.Dispatcher.Run();
-                //    });
-                //thread.SetApartmentState(ApartmentState.STA);
-                //thread.Start();
                 Mouse.OverrideCursor = Cursors.Wait;
                 try
                 {
-                     presenter.Content = new WineJournal.WineJournal();
+                    presenter.Content = new WineCellar.WineCellar();
                 }
                 finally
                 {
                     Mouse.OverrideCursor = null;
                 }
-               
+                busyVM.IsBusy = false;
+            }
+            else if (vm is WineCellar.WineRackVM)
+            {
 
-               
-                //mainVM.IsBusy = false;
+                busyVM.IsBusy = true;
+                busyVM.BusyContent = "Loading WineCellar";
+
+                Mouse.OverrideCursor = Cursors.Wait;
+                try
+                {
+                    presenter.Content = new WineCellar.WineRack();
+                }
+                finally
+                {
+                    Mouse.OverrideCursor = null;
+                }
+
+                busyVM.IsBusy = false;
+
+            }
+            else if (vm is WineJournal.WineJournalVM)
+            {
 
 
+                busyVM.IsBusy = true;
+                busyVM.BusyContent = "Loading WineJournal";
 
-                //presenter.Content = new WineJournal.WineJournal(); 
+                Mouse.OverrideCursor = Cursors.Wait;
+                try
+                {
+                    presenter.Content = new WineJournal.WineJournal();
+                }
+                finally
+                {
+                    Mouse.OverrideCursor = null;
+                }
 
+                busyVM.IsBusy = false;
 
             }
             else if (vm is CommentBoard.CommentBoardVM)
             {
-                worker.DoWork += (s, e) =>
-                {
-                    mainVM.IsBusy = true;
-                    mainVM.BusyContent = "Loading CommentBoard";
-                    presenter.Content = new CommentBoard.CommentBoard();
-                };
-                worker.RunWorkerCompleted += (s, e) => { mainVM.IsBusy = false; };
+                busyVM.IsBusy = true;
+                busyVM.BusyContent = "Loading CommentBoard";
 
-                worker.RunWorkerAsync();
+                Mouse.OverrideCursor = Cursors.Wait;
+                try
+                {
+                    presenter.Content = new CommentBoard.CommentBoard();
+                }
+                finally
+                {
+                    Mouse.OverrideCursor = null;
+                }
+
+                busyVM.IsBusy = false;
+
             }
 
-            
+
         }
 
 

@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ignore="http://www.ignore.com"
         xmlns:JournalSystem="clr-namespace:PORTAPP.WineJournal" 
-        xmlns:views="http://schemas.actiprosoftware.com/winfx/xaml/views" xmlns:System_ComponentModel="clr-namespace:System.ComponentModel;assembly=PresentationFramework" x:Class="PORTAPP.WineJournal.WineJournal"
+        xmlns:views="http://schemas.actiprosoftware.com/winfx/xaml/views" 
+        xmlns:System_ComponentModel="clr-namespace:System.ComponentModel;assembly=PresentationFramework" 
+        x:Class="PORTAPP.WineJournal.WineJournal"
         mc:Ignorable="d ignore"
         Height="400" Width="700"
         >
@@ -205,7 +207,8 @@
                                         </Grid.RowDefinitions>
                                         <ContentPresenter Grid.Row="0" HorizontalAlignment="Left" Margin="30,0,0,0" Content="{Binding}" ContentTemplate="{TemplateBinding HeaderTemplate}" />
                                         <ContentPresenter Grid.Row="1" Content="{Binding}" ContentTemplate="{TemplateBinding ContentTemplate}" />
-                                        <ContentPresenter Grid.Row="2" Content="{TemplateBinding Footer}" ContentTemplate="{TemplateBinding FooterTemplate}" />
+                                        <!--<ContentPresenter Grid.Row="2" Content="{TemplateBinding Footer}" ContentTemplate="{TemplateBinding FooterTemplate}" />-->
+                                        <Button Grid.Row="2" Content="Hello World" Click="Button_Click"/>
                                     </Grid>
                                     <Border Grid.RowSpan="3" Margin="2">
                                         <Viewbox>
@@ -246,7 +249,7 @@
         <Grid>
             <Border Background="{StaticResource CoverBackground}" BorderBrush="{StaticResource CoverBorderBrush}" BorderThickness="1" CornerRadius="5"
 						Padding="8">
-                <views:Book HotspotExtent="100" IsFirstPageFront="False" Width="600" Height="400" PageDepth="8" 
+                <views:Book Name="book" HotspotExtent="100" IsFirstPageFront="False" Width="600" Height="400" PageDepth="8" MouseDoubleClick="book_MouseDoubleClick"
 					ItemsSource="{Binding Pages}" ItemContainerStyleSelector="{StaticResource BookPageStyleSelector}"  />
             </Border>
         </Grid>

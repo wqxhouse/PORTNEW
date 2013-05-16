@@ -22,6 +22,8 @@ namespace PORTAPP.Design
                 Header = "Travel in Italy",
                 ImageSource = new BitmapImage(new Uri("/PORTNEW;component/PORTAPP/Design/images/001.jpg", UriKind.Relative)) { CreateOptions = BitmapCreateOptions.None },
                 Text = "Need to get away? Want to see the world?\n\n    Italy is the perfect place for your next family vacation. Experience beautiful sights, taste delightful Italian cuisine, and see what Europe has to offer you!"
+           ,
+                PageNumber = 0 
             });
 
 
@@ -32,6 +34,8 @@ namespace PORTAPP.Design
                 Header = "Sightseeing",
                 ImageSource = new BitmapImage(new Uri("/PORTNEW;component/PORTAPP/Design/images/002.jpg", UriKind.Relative)) { CreateOptions = BitmapCreateOptions.None },
                 Text = "A few must-see places include:\n\n - Venice\n - Bologna\n - Florence\n - Rome\n - Naples\n - Palermo\n - Pisa\n - Siena"
+            ,
+                PageNumber = 1
             });
 
 
@@ -42,6 +46,8 @@ namespace PORTAPP.Design
                 Header = "Cuisine",
                 ImageSource = new BitmapImage(new Uri("/PORTNEW;component/PORTAPP/Design/images/003.jpg", UriKind.Relative)) { CreateOptions = BitmapCreateOptions.None },
                 Text = "Italy is famous for its pasta, pizza, and gelato.\n\n    While you have probably had these foods before, there is nothing like fresh Italian pasta, pizza, or gelato. Get your taste buds ready because they are in for a treat."
+            ,
+                PageNumber = 2
             });
 
 
@@ -52,10 +58,47 @@ namespace PORTAPP.Design
                 Header = "Getting Around",
                 ImageSource = new BitmapImage(new Uri("/PORTNEW;component/PORTAPP/Design/images/004.jpg", UriKind.Relative)) { CreateOptions = BitmapCreateOptions.None },
                 Text = "    While it is possible to get around Italy without a car, it can sometimes be difficult. Especially if you are traveling with your family, a car can sometimes be mandatory. If you are feeling adventurous, however, the Eurail system and the Italian buses are capable."
+            ,
+                PageNumber = 3
             });
 
 
             callback(pageCollection, null);
+        }
+
+        public void GetUserJournalCollection(string username, Action<IEnumerable<WineDataDomain.Journal>, Exception> callback)
+        {
+            var collection =
+                new DeferrableObservableCollection<WineDataDomain.Journal>
+                {
+                    new WineDataDomain.Journal
+                    {
+                        JournalID = 0,
+                        Text = "Hello World",
+                        Title = "Test Page", 
+                        Date = DateTime.Now
+                    },
+
+                    new WineDataDomain.Journal
+                    {
+                        JournalID = 1,
+                        Text = "I am Wqxhouse",
+                        Title = "Zonglin Wu",
+                        Date = DateTime.Now
+                    },
+
+                    new WineDataDomain.Journal
+                    {
+                        JournalID = 2,
+                        Text = "Author is #2 Test",
+                        Title = "Test 2 Data",
+                        Date = DateTime.Now
+                    }
+
+                };
+
+            callback(collection, null);
+
         }
     }
 }

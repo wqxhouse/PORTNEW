@@ -30,6 +30,12 @@ namespace PORTAPP.ViewModel
         {
            
             _userState = userState;
+
+            #region Receive userState update message
+            
+
+            #endregion
+
             var logInfo = _userState.getUserState().IsLoggedIn;
 
             IsLoggedIn = logInfo;
@@ -73,68 +79,6 @@ namespace PORTAPP.ViewModel
                 return _changePageCommand;
             }
         }
-
-        /// <summary>
-        /// The <see cref="IsBusy" /> property's name.
-        /// </summary>
-        public const string IsBusyPropertyName = "IsBusy";
-
-        private bool _isBusy = false;
-
-        /// <summary>
-        /// Sets and gets the IsBusy property.
-        /// Changes to that property's value raise the PropertyChanged event. 
-        /// </summary>
-        public bool IsBusy
-        {
-            get
-            {
-                return _isBusy;
-            }
-
-            set
-            {
-                if (_isBusy == value)
-                {
-                    return;
-                }
-                
-                _isBusy = value;
-                RaisePropertyChanged(IsBusyPropertyName);
-            }
-        }
-
-        /// <summary>
-        /// The <see cref="BusyContent" /> property's name.
-        /// </summary>
-        public const string BusyContentPropertyName = "BusyContent";
-
-        private string _busyContent = "";
-
-        /// <summary>
-        /// Sets and gets the BusyContent property.
-        /// Changes to that property's value raise the PropertyChanged event. 
-        /// </summary>
-        public string BusyContent
-        {
-            get
-            {
-                return _busyContent;
-            }
-
-            set
-            {
-                if (_busyContent == value)
-                {
-                    return;
-                }
-
-                _busyContent = value;
-                RaisePropertyChanged(BusyContentPropertyName);
-            }
-        }
-
-
 
         public List<IPageViewModel> PageViewModels
         {

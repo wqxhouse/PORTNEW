@@ -26,9 +26,8 @@ namespace PORTAPP
                 m =>
                 {
                     if (m.Notification == "Logged In")
-                    {
-                        ExecuteAppLoggedIn();
-                        
+                    {       
+                        ExecuteAppLoggedIn();                       
                     }
                 });
         }

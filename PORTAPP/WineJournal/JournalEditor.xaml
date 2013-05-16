@@ -7,7 +7,8 @@
         xmlns:shared="http://schemas.actiprosoftware.com/winfx/xaml/shared" 
         mc:Ignorable="d ignore" d:DesignHeight="400" d:DesignWidth="700"
         xmlns:docking="http://schemas.actiprosoftware.com/winfx/xaml/docking" 
-	    xmlns:editor="http://schemas.actiprosoftware.com/winfx/xaml/syntaxeditor" >
+	    xmlns:editor="http://schemas.actiprosoftware.com/winfx/xaml/syntaxeditor" 
+        DataContext="{Binding JournalEditor,  Source={StaticResource Locator}}">
 
     
 
