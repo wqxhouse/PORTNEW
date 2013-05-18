@@ -13,7 +13,7 @@ namespace PORTAPP.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class MainViewModel : ViewModelBase
+    public sealed class MainViewModel : ViewModelBase
     {
         #region Fields
 

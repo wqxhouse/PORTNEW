@@ -61,7 +61,7 @@ namespace PORTAPP.ViewModel
             //since this is not lazy loading and 
             //the ctor of MainViewModel needs the instances of VMs
             //above
-            //SimpleIoc.Default.Register<MainViewModel>(true);
+            SimpleIoc.Default.Register<MainViewModel>(true);
         
         }
 

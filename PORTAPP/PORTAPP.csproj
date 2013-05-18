@@ -60,7 +60,6 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Printing" />
-    <Reference Include="System.Security" />
     <Reference Include="System.Windows.Interactivity">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files\Laurent Bugnion (GalaSoft)\Mvvm Light Toolkit\Binaries\WPF4\System.Windows.Interactivity.dll</HintPath>
@@ -127,6 +126,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModel\ViewModelLocatorHelper.cs" />
+    <Compile Include="Window1.xaml.cs">
+      <DependentUpon>Window1.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WineCellar\WineCellar.xaml.cs">
       <DependentUpon>WineCellar.xaml</DependentUpon>
     </Compile>
@@ -172,6 +174,10 @@
     <Page Include="Skins\MainSkin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Window1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WineCellar\WineCellar.xaml">
       <SubType>Form</SubType>

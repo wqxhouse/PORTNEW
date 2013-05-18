@@ -1,5 +1,7 @@
-﻿using System.Windows;
-using GalaSoft.MvvmLight.Threading;
+﻿using GalaSoft.MvvmLight.Threading;
+using System.Threading;
+using System.Windows;
+using System.Windows.Threading;
 
 namespace PORTAPP
 {
@@ -11,6 +13,24 @@ namespace PORTAPP
         static App()
         {
             DispatcherHelper.Initialize();
+        }
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Loaded,
+                (DispatcherOperationCallback)delegate { CloseSplashScreen(); return null; },
+                this);
+            base.OnStartup(e);
+        }
+
+        private void CloseSplashScreen()
+        {
+            // signal the native process (that launched us) to close the splash screen
+            using (var closeSplashEvent = new EventWaitHandle(false,
+                EventResetMode.ManualReset, "CloseSplashScreenEventSplashScreenStarter"))
+            {
+                closeSplashEvent.Set();
+            }
         }
     }
 }
