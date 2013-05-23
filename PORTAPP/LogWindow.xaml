@@ -27,8 +27,8 @@
         <Label Content="Password" Grid.Row="3" Height="28" HorizontalAlignment="Left" Margin="12,7,0,0" Name="label2" VerticalAlignment="Top" Grid.RowSpan="2" />
         <TextBox Name="UsernameBox" Grid.Row="2" Height="23" HorizontalAlignment="Left" Margin="4,5,0,0"  VerticalAlignment="Top" Width="120" Grid.Column="1" Text="{Binding UserName, Mode=TwoWay}" />
         <TextBox Name="PasswordBox"  Grid.Row="4" Height="23" HorizontalAlignment="Left" Margin="4,4,0,0"  VerticalAlignment="Top" Width="120" Grid.Column="1" Text="{Binding Password}"  />
-        <Button Content="Lator" Grid.Row="7" Height="23" HorizontalAlignment="Left" Margin="12,2.055,0,0" Name="button1" VerticalAlignment="Top" Width="60" />
-        <Button Content="Register" Grid.Column="1" Grid.Row="7" Height="23" HorizontalAlignment="Left" Margin="43,2.055,0,0" Name="Lator_butn" VerticalAlignment="Top" Width="65" />
+        <Button Content="Lator" Grid.Row="7" Height="23" HorizontalAlignment="Left" Margin="12,2.055,0,0" Name="Lator_butn" VerticalAlignment="Top" Width="60" />
+        <Button Content="Register" Grid.Column="1" Grid.Row="7" Height="23" HorizontalAlignment="Left" Margin="43,2.055,0,0" Name="Register_butn" VerticalAlignment="Top" Width="65" Click="Register_butn_Click"/>
         <Button Content="Login" Grid.Column="2" Grid.Row="7" Height="23" HorizontalAlignment="Left" Name="Login_butn" VerticalAlignment="Top" Width="70" Command="{Binding LoginCmd, Mode=OneWay}" Margin="-6.521,2.055,0,0"  />
         <Label Content="PORT LOGIN" Height="40" HorizontalAlignment="Left" Margin="0,8,0,0" Name="label3" VerticalAlignment="Top" FontSize="20" Grid.ColumnSpan="2" Grid.Column="1" />
     </Grid>

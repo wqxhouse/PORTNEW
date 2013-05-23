@@ -7,6 +7,8 @@ using System.Security;
 
 namespace PORTAPP
 {
+
+    
     /// <summary>
     /// This class contains properties that a View can data bind to.
     /// <para>

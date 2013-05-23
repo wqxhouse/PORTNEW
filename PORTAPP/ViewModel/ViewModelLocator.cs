@@ -43,17 +43,21 @@ namespace PORTAPP.ViewModel
             }
 
             #region pre-initialized ViewModels
-            SimpleIoc.Default.Register<LogWindowVM>(true);
+            
 
-            SimpleIoc.Default.Register<WineJournal.WineJournalVM>(true);
-            SimpleIoc.Default.Register<WineCellar.WineCellarVM>(true);
-            SimpleIoc.Default.Register<WineCellar.WineRackVM>(true);
-            SimpleIoc.Default.Register<CommentBoard.CommentBoardVM>(true);
+            SimpleIoc.Default.Register<WineJournal.WineJournalVM>();
+            SimpleIoc.Default.Register<WineCellar.WineCellarVM>();
+            SimpleIoc.Default.Register<WineCellar.WineRackVM>();
+            SimpleIoc.Default.Register<CommentBoard.CommentBoardVM>();
             SimpleIoc.Default.Register<WineJournal.JournalEditorVM>(true);
+
+            SimpleIoc.Default.Register<UserSystem.UserPanelVM>();
             #endregion
 
             #region lazy-loaded VMs
-            
+            SimpleIoc.Default.Register<LogWindowVM>();
+
+            SimpleIoc.Default.Register<UserSystem.RegisterWindowVM>();
             #endregion
 
 
@@ -169,6 +173,38 @@ namespace PORTAPP.ViewModel
             get
             {
                 return ServiceLocator.Current.GetInstance<WineJournal.JournalEditorVM>();
+            }
+        }
+
+
+
+        /// <summary>
+        /// Gets the LogWindow property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public LogWindowVM LogWindow
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<LogWindowVM>();
+            }
+        }
+
+
+
+        /// <summary>
+        /// Gets the UserPanel property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public UserSystem.UserPanelVM UserPanel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<UserSystem.UserPanelVM>();
             }
         }
 

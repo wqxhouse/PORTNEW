@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using GalaSoft.MvvmLight.Messaging;
 using System.Windows;
+using System.Collections.ObjectModel;
 
 namespace PORTAPP.WineJournal
 {
@@ -11,7 +12,16 @@ namespace PORTAPP.WineJournal
     {
         private readonly WineDataDomain.IJournalPageRepository _repo;
         private readonly UserSystem.IUserState _userState;
-        private WineDataDomain.Journal journalToEdit;
+        private WineDataDomain.Journal _journalToEdit;
+
+        private ObservableCollection<WineDataDomain.Journal> _userJournalCollection;
+        public ObservableCollection<WineDataDomain.Journal> UserJournalCollection
+        {
+            get
+            {
+                return _userJournalCollection;
+            }
+        }
 
         public JournalEditorVM(UserSystem.IUserState userState, WineDataDomain.IJournalPageRepository repo)
         {
@@ -30,11 +40,48 @@ namespace PORTAPP.WineJournal
                             }
                             else
                             {
-                                journalToEdit = 
-                                    getJournalFromJournalCollection(journalPage, journalCollection);
+                                _userJournalCollection = new ObservableCollection<WineDataDomain.Journal>(journalCollection);
+                                _journalToEdit =
+                                    getJournalFromJournalCollection(journalPage, _userJournalCollection);
                             }
                         });
 
+                });
+
+            Messenger.Default.Register<string>(
+                this,
+                "FromTextWindow_ToJournalEditorVM_Text",
+                updateJournalDataBase);
+
+        }
+
+        
+
+        private void updateJournal(string journalText)
+        {
+            
+        }
+
+        private void updateJournalDataBase(string journalText)
+        {
+            _repo.UpdateUserJournal(_userState.getUserState().LoggedInUserName,
+                new ObservableCollection<WineDataDomain.Journal>{
+                    new WineDataDomain.Journal
+                    {
+                        Text = "Hacked!!!"
+                    },
+                    new WineDataDomain.Journal
+                    {
+                        Text = "Wqxhouse"
+                    }
+                },
+
+                (b, e) =>
+                {
+                    if (b != true || e != null)
+                    {
+                        MessageBox.Show("Errors: " + e.Message);
+                    }
                 });
 
         }
@@ -61,7 +108,7 @@ namespace PORTAPP.WineJournal
         {
             get
             {
-                return journalToEdit.Title;
+                return _journalToEdit.Title;
             }
         }
 
@@ -69,7 +116,7 @@ namespace PORTAPP.WineJournal
         {
             get
             {
-                return journalToEdit.Text;
+                return _journalToEdit.Text;
             }
         }
 
@@ -77,7 +124,7 @@ namespace PORTAPP.WineJournal
         {
             get
             {
-                return journalToEdit.Date;
+                return _journalToEdit.Date;
             }
         }
 

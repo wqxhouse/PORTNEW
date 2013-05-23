@@ -13,6 +13,7 @@ using System.Windows.Shapes;
 using ActiproSoftware.Windows.Controls.Docking;
 using ActiproSoftware.Text;
 using ActiproSoftware.Windows.Controls.SyntaxEditor;
+using GalaSoft.MvvmLight.Messaging;
 
 namespace PORTAPP.WineJournal
 {
@@ -83,7 +84,21 @@ namespace PORTAPP.WineJournal
         /// <param name="e">An <see cref="ExecutedRoutedEventArgs"/> that contains the event data.</param>
         private void OnSaveExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            MessageBox.Show("Save file here.");
+            //MessageBox.Show("Save file here.");
+            //this.Text = "Hello\rPPP\r\nA\nB";
+            //MessageBox.Show("" + Text.Length);
+            //MessageBox.Show("Length: " + this.Text.Length);
+            //string s = "";
+            //for (int i = 0; i < Text.Length; i++)
+            //{
+            //    s += " " + (int)Text[i];
+            //}
+            //MessageBox.Show(s);
+            Messenger.Default.Send<string>(this.Text, "FromTextWindow_ToJournalEditorVM_Text");
+
+
+
+            
         }
 
         /// <summary>

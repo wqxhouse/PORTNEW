@@ -196,5 +196,36 @@ namespace ServiceDataLib
                 callback(false, new FaultException(string.Format("BUG:Database has multiple user with the same name, need to fix")));
             }
         }
+    
+
+        public void CreateNewUser(WineDataDomain.User user, Action<bool,Exception> callback)
+        {
+            if (user == null)
+            {
+                callback(false, new FaultException(string.Format("NullUserNotAllowed")));
+            }
+            
+            //verify if user is existed
+            bool isExisted = false;
+            IsExistedUser(user.UserName, (b, e) => {isExisted = b;});
+            if(isExisted)
+            {
+                callback(false, new FaultException(string.Format("Newly Registered User already existed")));
+            }
+
+            User.CreateUser
+                (
+                    0, 
+                    user.UserName, 
+                    user.PassWord, 
+                    user.Email, 
+                    user.RegDate, 
+                    "192.168.0.1" //This is just for the first release
+                );
+            //TODO: Implement more according to Domain
+            callback(true, null);
+        }
+
+        
     }
 }

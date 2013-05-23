@@ -18,7 +18,6 @@ namespace PORTAPP.WineJournal
         private UserSystem.IUserState _userState;
 
 
-
         /// <summary>
         /// Initializes a new instance of the WineJournalVM class.
         /// </summary>
@@ -43,6 +42,7 @@ namespace PORTAPP.WineJournal
 
                 var currentUser = _userState.getUserState().LoggedInUserName;
 
+                /*
                 _repo.GetUserPages(currentUser,
                     (pages, e) =>
                     {
@@ -58,14 +58,133 @@ namespace PORTAPP.WineJournal
                         }
 
                     });
-                
+                */
+                repo.GetUserPages(240,
+                               240,
+                               22,
+                               11,
+                               currentUser,
+                        (pages, e) =>
+                        {
+                            if (e != null)
+                            {
+                                MessageBox.Show(e.Message);
+                            }
+
+                            Pages = new DeferrableObservableCollection<WineDataDomain.JournalPage>();
+                            foreach (WineDataDomain.JournalPage p in pages)
+                            {
+                                Pages.Add(p);
+                            }
+                        });
+
+
+                #region buggy SendPage Property from view
+                //Pages = new DeferrableObservableCollection<WineDataDomain.JournalPage>();
+                //Pages.Add(new WineDataDomain.JournalPage { Text = "Hacked" });
+
+                //Messenger.Default.Register<string>
+                //    (this,
+                //    "FromWineJournal_ToWIneJournalVM_settingsReady",
+                //    (u) =>
+                //    {
+
+                //        //MessageBox.Show("Reachd");
+                //        //MessageBox.Show(_pageSettings.PageWidth.ToString());
+                //        //InitPageFromDatabase(currentUser);
+
+                //        _repo.GetUserPages(_pageSettings.PageWidth,
+                //               _pageSettings.PageHeight,
+                //               _pageSettings.TextHeight,
+                //               _pageSettings.TextHeight,
+                //               currentUser,
+                //(pages, e) =>
+                //{
+                //    if (e != null)
+                //    {
+                //        MessageBox.Show(e.Message);
+                //    }
+
+                //    Pages = new DeferrableObservableCollection<WineDataDomain.JournalPage>();
+                //    foreach (WineDataDomain.JournalPage p in pages)
+                //    {
+                //        Pages.Add(p);
+                //    }
+
+                //});
+
+                //    });
+                #endregion
+
+
+
             }
            
+        }
+
+        private void InitPageFromDatabase(string currentUser)
+        {
+
+            //MessageBox.Show("Hello");
+            
+            //need to separate the logic of text processing and query
+            
+            _repo.GetUserPages(_pageSettings.PageWidth,
+                               _pageSettings.PageHeight,
+                               _pageSettings.TextHeight,
+                               _pageSettings.TextHeight,
+                               currentUser,
+                (pages, e) =>
+                {
+                    if (e != null)
+                    {
+                        MessageBox.Show(e.Message);
+                    }
+
+                    Pages = new DeferrableObservableCollection<WineDataDomain.JournalPage>();
+                    foreach (WineDataDomain.JournalPage p in pages)
+                    {
+                        Pages.Add(p);
+                    }
+
+                });
         }
 
 
 
         #region properities
+
+        /// <summary>
+        /// The <see cref="PageSettings" /> property's name.
+        /// </summary>
+        public const string PageSettingsPropertyName = "PageSettings";
+
+        private PageProperty _pageSettings;
+
+        /// <summary>
+        /// Sets and gets the PageSettings property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public PageProperty PageSettings
+        {
+            get
+            {
+                return _pageSettings;
+            }
+
+            set
+            {
+                if (_pageSettings == value)
+                {
+                    return;
+                }
+
+
+                _pageSettings = value;
+                RaisePropertyChanged(PageSettingsPropertyName);
+            }
+        }
+
 
         /// <summary>
         /// The <see cref="IsBusy" /> property's name.

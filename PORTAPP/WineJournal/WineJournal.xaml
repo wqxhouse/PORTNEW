@@ -24,7 +24,7 @@
         </Style>
 
 
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 
         <LinearGradientBrush x:Key="CoverBackground" StartPoint="0,0" EndPoint="1,0">
             <GradientStop Color="#815324" Offset="0.0" />
@@ -46,14 +46,14 @@
             <GradientStop Color="#00000000" Offset="1.0" />
         </LinearGradientBrush>
 
-        <Style x:Key="BookPageStyleBase" TargetType="{x:Type views:BookPage}">
+        <!--<Style x:Key="BookPageStyleBase" TargetType="{x:Type views:BookPage}">
             <Setter Property="BorderBrush" Value="Gray" />
             <Setter Property="BorderThickness" Value="2" />
 
             <Setter Property="ContentTemplate">
                 <Setter.Value>
                     <DataTemplate>
-                        <TextBlock HorizontalAlignment="Stretch" Margin="15" Text="{Binding Text}" FontSize="16" FontFamily="Georgia" TextAlignment="Justify" TextWrapping="Wrap" />
+                        <TextBlock x:Name="ContentTextBlock" HorizontalAlignment="Stretch" Margin="15" Text="{Binding Text}" FontSize="16" FontFamily="Georgia" TextAlignment="Justify" TextWrapping="Wrap" />
 
                     </DataTemplate>
                 </Setter.Value>
@@ -68,8 +68,7 @@
             <Setter Property="FooterTemplate">
                 <Setter.Value>
                     <DataTemplate>
-                        <!--<TextBlock HorizontalAlignment="Center" Margin="0,10" Text="{Binding}" FontSize="12" FontWeight="Bold" FontFamily="Arial" />-->
-                        <!--<TextBlock HorizontalAlignment="Center" Margin="0,10" Text="{Binding}" FontSize="12" FontWeight="Bold" FontFamily="Arial" />-->
+
                         <Grid>
                             <Image Source="../Resources/Images/BookItems.png" Width="270" Height="30" Opacity="0.595"/>
                             <Border Width="30"
@@ -100,42 +99,31 @@
                 </Setter.Value>
             </Setter>
 
-            <Setter Property="Template">
+        </Style>-->
+
+        <Style x:Key="BookPageStyleBase" TargetType="views:BookPage">
+            <Setter Property="BorderBrush" Value="Gray" />
+            <Setter Property="BorderThickness" Value="2" />
+
+            <Setter Property="ContentTemplate">
                 <Setter.Value>
-
-                    <ControlTemplate TargetType="{x:Type views:BookPage}">
-                        <Grid>
-                            <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="{TemplateBinding CornerRadius}" Padding="{TemplateBinding Padding}">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="Auto"/>
-                                    </Grid.RowDefinitions>
-                                    <ContentPresenter ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}" Grid.Row="0"/>
-                                    <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Grid.Row="1"/>
-                                    <ContentPresenter ContentTemplate="{TemplateBinding FooterTemplate}" Content="{TemplateBinding Footer}" Grid.Row="2"/>
-                                </Grid>
-                            </Border>
-                            <Rectangle x:Name="PART_BindingShadow" IsHitTestVisible="False">
-                                <Rectangle.Visibility>
-                                    <Binding Path="IsBindingShadowVisible" RelativeSource="{RelativeSource TemplatedParent}">
-                                        <Binding.Converter>
-                                            <BooleanToVisibilityConverter/>
-                                        </Binding.Converter>
-                                    </Binding>
-                                </Rectangle.Visibility>
-                            </Rectangle>
-                            <Path x:Name="PART_FlippingShadow" IsHitTestVisible="False"/>
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="System_ComponentModel:DesignerProperties.IsInDesignMode" Value="True">
-                                <Setter Property="Visibility" TargetName="PART_BindingShadow" Value="Collapsed"/>
-                                <Setter Property="Visibility" TargetName="PART_FlippingShadow" Value="Collapsed"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-
+                    <DataTemplate>
+                        <TextBlock HorizontalAlignment="Stretch" Margin="15" Text="{Binding Text}" FontSize="16" FontFamily="Georgia" TextAlignment="Justify" TextWrapping="Wrap" />
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="HeaderTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <TextBlock HorizontalAlignment="Center" Margin="0,10" Text="{Binding Header}" FontSize="21" FontStyle="Italic" FontWeight="Bold" FontFamily="Times New Roman" />
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="FooterTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <TextBlock HorizontalAlignment="Center" Margin="0,10" Text="{Binding}" FontSize="12" FontWeight="Bold" FontFamily="Arial" />
+                    </DataTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
@@ -156,7 +144,7 @@
                                     </LinearGradientBrush>
                                 </Border.Background>
                                 <Grid>
-                                    <Grid Margin="40,45,10,10">
+                                    <Grid Margin="40,45,10,10" > <!--Loaded="Grid_LoadedBack">-->
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto" />
                                             <RowDefinition Height="*" />
@@ -199,7 +187,7 @@
                                     </LinearGradientBrush>
                                 </Border.Background>
                                 <Grid>
-                                    <Grid Margin="10,45,40,10">
+                                    <Grid Margin="10,45,40,10" >
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto" />
                                             <RowDefinition Height="*" />
@@ -231,7 +219,7 @@
             </Setter>
         </Style>
 
-        <views:BookPageStyleSelector x:Key="BookPageStyleSelector" BackFacingPageStyle="{StaticResource BackFacingPageStyle}"
+        <views:BookPageStyleSelector  x:Key="BookPageStyleSelector" BackFacingPageStyle="{StaticResource BackFacingPageStyle}"
 				FrontFacingPageStyle="{StaticResource FrontFacingPageStyle}" />
 
     </UserControl.Resources>

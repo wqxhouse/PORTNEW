@@ -1,0 +1,1193 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WineApi</name>
+    </assembly>
+    <members>
+        <member name="T:WineApi.Label">
+            <summary>
+            A label for a product.
+            </summary>
+        </member>
+        <member name="P:WineApi.Label.Id">
+            <summary>
+            A unique identifier for the label.
+            </summary>
+        </member>
+        <member name="P:WineApi.Label.Name">
+            <summary>
+            The name, or description, of the label.
+            </summary>
+        </member>
+        <member name="P:WineApi.Label.Url">
+            <summary>
+            The url to the label.
+            </summary>
+        </member>
+        <member name="T:WineApi.IUrlInvoker">
+            <summary>
+            This interface has been introduced specifically to enable better
+            unit testing. The ServiceBase class supports Property Injection
+            via the UrlInvoker proptery i.e. unit tests can pass in a mock object.
+            </summary>
+            <remarks>
+            Ideally, I wanted this interface to be "internal" but the Castle
+            dynamic proxy generator used by Rhino Mocks requires the type to be
+            public.
+            Castle.DynamicProxy.Generators.GeneratorException : Type is not public, so a proxy cannot be generated. Type: WineApi.IUrlInvoker
+            </remarks>
+        </member>
+        <member name="M:WineApi.IUrlInvoker.InvokeUrl(System.String)">
+            <summary>
+            Invoke the given Url and return the resultant JSON response string.
+            </summary>
+            <param name="url">The Url to be invoked.</param>
+            <returns>The JSON response text.</returns>
+        </member>
+        <member name="T:WineApi.CommunityReview">
+            <summary>
+            A community review of a product.
+            </summary>
+        </member>
+        <member name="P:WineApi.CommunityReview.Id">
+            <summary>
+            The unique (Endeca) id for the publication.
+            </summary>
+        </member>
+        <member name="P:WineApi.CommunityReview.Name">
+            <summary>
+            The name, or description, of the review or publication.
+            </summary>
+        </member>
+        <member name="P:WineApi.CommunityReview.Score">
+            <summary>
+            The score given to the product.
+            </summary>
+        </member>
+        <member name="P:WineApi.CommunityReview.Description">
+            <summary>
+            The full description of the review.
+            </summary>
+        </member>
+        <member name="P:WineApi.CommunityReview.Url">
+            <summary>
+            A url to other products that have been reviewed by the same
+            publication.
+            </summary>
+        </member>
+        <member name="T:WineApi.WineApiStatusException">
+            <summary>
+            This exception is thrown if an Execute call results in a status return code other than 0.
+            </summary>
+        </member>
+        <member name="T:WineApi.WineApiException">
+            <summary>
+            Base class for exceptions thrown by the WineApi class library.
+            </summary>
+        </member>
+        <member name="M:WineApi.WineApiException.#ctor">
+            <summary>
+            Default constructor.
+            </summary>
+        </member>
+        <member name="M:WineApi.WineApiException.#ctor(System.String)">
+            <summary>
+            Constructor taking a message.
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:WineApi.WineApiException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructor taking a message and an inner exception.
+            </summary>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="M:WineApi.WineApiException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Some other constructor.
+            </summary>
+            <param name="info"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:WineApi.WineApiStatusException.#ctor(WineApi.Status)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="status">The Status object.</param>
+        </member>
+        <member name="P:WineApi.WineApiStatusException.Status">
+            <summary>
+            The Status object.
+            </summary>
+        </member>
+        <member name="T:WineApi.Ratings">
+            <summary>
+            A collection of ratings.
+            </summary>
+        </member>
+        <member name="P:WineApi.Ratings.HighestScore">
+            <summary>
+            The highest score given to the product.
+            </summary>
+        </member>
+        <member name="P:WineApi.Ratings.List">
+            <summary>
+            A collection of ratings that have been given to the product.
+            Only available with "partner" access.
+            </summary>
+        </member>
+        <member name="T:WineApi.Rating">
+            <summary>
+            A product rating.
+            </summary>
+        </member>
+        <member name="P:WineApi.Rating.Id">
+            <summary>
+            The unique (Endeca) id for the publication.
+            </summary>
+        </member>
+        <member name="P:WineApi.Rating.Name">
+            <summary>
+            The name, or description, of the review or publication.
+            </summary>
+        </member>
+        <member name="P:WineApi.Rating.Score">
+            <summary>
+            The score given to the product.
+            </summary>
+        </member>
+        <member name="P:WineApi.Rating.Url">
+            <summary>
+            A url to other products that have been reviewed by the same
+            publication.
+            </summary>
+        </member>
+        <member name="T:WineApi.Category">
+            <summary>
+            A category.
+            </summary>
+        </member>
+        <member name="P:WineApi.Category.Id">
+            <summary>
+            The category identifier (Endeca Dimension Id).
+            </summary>
+        </member>
+        <member name="P:WineApi.Category.Name">
+            <summary>
+            Descriptive name for the category.
+            </summary>
+        </member>
+        <member name="P:WineApi.Category.Refinements">
+            <summary>
+            The category options.
+            </summary>
+        </member>
+        <member name="T:WineApi.CatalogService">
+            <summary>
+            Catalog queries give complete access to the Wine.com product catalog, including professional ratings, labels, styles of wines, and all other attributes associated with Wines.
+            </summary>
+        </member>
+        <member name="T:WineApi.ServiceBase">
+            <summary>
+            This is the base class for each of the service classes e.g. CatalogService.
+            </summary>
+        </member>
+        <member name="M:WineApi.ServiceBase.#ctor(System.String)">
+            <summary>
+            Constructor for use by derived classes.
+            </summary>
+            <param name="resource">The resource type component of the Url.</param>
+        </member>
+        <member name="M:WineApi.ServiceBase.AppendNameValueToQueryString(System.String,System.String)">
+            <summary>
+            Append a name/value pair to the query string component of the overall Url.
+            </summary>
+            <param name="name">The name of the name/value pair.</param>
+            <param name="value">The value of the name/value pair.</param>
+        </member>
+        <member name="M:WineApi.ServiceBase.Execute``1">
+            <summary>
+            Execute the query. Issue a http request. Read the response which should be a JSON string.
+            Use Json.NET to deserialise the JSON string into the required object graph.
+            </summary>
+            <typeparam name="T">The type of the object at the root of the object graph.</typeparam>
+            <returns>The deserialised object graph.</returns>
+        </member>
+        <member name="M:WineApi.ServiceBase.CheckStatus(WineApi.Status)">
+            <summary>
+            Check the ReturnCode property of a given Status object. If it is not 0 then throw
+            a WineApiStatusException.
+            </summary>
+            <param name="status">The Status object to be checked.</param>
+        </member>
+        <member name="P:WineApi.ServiceBase.UrlInvoker">
+            <summary>
+            Property Injection - allows unit tests to supply a mock object to
+            override the default (an instance of DefaultUrlInvoker).
+            </summary>
+        </member>
+        <member name="M:WineApi.CatalogService.#ctor">
+            <summary>
+            Default constructor.
+            </summary>
+        </member>
+        <member name="M:WineApi.CatalogService.Offset(System.Int32)">
+            <summary>
+            Adds the "offset" custom parameter to the query.
+            </summary>
+            <param name="offset">The record to start from.</param>
+            <returns>this</returns>
+        </member>
+        <member name="M:WineApi.CatalogService.Size(System.Int32)">
+            <summary>
+            Adds the "size" custom parameter to the query.
+            </summary>
+            <param name="size">The number of records to return in a list. Max is 100, default is 5.</param>
+            <returns>this</returns>
+        </member>
+        <member name="M:WineApi.CatalogService.Search(System.String[])">
+            <summary>
+            Adds the "search" custom parameter to the query.
+            </summary>
+            <param name="terms">The term(s) to search for.</param>
+            <returns>this</returns>
+        </member>
+        <member name="M:WineApi.CatalogService.CategoriesFilter(System.Int32[])">
+            <summary>
+            Adds the "filter" custom parameter to the query. Specifically, it adds the "categories" filter.
+            </summary>
+            <param name="ids">The category attributes to filter on. Examples would be the red wine attribute, or the cabernet attribute.</param>
+            <returns>this</returns>
+        </member>
+        <member name="M:WineApi.CatalogService.RatingFilter(System.Int32)">
+            <summary>
+            Adds the "filter" custom parameter to the query. Specifically, it adds the "rating" filter.
+            </summary>
+            <param name="from">The lower value of a range of rating scores to filter on.</param>
+            <returns>this</returns>
+        </member>
+        <member name="M:WineApi.CatalogService.RatingFilter(System.Int32,System.Int32)">
+            <summary>
+            Adds the "filter" custom parameter to the query. Specifically, it adds the "rating" filter.
+            </summary>
+            <param name="from">The lower value of a range of rating scores to filter on.</param>
+            <param name="to">The upper value of a range of rating scores to filter on.</param>
+            <returns>this</returns>
+        </member>
+        <member name="M:WineApi.CatalogService.PriceFilter(System.Decimal)">
+            <summary>
+            Adds the "filter" custom parameter to the query. Specifically, it adds the "price" filter.
+            Only supported when the state parameter is provided.
+            </summary>
+            <param name="from">The lower value of a range of price to filter on.</param>
+            <returns>this</returns>
+        </member>
+        <member name="M:WineApi.CatalogService.PriceFilter(System.Decimal,System.Decimal)">
+            <summary>
+            Adds the "filter" custom parameter to the query. Specifically, it adds the "price" filter.
+            Only supported when the state parameter is provided.
+            </summary>
+            <param name="from">The lower value of a range of price to filter on.</param>
+            <param name="to">The upper value of a range of price to filter on.</param>
+            <returns>this</returns>
+        </member>
+        <member name="M:WineApi.CatalogService.ProductFilter(System.Int32[])">
+            <summary>
+            Adds the "filter" custom parameter to the query. Specifically, it adds the "product" filter.
+            When this is specified, full product details are provided.
+            </summary>
+            <param name="ids">The specific products to return.</param>
+            <returns>this</returns>
+        </member>
+        <member name="M:WineApi.CatalogService.State(System.String)">
+            <summary>
+            Adds the "state" custom parameter to the query.
+            This is optional. If it is not present, retail information will not be displayed.
+            </summary>
+            <param name="state">The desired ship to state.</param>
+            <returns>this</returns>
+        </member>
+        <member name="M:WineApi.CatalogService.SortBy(WineApi.SortOptions,WineApi.SortDirection)">
+            <summary>
+            Adds the "sort" custom parameter to the query.
+            </summary>
+            <param name="sortOption">What sort key should be used when sorting the list.</param>
+            <param name="sortDirection">The direction in which to sort.</param>
+            <returns>this</returns>
+        </member>
+        <member name="M:WineApi.CatalogService.InStock">
+            <summary>
+            Adds the "instock" custom parameter to the query.
+            This is a convenience method that defaults the value to true.
+            </summary>
+            <returns>this</returns>
+        </member>
+        <member name="M:WineApi.CatalogService.InStock(System.Boolean)">
+            <summary>
+            Adds the "instock" custom parameter to the query.
+            Limit the results to in stock products only (should be coupled with the state parameter).
+            </summary>
+            <param name="inStock">true or false.</param>
+            <returns>this</returns>
+        </member>
+        <member name="M:WineApi.CatalogService.Execute">
+            <summary>
+            Executes the Catalog query and returns a Catalog object.
+            </summary>
+            <returns>A Catalog object.</returns>
+        </member>
+        <member name="T:WineApi.WineType">
+            <summary>
+            A wine type.
+            </summary>
+        </member>
+        <member name="P:WineApi.WineType.Id">
+            <summary>
+            A unique (Endeca) identifier for the type of wine.
+            </summary>
+        </member>
+        <member name="P:WineApi.WineType.Name">
+            <summary>
+            The name of the type of wine.
+            </summary>
+        </member>
+        <member name="P:WineApi.WineType.Url">
+            <summary>
+            The url to other products that have the same wine type.
+            </summary>
+        </member>
+        <member name="T:WineApi.Varietal">
+            <summary>
+            A varietal.
+            </summary>
+        </member>
+        <member name="P:WineApi.Varietal.Id">
+            <summary>
+            A unique (Endeca) identifier for the varietal.
+            </summary>
+        </member>
+        <member name="P:WineApi.Varietal.Name">
+            <summary>
+            The name of the varietal.
+            </summary>
+        </member>
+        <member name="P:WineApi.Varietal.Url">
+            <summary>
+            The url to other products that have the same varietal.
+            </summary>
+        </member>
+        <member name="P:WineApi.Varietal.WineType">
+            <summary>
+            The type of wine that the varietal corresponds to.
+            </summary>
+        </member>
+        <member name="T:WineApi.ReferenceService">
+            <summary>
+            The reference library API exposes all of the articles, blogs, and content Wine.com has about wine.
+            </summary>
+        </member>
+        <member name="M:WineApi.ReferenceService.#ctor">
+            <summary>
+            Default constructor.
+            </summary>
+        </member>
+        <member name="M:WineApi.ReferenceService.CategoriesFilter(System.Int32[])">
+            <summary>
+            Adds the "filter" custom parameter to the query. Specifically, it adds the "categories" filter.
+            </summary>
+            <param name="ids">The category attributes to filter on.</param>
+            <returns>this</returns>
+        </member>
+        <member name="M:WineApi.ReferenceService.Execute">
+            <summary>
+            Executes the Reference query and returns a Reference object.
+            </summary>
+            <returns>A Reference object.</returns>
+        </member>
+        <member name="T:WineApi.Footnote">
+            <summary>
+            A footnote.
+            </summary>
+        </member>
+        <member name="P:WineApi.Footnote.Id">
+            <summary>
+            The article identifier.
+            </summary>
+        </member>
+        <member name="P:WineApi.Footnote.Title">
+            <summary>
+            Descriptive name for the article.
+            </summary>
+        </member>
+        <member name="P:WineApi.Footnote.Url">
+            <summary>
+            A url to the article on the wine.com website.
+            </summary>
+        </member>
+        <member name="T:WineApi.Product">
+            <summary>
+            This is the actual product object. When in a list format some of
+            these values will be null. A full object will only be populated
+            when the product identifier is specified in the query.
+            </summary>
+        </member>
+        <member name="P:WineApi.Product.Id">
+            <summary>
+            A unique identifier for the product.
+            </summary>
+        </member>
+        <member name="P:WineApi.Product.Name">
+            <summary>
+            The product name.
+            </summary>
+        </member>
+        <member name="P:WineApi.Product.Description">
+            <summary>
+            Additional information that may accompany the product.
+            Only available with "partner" access.
+            </summary>
+        </member>
+        <member name="P:WineApi.Product.GeoLocation">
+            <summary>
+            The location of the grapes, or winery, that produced this wine.
+            Only available with "partner" access.
+            </summary>
+        </member>
+        <member name="P:WineApi.Product.Url">
+            <summary>
+            The url to the product detail.
+            </summary>
+        </member>
+        <member name="P:WineApi.Product.PriceMin">
+            <summary>
+            The starting point for the price. Prices could be higher in
+            certain markets, but they will never be lower than this price.
+            </summary>
+        </member>
+        <member name="P:WineApi.Product.PriceMax">
+            <summary>
+            The maximum price point across all markets for this product.
+            </summary>
+        </member>
+        <member name="P:WineApi.Product.PriceRetail">
+            <summary>
+            The suggested retail price for the product.
+            </summary>
+        </member>
+        <member name="P:WineApi.Product.Type">
+            <summary>
+            Identifies the type of product that is being described. See the
+            list of possible product type options.
+            </summary>
+        </member>
+        <member name="P:WineApi.Product.Year">
+            <summary>
+            The year, or vintage of the product. If the product is not a
+            bottle of wine, then the string will be empty. If the product
+            is a bottle of wine, but has no vintage, it will have a
+            designation of "Non-Vintage".
+            </summary>
+        </member>
+        <member name="P:WineApi.Product.Appellation">
+            <summary>
+            The appellation that the product belongs. Note, not all products
+            have appellations. This can be null.
+            </summary>
+        </member>
+        <member name="P:WineApi.Product.Varietal">
+            <summary>
+            The varietal that the product belongs to. Note, not all products
+            have a varietal. This can be null.
+            </summary>
+        </member>
+        <member name="P:WineApi.Product.Vineyard">
+            <summary>
+            The vineyard that the product belongs to. Note, not all products
+            have a vineyard. This can be null.
+            </summary>
+        </member>
+        <member name="P:WineApi.Product.ProductAttributes">
+            <summary>
+            A collection of additional attributes that define the product.
+            </summary>
+        </member>
+        <member name="P:WineApi.Product.Labels">
+            <summary>
+            A collection of labels that go with the product.
+            </summary>
+        </member>
+        <member name="P:WineApi.Product.Ratings">
+            <summary>
+            A collection of ratings that have been given to the product.
+            </summary>
+        </member>
+        <member name="P:WineApi.Product.Retail">
+            <summary>
+            Retail properties for the product. This is only available when
+            the state is specified, otherwise it is null.
+            </summary>
+        </member>
+        <member name="P:WineApi.Product.Vintages">
+            <summary>
+            A list of other vintages of this wine.
+            Only available with "partner" access.
+            </summary>
+        </member>
+        <member name="P:WineApi.Product.Community">
+            <summary>
+            Wine.com community information.
+            </summary>
+        </member>
+        <member name="T:WineApi.Vineyard">
+            <summary>
+            A vineyard.
+            </summary>
+        </member>
+        <member name="P:WineApi.Vineyard.Id">
+            <summary>
+            A unique identifier for the vineyard.
+            </summary>
+        </member>
+        <member name="P:WineApi.Vineyard.Name">
+            <summary>
+            The name of the vineyard.
+            </summary>
+        </member>
+        <member name="P:WineApi.Vineyard.Url">
+            <summary>
+            The url to the description of the vineyard.
+            </summary>
+        </member>
+        <member name="P:WineApi.Vineyard.ImageUrl">
+            <summary>
+            The url to an image of the vineyard.
+            </summary>
+        </member>
+        <member name="P:WineApi.Vineyard.GeoLocation">
+            <summary>
+            The location of the vineyard.
+            Only available with "partner" access.
+            </summary>
+        </member>
+        <member name="T:WineApi.Retail">
+            <summary>
+            This identifies retail values for the purchase of this product. Only
+            available when the destination state is specified using the "state"
+            url value.
+            </summary>
+        </member>
+        <member name="P:WineApi.Retail.Sku">
+            <summary>
+            The unique sku for the product.
+            </summary>
+        </member>
+        <member name="P:WineApi.Retail.InStock">
+            <summary>
+            Indicates whether or not the product is in stock.
+            </summary>
+        </member>
+        <member name="P:WineApi.Retail.Price">
+            <summary>
+            Wine.com sales price for the product.
+            </summary>
+        </member>
+        <member name="P:WineApi.Retail.Url">
+            <summary>
+            The url for purchasing this product.
+            </summary>
+        </member>
+        <member name="P:WineApi.Retail.State">
+            <summary>
+            The desired ship to state.
+            </summary>
+        </member>
+        <member name="T:WineApi.Products">
+            <summary>
+            This is a list of products.
+            </summary>
+        </member>
+        <member name="P:WineApi.Products.Total">
+            <summary>
+            The total number of products that match the query. Not all products will be returned.
+            </summary>
+        </member>
+        <member name="P:WineApi.Products.Offset">
+            <summary>
+            The starting position in the entire list.
+            </summary>
+        </member>
+        <member name="P:WineApi.Products.Url">
+            <summary>
+            The url to the list of wines.
+            </summary>
+        </member>
+        <member name="P:WineApi.Products.List">
+            <summary>
+            The actual list of products.
+            </summary>
+        </member>
+        <member name="T:WineApi.ProductAttribute">
+            <summary>
+            This identifies other attributes that describe the product. Some
+            examples would be "Kosher" or "Collectible" or "Screw Cap".
+            </summary>
+        </member>
+        <member name="P:WineApi.ProductAttribute.Id">
+            <summary>
+            The unique (Endeca) id for the attribute.
+            </summary>
+        </member>
+        <member name="P:WineApi.ProductAttribute.Name">
+            <summary>
+            The name, or description, of the attribute.
+            </summary>
+        </member>
+        <member name="P:WineApi.ProductAttribute.Url">
+            <summary>
+            A url to other products that have the same attribute.
+            </summary>
+        </member>
+        <member name="P:WineApi.ProductAttribute.ImageUrl">
+            <summary>
+            The url to an icon for the product attribute.
+            </summary>
+        </member>
+        <member name="T:WineApi.GeoLocation">
+            <summary>
+            Identifies a latitude and longitude for the location of the grapes,
+            or winery, that produced the wine.
+            </summary>
+        </member>
+        <member name="P:WineApi.GeoLocation.Latitude">
+            <summary>
+            The latitude of the location. If this data does not exist (or you
+            do not have access to it), the value returned will be -360.
+            </summary>
+        </member>
+        <member name="P:WineApi.GeoLocation.Longitude">
+            <summary>
+            The longitude of the location. If this data does not exist (or
+            you do not have access to it), the value returned will be -360.
+            </summary>
+        </member>
+        <member name="P:WineApi.GeoLocation.Url">
+            <summary>
+            The url to a map of the wine.
+            </summary>
+        </member>
+        <member name="T:WineApi.Article">
+            <summary>
+            An article.
+            </summary>
+        </member>
+        <member name="P:WineApi.Article.Id">
+            <summary>
+            The article identifier.
+            </summary>
+        </member>
+        <member name="P:WineApi.Article.Title">
+            <summary>
+            Descriptive name for the article.
+            </summary>
+        </member>
+        <member name="P:WineApi.Article.Abstract">
+            <summary>
+            A short description, or abstract, for the article.
+            </summary>
+        </member>
+        <member name="P:WineApi.Article.Content">
+            <summary>
+            The article content. This is only populated when the article
+            identifier is specified in the filter.
+            Only available with "partner" access.
+            </summary>
+        </member>
+        <member name="P:WineApi.Article.Url">
+            <summary>
+            A url to the article on the wine.com website.
+            </summary>
+        </member>
+        <member name="P:WineApi.Article.Footnotes">
+            <summary>
+            Footnotes to other articles that are related to this article.
+            </summary>
+        </member>
+        <member name="T:WineApi.ReturnCode">
+            <summary>
+            A numerical code that identifies the status. A number of 0 means everything worked correctly.
+            </summary>
+        </member>
+        <member name="F:WineApi.ReturnCode.Success">
+            <summary>
+            Everything worked, no problems.
+            </summary>
+        </member>
+        <member name="F:WineApi.ReturnCode.CriticalError">
+            <summary>
+            A critical error was encountered. This is due to a bug in the service. Please notify wine.com ASAP to correct this issue.
+            </summary>
+        </member>
+        <member name="F:WineApi.ReturnCode.UnableToAuthorize">
+            <summary>
+            Unable to Authorize. We cannot authorize this account.
+            </summary>
+        </member>
+        <member name="F:WineApi.ReturnCode.NoAccess">
+            <summary>
+            No Access. Account does not have access to this service.
+            </summary>
+        </member>
+        <member name="T:WineApi.Community">
+            <summary>
+            This object contains summaries the community content, as well as
+            access to the more detailed community information.
+            </summary>
+        </member>
+        <member name="P:WineApi.Community.Reviews">
+            <summary>
+            A collection of reviews that community members have written.
+            </summary>
+        </member>
+        <member name="P:WineApi.Community.Url">
+            <summary>
+            The url to the product detail page that contains the community notes.
+            </summary>
+        </member>
+        <member name="T:WineApi.Vintage">
+            <summary>
+            This links a product to other vintages, and lists some additional
+            attributes of these products.
+            </summary>
+        </member>
+        <member name="P:WineApi.Vintage.Id">
+            <summary>
+            The product id of the related vintage.
+            </summary>
+        </member>
+        <member name="P:WineApi.Vintage.Name">
+            <summary>
+            The year, or vintage, of the related product.
+            </summary>
+        </member>
+        <member name="P:WineApi.Vintage.Ratings">
+            <summary>
+            A collection of ratings that have been given to this specific
+            vintage.
+            </summary>
+        </member>
+        <member name="P:WineApi.Vintage.Url">
+            <summary>
+            The url to the product detail for this vintage.
+            </summary>
+        </member>
+        <member name="T:WineApi.SortOptions">
+            <summary>
+            Supported sort options.
+            </summary>
+        </member>
+        <member name="F:WineApi.SortOptions.Popularity">
+            <summary>
+            The products are sorted by popularity.
+            </summary>
+        </member>
+        <member name="F:WineApi.SortOptions.Rating">
+            <summary>
+            The products are sorted by their top professional rating score.
+            </summary>
+        </member>
+        <member name="F:WineApi.SortOptions.Vintage">
+            <summary>
+            The products are sorted by their vintage.
+            </summary>
+        </member>
+        <member name="F:WineApi.SortOptions.Winery">
+            <summary>
+            The products are sorted by the winery name.
+            </summary>
+        </member>
+        <member name="F:WineApi.SortOptions.Name">
+            <summary>
+            The products are sorted alphabetically, by the product name.
+            </summary>
+        </member>
+        <member name="F:WineApi.SortOptions.Price">
+            <summary>
+            The products are sorted by price. This is only available when the state parameter is specified.
+            </summary>
+        </member>
+        <member name="F:WineApi.SortOptions.Saving">
+            <summary>
+            The products are sorted by the amount they are discounted. This is only available when the state parameter is specified.
+            </summary>
+        </member>
+        <member name="F:WineApi.SortOptions.JustIn">
+            <summary>
+            The products are sorted by when wine.com first received them.
+            </summary>
+        </member>
+        <member name="T:WineApi.Area">
+            <summary>
+            This defines a high level area that the wine belongs to. An example
+            would be "New World", or "France".
+            </summary>
+        </member>
+        <member name="P:WineApi.Area.Id">
+            <summary>
+            A unique (Endeca) identifier for the area.
+            </summary>
+        </member>
+        <member name="P:WineApi.Area.Name">
+            <summary>
+            The name of the area.
+            </summary>
+        </member>
+        <member name="P:WineApi.Area.Url">
+            <summary>
+            The url to the other products in the same area.
+            </summary>
+        </member>
+        <member name="P:WineApi.Area.Parent">
+            <summary>
+            If there is a higher area classification, this will be populated
+            with the parent. An example could be an area called "Old World"
+            which would be the parent of an area called "France". This could
+            be null.
+            </summary>
+        </member>
+        <member name="T:WineApi.Region">
+            <summary>
+            A wine region.
+            </summary>
+        </member>
+        <member name="P:WineApi.Region.Id">
+            <summary>
+            A unique (Endeca) identifier for the region.
+            </summary>
+        </member>
+        <member name="P:WineApi.Region.Name">
+            <summary>
+            The name of the region.
+            </summary>
+        </member>
+        <member name="P:WineApi.Region.Url">
+            <summary>
+            The url to the other products in the same region.
+            </summary>
+        </member>
+        <member name="P:WineApi.Region.Area">
+            <summary>
+            The area that the region belongs to. This could be null.
+            </summary>
+        </member>
+        <member name="T:WineApi.Catalog">
+            <summary>
+            This object is returned when a call is made to the Catalog API.
+            </summary>
+        </member>
+        <member name="P:WineApi.Catalog.Status">
+            <summary>
+            Contains status and debugging information.
+            </summary>
+        </member>
+        <member name="P:WineApi.Catalog.Products">
+            <summary>
+            This object contains products that match the catalog query.
+            </summary>
+        </member>
+        <member name="T:WineApi.Appellation">
+            <summary>
+            An appellation.
+            </summary>
+        </member>
+        <member name="P:WineApi.Appellation.Id">
+            <summary>
+            A unique (Endeca) identifier for the appellation.
+            </summary>
+        </member>
+        <member name="P:WineApi.Appellation.Name">
+            <summary>
+            The name of the appellation.
+            </summary>
+        </member>
+        <member name="P:WineApi.Appellation.Url">
+            <summary>
+            The url to the other products in the same appellation.
+            </summary>
+        </member>
+        <member name="P:WineApi.Appellation.Region">
+            <summary>
+            The region that corresponds to the appellation.
+            </summary>
+        </member>
+        <member name="T:WineApi.WineApiServiceException">
+            <summary>
+            This exception is thrown if an any exception occurs during a call to Execute.
+            The inner exception contains the original exception.
+            </summary>
+        </member>
+        <member name="M:WineApi.WineApiServiceException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="resource">The resource type that was being queried for e.g. "catalog".</param>
+            <param name="innerException">The original exception.</param>
+        </member>
+        <member name="T:WineApi.Vintages">
+            <summary>
+            This is also referred to as pedigree. This is a list of past vintages of the selected product.
+            </summary>
+        </member>
+        <member name="P:WineApi.Vintages.List">
+            <summary>
+            A specific vintage that the product is related to.
+            </summary>
+        </member>
+        <member name="T:WineApi.SortDirection">
+            <summary>
+            The direction in which to sort.
+            </summary>
+        </member>
+        <member name="F:WineApi.SortDirection.Ascending">
+            <summary>
+            Sort in ascending order.
+            </summary>
+        </member>
+        <member name="F:WineApi.SortDirection.Descending">
+            <summary>
+            Sort in descending order.
+            </summary>
+        </member>
+        <member name="T:WineApi.Config">
+            <summary>
+            Use this (singleton) class to configure WineApi.
+            </summary>
+        </member>
+        <member name="P:WineApi.Config.ApiKey">
+            <summary>
+            The key given to the developer that is requesting the resource.
+            </summary>
+        </member>
+        <member name="P:WineApi.Config.Version">
+            <summary>
+            The version of the API to use.
+            </summary>
+        </member>
+        <member name="P:WineApi.Config.AffiliateId">
+            <summary>
+            After signing up with LinkShare, use the "affiliateId" parameter
+            to pass your affiliate code to the API. All links will be updated
+            to track the sales you drive and you will receive a monthly check
+            from LinkShare! When you sign up with LinkShare you will see the
+            specifics of payments.
+            </summary>
+        </member>
+        <member name="T:WineApi.CategoryMapService">
+            <summary>
+            This query returns the various categories and their children. These categories can then be used to retrieve products using the "filter" option.
+            </summary>
+        </member>
+        <member name="M:WineApi.CategoryMapService.#ctor">
+            <summary>
+            Default constructor.
+            </summary>
+        </member>
+        <member name="M:WineApi.CategoryMapService.CategoriesFilter(System.Int32[])">
+            <summary>
+            Adds the "filter" custom parameter to the query. Specifically, it adds the "categories" filter.
+            </summary>
+            <param name="ids">The category attributes to filter on.</param>
+            <returns>this</returns>
+        </member>
+        <member name="M:WineApi.CategoryMapService.RatingFilter(System.Int32)">
+            <summary>
+            Adds the "filter" custom parameter to the query. Specifically, it adds the "rating" filter.
+            </summary>
+            <param name="from">The lower value of a range of rating scores to filter on.</param>
+            <returns>this</returns>
+        </member>
+        <member name="M:WineApi.CategoryMapService.RatingFilter(System.Int32,System.Int32)">
+            <summary>
+            Adds the "filter" custom parameter to the query. Specifically, it adds the "rating" filter.
+            </summary>
+            <param name="from">The lower value of a range of rating scores to filter on.</param>
+            <param name="to">The upper value of a range of rating scores to filter on.</param>
+            <returns>this</returns>
+        </member>
+        <member name="M:WineApi.CategoryMapService.Search(System.String[])">
+            <summary>
+            Adds the "search" custom parameter to the query.
+            </summary>
+            <param name="terms">The term(s) to search for.</param>
+            <returns>this</returns>
+        </member>
+        <member name="M:WineApi.CategoryMapService.Show(System.Int32[])">
+            <summary>
+            Lists all items in the given categories.
+            </summary>
+            <param name="ids">The categories to be returned.</param>
+            <returns>this</returns>
+        </member>
+        <member name="M:WineApi.CategoryMapService.Execute">
+            <summary>
+            Executes the CategoryMap query and returns a CategoryMap object.
+            </summary>
+            <returns>A CategoryMap object.</returns>
+        </member>
+        <member name="T:WineApi.Book">
+            <summary>
+            A book is defined as a section of the Wine.com reference library. An
+            example would be "Wine Basics" or "Selecting Wines".
+            </summary>
+        </member>
+        <member name="P:WineApi.Book.Id">
+            <summary>
+            The book identifier.
+            </summary>
+        </member>
+        <member name="P:WineApi.Book.Title">
+            <summary>
+            Descriptive name for the book.
+            </summary>
+        </member>
+        <member name="P:WineApi.Book.Articles">
+            <summary>
+            The articles that make up the book.
+            </summary>
+        </member>
+        <member name="T:WineApi.Refinement">
+            <summary>
+            A refinement is the actual category value.
+            </summary>
+        </member>
+        <member name="P:WineApi.Refinement.Id">
+            <summary>
+            The refinement identifier (Endeca Dimension Value Id).
+            </summary>
+        </member>
+        <member name="P:WineApi.Refinement.Name">
+            <summary>
+            Describe name for the refinement. "Red Wine" for example.
+            </summary>
+        </member>
+        <member name="P:WineApi.Refinement.Url">
+            <summary>
+            A url to products that map to this category refinement. This
+            includes the original filter. For example, if you are looking for
+            all child categories for the category Red Wines, the Merlot value
+            will include the Red Wine value.
+            </summary>
+        </member>
+        <member name="T:WineApi.CategoryMap">
+            <summary>
+            This object is returned when a call is made to the Category Map API.
+            It returns possible category matches based off a provided query.
+            </summary>
+        </member>
+        <member name="P:WineApi.CategoryMap.Status">
+            <summary>
+            Contains status and debugging information.
+            </summary>
+        </member>
+        <member name="P:WineApi.CategoryMap.Categories">
+            <summary>
+            A list of categories that match the provided query.
+            </summary>
+        </member>
+        <member name="T:WineApi.Status">
+            <summary>
+            This object is returned with every query. It contains a status code,
+            and any debugging information that might accompany an error.
+            </summary>
+        </member>
+        <member name="P:WineApi.Status.ReturnCode">
+            <summary>
+            A numerical code that identifies the status. A number of 0 means
+            everything worked correctly.
+            </summary>
+        </member>
+        <member name="P:WineApi.Status.Messages">
+            <summary>
+            Returns a list of messages that contain debugging information to
+            assist with correcting the issue.
+            </summary>
+        </member>
+        <member name="T:WineApi.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:WineApi.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:WineApi.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:WineApi.Resources.ReturnCodeCriticalError">
+            <summary>
+              Looks up a localized string similar to A critical error was encountered. This is due to a bug in the service. Please notify wine.com ASAP to correct this issue..
+            </summary>
+        </member>
+        <member name="P:WineApi.Resources.ReturnCodeNoAccess">
+            <summary>
+              Looks up a localized string similar to No Access. Account does not have access to this service..
+            </summary>
+        </member>
+        <member name="P:WineApi.Resources.ReturnCodeSuccess">
+            <summary>
+              Looks up a localized string similar to Everything worked, no problems..
+            </summary>
+        </member>
+        <member name="P:WineApi.Resources.ReturnCodeUnableToAuthorize">
+            <summary>
+              Looks up a localized string similar to Unable to Authorize. We cannot authorize this account..
+            </summary>
+        </member>
+        <member name="P:WineApi.Resources.WineApiServiceExceptionMessage">
+            <summary>
+              Looks up a localized string similar to Failed to invoke the Wine.com API service for the resource, &quot;{0}&quot;..
+            </summary>
+        </member>
+        <member name="T:WineApi.Reference">
+            <summary>
+            This object is returned when a call is made to the Reference Library API.
+            </summary>
+        </member>
+        <member name="P:WineApi.Reference.Status">
+            <summary>
+            Contains status and debugging information.
+            </summary>
+        </member>
+        <member name="P:WineApi.Reference.Books">
+            <summary>
+            A list of reference sections, or books.
+            </summary>
+        </member>
+        <member name="T:WineApi.CommunityReviews">
+            <summary>
+            Summaries all of the community reviews.
+            </summary>
+        </member>
+        <member name="P:WineApi.CommunityReviews.HighestScore">
+            <summary>
+            The highest review score given to the product.
+            </summary>
+        </member>
+        <member name="P:WineApi.CommunityReviews.List">
+            <summary>
+            A collection of reviews that have been given to the product.
+            Only available with "partner" access.
+            </summary>
+        </member>
+        <member name="P:WineApi.CommunityReviews.Url">
+            <summary>
+            The url to the full list of reviews.
+            </summary>
+        </member>
+    </members>
+</doc>

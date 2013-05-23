@@ -13,6 +13,10 @@ namespace WineDataDomain
         public string PassWord { get; set; }
         public string Email { get; set; }
         public DateTime RegDate { get; set; }
+        public int Preference { get; set; }
+        public DateTime DateOfBirth { get; set; }
+        public string ZipCode { get; set; }
+        public string PicUrl { get; set; }
 
         public User DeepCopy()
         {

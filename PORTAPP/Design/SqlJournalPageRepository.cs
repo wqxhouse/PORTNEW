@@ -3,18 +3,279 @@ using System;
 using ActiproSoftware.Windows;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
+using System.Linq;
+using System.Windows;
 
 namespace PORTAPP.Design
 {
     
     public class SqlJournalPageRepository : WineDataDomain.IJournalPageRepository
     {
-        
-        public void GetUserPages(string username, System.Action<System.Collections.Generic.IEnumerable<WineDataDomain.JournalPage>, System.Exception> callback)
-        {
-            var pageCollection =
-               new DeferrableObservableCollection<WineDataDomain.JournalPage>();
 
+        public void Separation(string text, int tWidth, int tHeight, int wWidth, int wHeight,
+                                string username, 
+                                Action<IEnumerable<WineDataDomain.JournalPage>, Exception> callback)
+        {
+            var pageCollection = new DeferrableObservableCollection<WineDataDomain.JournalPage>();
+            int widNum = tWidth / wWidth;
+            int HHeight = tHeight / wHeight;
+            int total = text.Length;
+
+            int complement = 0;
+            int count = 0;
+
+            string txt = "";
+            string temp = "";
+
+            int LCount = 0;
+            int WCount = 0;
+            int pageNumber = 0;
+
+            while (count < total)
+            {
+                while (WCount < widNum)
+                {
+                    if (count == total)
+                    {
+                        txt += temp;
+                        pageNumber++;
+                        pageCollection.Add(new WineDataDomain.JournalPage()
+                        {
+                            OverlayTopLeftColor = Color.FromArgb(102, 108, 132, 60),
+                            OverlayBottomRightColor = Color.FromArgb(102, 208, 255, 113),
+                            Header = "Cuisine",
+                            ImageSource = new BitmapImage(new Uri("/PORTNEW;component/PORTAPP/Design/images/003.jpg", UriKind.Relative)) { CreateOptions = BitmapCreateOptions.None },
+                            Text = txt,
+                            PageNumber = pageNumber
+                        });
+                        return;
+                    }
+                    else if (text[count] == ' ')
+                    {
+                        txt += temp;
+                        txt += ' ';
+                        complement = 0;
+                        temp = "";
+                        count++;
+                        WCount++;
+                    }
+
+                    else if ((int)text[count] == 13)
+                    {
+                        txt += temp;
+                        temp = "";
+                        complement = 0;
+                        txt += (char)(13);
+                        txt += (char)(10);
+                        count = count + 2;
+                        WCount = 0;
+                        LCount++;
+           
+                    }
+
+                    else
+                    {
+                        complement++;
+                        temp += text[count];
+                        count++;
+                        WCount++;
+                    }
+                }
+                if (text[count] == ' ')
+                {
+                    txt += temp;
+                    complement = 0;
+                    temp = "";
+
+                }
+                if (complement != 0)
+                {
+                    while (complement > 0)
+                    {
+                        txt += '@';
+                        complement--;
+                    }
+                }
+                LCount++;
+                //Console.WriteLine(txt);
+                //txt = "";
+                if (LCount == HHeight)
+                {
+                    // create a new page
+                    pageNumber++;
+                    pageCollection.Add(new WineDataDomain.JournalPage()
+                    {
+                        OverlayTopLeftColor = Color.FromArgb(102, 108, 132, 60),
+                        OverlayBottomRightColor = Color.FromArgb(102, 208, 255, 113),
+                        Header = "Cuisine",
+                        ImageSource = new BitmapImage(new Uri("/PORTNEW;component/PORTAPP/Design/images/003.jpg", UriKind.Relative)) { CreateOptions = BitmapCreateOptions.None },
+                        Text = txt,
+                        PageNumber = pageNumber
+                    });
+                    txt = "";
+                }
+                txt ="";
+                if (temp.Length != 0)
+                {
+                    WCount = temp.Length;
+                }
+                else
+                {
+                    WCount = 0;
+                }
+            }
+            txt += temp;
+            pageNumber ++;
+            pageCollection.Add(new WineDataDomain.JournalPage()
+            {
+                OverlayTopLeftColor = Color.FromArgb(102, 108, 132, 60),
+                OverlayBottomRightColor = Color.FromArgb(102, 208, 255, 113),
+                Header = "Cuisine",
+                ImageSource = new BitmapImage(new Uri("/PORTNEW;component/PORTAPP/Design/images/003.jpg", UriKind.Relative)) { CreateOptions = BitmapCreateOptions.None },
+                Text = txt,
+                PageNumber = pageNumber
+            });
+            return;
+        }
+
+
+
+        public void GetUserPages(int tWidth, int tHeight, int wWidth, int wHeight, string username, System.Action<System.Collections.Generic.IEnumerable<WineDataDomain.JournalPage>, System.Exception> callback)
+        {
+            /*
+            string text = "Assignment 2C\nMain Claim:\nBorrowing ideas from works of others is permissible if the borrowed ideas are used as bases of creative works with new ideas with the source appropriately cited. ";
+           // Idea borrowers need to ask the authors of original works for permission to cite a large portion of the works; small portion of content, however, can be cited directly without permission. However, omitting citation is not permissible and is considered as plagiarism.";
+            var pageCollection = new DeferrableObservableCollection<WineDataDomain.JournalPage>();
+            int widNum = tWidth / wWidth;
+            int HHeight = tHeight / wHeight;
+            int total = text.Length;
+
+            int complement = 0;
+            int count = 0;
+
+            string txt = "";
+            string temp = "";
+
+            int LCount = 0;
+            int WCount = 0;
+            int pageNumber = 0;
+
+            while (count < total)
+            {
+                while (WCount < widNum)
+                {
+                    if (count == total)
+                    {
+                        txt += temp;
+                        pageNumber++;
+                        pageCollection.Add(new WineDataDomain.JournalPage()
+                        {
+                            OverlayTopLeftColor = Color.FromArgb(102, 108, 132, 60),
+                            OverlayBottomRightColor = Color.FromArgb(102, 208, 255, 113),
+                            Header = "Cuisine",
+                            ImageSource = new BitmapImage(new Uri("/PORTNEW;component/PORTAPP/Design/images/003.jpg", UriKind.Relative)) { CreateOptions = BitmapCreateOptions.None },
+                            Text = txt,
+                            PageNumber = pageNumber
+                        });
+
+                        //return;
+                        callback(pageCollection, null);
+                        return;
+                    }
+                    else if (text[count] == ' ')
+                    {
+                        txt += temp;
+                        txt += ' ';
+                        complement = 0;
+                        temp = "";
+                        count++;
+                        WCount++;
+                    }
+
+                    else if ((int)text[count] == 13)
+                    {
+                        txt += temp;
+                        temp = "";
+                        complement = 0;
+                        txt += (char)(13);
+                        txt += (char)(10);
+                        count = count + 2;
+                        WCount = 0;
+                        LCount++;
+
+                    }
+
+                    else
+                    {
+                        complement++;
+                        temp += text[count];
+                        count++;
+                        WCount++;
+                    }
+                }
+                if (text[count] == ' ')
+                {
+                    txt += temp;
+                    complement = 0;
+                    temp = "";
+
+                }
+                if (complement != 0)
+                {
+                    while (complement > 0)
+                    {
+                        txt += '@';
+                        complement--;
+                    }
+                }
+                LCount++;
+                //Console.WriteLine(txt);
+                //txt = "";
+                if (LCount == HHeight)
+                {
+                    // create a new page
+                    pageNumber++;
+                    pageCollection.Add(new WineDataDomain.JournalPage()
+                    {
+                        OverlayTopLeftColor = Color.FromArgb(102, 108, 132, 60),
+                        OverlayBottomRightColor = Color.FromArgb(102, 208, 255, 113),
+                        Header = "Cuisine",
+                        ImageSource = new BitmapImage(new Uri("/PORTNEW;component/PORTAPP/Design/images/003.jpg", UriKind.Relative)) { CreateOptions = BitmapCreateOptions.None },
+                        Text = txt,
+                        PageNumber = pageNumber
+                    });
+                    txt = "";
+                }
+                txt = "";
+                if (temp.Length != 0)
+                {
+                    WCount = temp.Length;
+                }
+                else
+                {
+                    WCount = 0;
+                }
+            }
+            txt += temp;
+            pageNumber++;
+            pageCollection.Add(new WineDataDomain.JournalPage()
+            {
+                OverlayTopLeftColor = Color.FromArgb(102, 108, 132, 60),
+                OverlayBottomRightColor = Color.FromArgb(102, 208, 255, 113),
+                Header = "Cuisine",
+                ImageSource = new BitmapImage(new Uri("/PORTNEW;component/PORTAPP/Design/images/003.jpg", UriKind.Relative)) { CreateOptions = BitmapCreateOptions.None },
+                Text = txt,
+                PageNumber = pageNumber
+            });
+
+
+           // return;
+            */
+
+
+            
+            var pageCollection = new DeferrableObservableCollection<WineDataDomain.JournalPage>();
+             
             pageCollection.Add(new WineDataDomain.JournalPage()
             {
                 OverlayTopLeftColor = Color.FromArgb(102, 85, 50, 50),
@@ -61,9 +322,10 @@ namespace PORTAPP.Design
             ,
                 PageNumber = 3
             });
-
+            
 
             callback(pageCollection, null);
+            return;
         }
 
         public void GetUserJournalCollection(string username, Action<IEnumerable<WineDataDomain.Journal>, Exception> callback)
@@ -98,6 +360,18 @@ namespace PORTAPP.Design
                 };
 
             callback(collection, null);
+
+        }
+    
+
+        public void  UpdateUserJournal(string username, 
+            IEnumerable<WineDataDomain.Journal> journalCollectionModified, 
+            Action<bool,Exception> callback)
+        {
+            var query = from j in journalCollectionModified.ToList()
+                        select j;
+
+            MessageBox.Show(query.FirstOrDefault().Text);
 
         }
     }

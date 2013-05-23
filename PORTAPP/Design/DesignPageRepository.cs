@@ -106,5 +106,15 @@ namespace PORTAPP.Design
             callback(collection, null);
 
         }
+
+        public void GetUserPages(int tWidth, int tHeight, int wWidth, int wHeight, string username, Action<IEnumerable<WineDataDomain.JournalPage>, Exception> callback)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateUserJournal(string username, IEnumerable<WineDataDomain.Journal> journalCollectionModified, Action<bool, Exception> callback)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
