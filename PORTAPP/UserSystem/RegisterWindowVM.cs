@@ -2,6 +2,8 @@
 using System.ComponentModel;
 using System.Collections.Generic;
 using GalaSoft.MvvmLight.Messaging;
+using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace PORTAPP.UserSystem
 {
@@ -13,11 +15,23 @@ namespace PORTAPP.UserSystem
     /// </summary>
     public class RegisterWindowVM : ViewModelBase, IDataErrorInfo
     {
+        private readonly WineDataDomain.IUserRepository _userRepo;
+        private readonly WineDataDomain.IWineRepository _wineRepo;
+        private readonly WineCatagory.WineCatagoryHandler catagoryHandler;
+
         /// <summary>
         /// Initializes a new instance of the RegisterWindowVM class.
         /// </summary>
-        public RegisterWindowVM()
+        public RegisterWindowVM(WineDataDomain.IUserRepository userRepo, WineDataDomain.IWineRepository wineRepo)
         {
+            //inject repo
+            _userRepo = userRepo;
+            _wineRepo = wineRepo;
+
+
+            //Create catagory handler and pass wineRepo dependancy to it.
+            catagoryHandler = new WineCatagory.WineCatagoryHandler(wineRepo);
+
 
             //receive register action upon receiving register notification from LogWindow
             Messenger.Default.Register<NotificationMessage>
@@ -29,12 +43,124 @@ namespace PORTAPP.UserSystem
                             ExecuteRegister();
                         }
                     });
+
+            //load from database the user info to avoid same username
+            _userRepo.GetAllUserData(
+                (users, e) =>
+                {
+                    if (e != null)
+                    {
+                        MessageBox.Show(e.Message);
+                    }
+                    else
+                    {
+                        Users = new ObservableCollection<WineDataDomain.User>(users);
+                    }
+                });
+
+            //initialize PreferenceList
+            PreferenceList = new ObservableCollection<Preference>();
+
+            //load from database the wine name and catagories to suggest
+            //when filling in the preference field.
+            //TODO: wine 
+            PopulatePreferenceList();
+
+
+        }
+
+
+        #region private methods
+
+        private void PopulatePreferenceList()
+        {
+            if (PreferenceList == null)
+            {
+                MessageBox.Show("DEBUG: PreferenceList not initialzed");
+            }
+
+            var association = catagoryHandler.GetWineTypeToVarietals();
+            foreach (KeyValuePair<int, WineDataDomain.Refinement[]> i in association)
+            {
+                foreach (WineDataDomain.Refinement r in i.Value)
+                {
+                    PreferenceList.Add(new Preference(i.Key, r));
+                }
+            }
+
         }
 
         private void ExecuteRegister()
         {
-            
+            //TODO: exe register
         }
+
+        #endregion
+
+        #region properities
+
+        /// <summary>
+        /// The <see cref="PreferenceList" /> property's name.
+        /// </summary>
+        public const string PreferenceListPropertyName = "PreferenceList";
+
+        private ObservableCollection<Preference> _preferenceList ;
+
+        /// <summary>
+        /// Sets and gets the PreferenceList property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public ObservableCollection<Preference> PreferenceList
+        {
+            get
+            {
+                return _preferenceList;
+            }
+
+            set
+            {
+                if (_preferenceList == value)
+                {
+                    return;
+                }
+
+                
+                _preferenceList = value;
+                RaisePropertyChanged(PreferenceListPropertyName);
+            }
+        }
+        
+
+        /// <summary>
+        /// The <see cref="Users" /> property's name.
+        /// </summary>
+        public const string UsersPropertyName = "Users";
+
+        private ObservableCollection<WineDataDomain.User> _users;
+
+        /// <summary>
+        /// Sets and gets the Users property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public ObservableCollection<WineDataDomain.User> Users
+        {
+            get
+            {
+                return _users;
+            }
+
+            set
+            {
+                if (_users == value)
+                {
+                    return;
+                }
+
+                _users = value;
+                RaisePropertyChanged(UsersPropertyName);
+            }
+        }
+
 
         /// <summary>
         /// The <see cref="UserName" /> property's name.
@@ -136,6 +262,10 @@ namespace PORTAPP.UserSystem
             }
         }
 
+        #endregion
+
+
+        #region IDataError
         public string Error
         {
             get { throw new System.NotImplementedException(); }
@@ -152,6 +282,7 @@ namespace PORTAPP.UserSystem
                 return string.Empty;
             }
         }
+        #endregion
 
         #region Validation
         private Dictionary<string, string> errors = new Dictionary<string, string>();

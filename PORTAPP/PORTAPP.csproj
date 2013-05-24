@@ -112,6 +112,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Telerik\RadControls for WPF Q1 2013\Binaries\WPF40\Telerik.Windows.Controls.dll</HintPath>
     </Reference>
+    <Reference Include="Telerik.Windows.Controls.Input, Version=2013.1.403.40, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL" />
     <Reference Include="TransitionEffects">
       <HintPath>..\ReferenceDLL\TransitionEffects.dll</HintPath>
     </Reference>
@@ -141,8 +142,8 @@
     <Compile Include="Design\DesignPageRepository.cs" />
     <Compile Include="Design\DesignUserRepository.cs" />
     <Compile Include="Design\DesignUserState.cs" />
+    <Compile Include="Design\DesignWineRepository.cs" />
     <Compile Include="Design\SqlJournalPageRepository.cs" />
-    <Compile Include="InitController.cs" />
     <Compile Include="IPageViewModel.cs" />
     <Compile Include="LogWindow.xaml.cs">
       <DependentUpon>LogWindow.xaml</DependentUpon>
@@ -153,6 +154,7 @@
     </Compile>
     <Compile Include="Skins\EffectTransition.cs" />
     <Compile Include="UserSystem\IUserState.cs" />
+    <Compile Include="UserSystem\Preference.cs" />
     <Compile Include="UserSystem\RegisterWindow.xaml.cs">
       <DependentUpon>RegisterWindow.xaml</DependentUpon>
     </Compile>
@@ -169,6 +171,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModel\ViewModelLocatorHelper.cs" />
+    <Compile Include="WineCatagory\WineCatagoryHandler.cs" />
     <Compile Include="WineCellar\WineCellar.xaml.cs">
       <DependentUpon>WineCellar.xaml</DependentUpon>
     </Compile>
@@ -308,6 +311,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\BookItems.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="UserSystem\PreferenceIcons\RedWine.png" />
+    <Resource Include="UserSystem\PreferenceIcons\RoseWine.png" />
+    <Resource Include="UserSystem\PreferenceIcons\WhiteWine.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

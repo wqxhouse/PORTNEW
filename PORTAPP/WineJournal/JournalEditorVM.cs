@@ -64,6 +64,8 @@ namespace PORTAPP.WineJournal
 
         private void updateJournalDataBase(string journalText)
         {
+
+            //TODO : needs complete
             _repo.UpdateUserJournal(_userState.getUserState().LoggedInUserName,
                 new ObservableCollection<WineDataDomain.Journal>{
                     new WineDataDomain.Journal

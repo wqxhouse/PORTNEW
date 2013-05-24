@@ -38,8 +38,15 @@ namespace PORTAPP.ViewModel
             else
             {
                 SimpleIoc.Default.Register<WineDataDomain.IUserRepository, ServiceDataLib.SqlUserRepository>();
+
+                //temporarily mock
                 SimpleIoc.Default.Register<WineDataDomain.IJournalPageRepository, Design.SqlJournalPageRepository>();
+
                 SimpleIoc.Default.Register<UserSystem.IUserState, UserSystem.UserState>();
+                
+                //use design temporarily
+                SimpleIoc.Default.Register<WineDataDomain.IWineRepository, Design.DesignWineRepository>();
+
             }
 
             #region pre-initialized ViewModels
@@ -205,6 +212,22 @@ namespace PORTAPP.ViewModel
             get
             {
                 return ServiceLocator.Current.GetInstance<UserSystem.UserPanelVM>();
+            }
+        }
+
+
+
+        /// <summary>
+        /// Gets the RegisterWindow property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public UserSystem.RegisterWindowVM RegisterWindow
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<UserSystem.RegisterWindowVM>();
             }
         }
 
