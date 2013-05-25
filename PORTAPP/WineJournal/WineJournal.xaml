@@ -108,7 +108,7 @@
             <Setter Property="ContentTemplate">
                 <Setter.Value>
                     <DataTemplate>
-                        <TextBlock HorizontalAlignment="Stretch" Margin="15" Text="{Binding Text}" FontSize="16" FontFamily="Georgia" TextAlignment="Justify" TextWrapping="Wrap" />
+                        <TextBlock HorizontalAlignment="Stretch" Margin="15" Text="{Binding Text}" FontSize="16" FontFamily="Georgia" TextAlignment="Justify" /> <!--TextWrapping="Wrap"-->
                     </DataTemplate>
                 </Setter.Value>
             </Setter>
@@ -144,7 +144,7 @@
                                     </LinearGradientBrush>
                                 </Border.Background>
                                 <Grid>
-                                    <Grid Margin="40,45,10,10" > <!--Loaded="Grid_LoadedBack">-->
+                                    <Grid Margin="40,45,10,10"  Loaded="Grid_LoadedBack">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto" />
                                             <RowDefinition Height="*" />

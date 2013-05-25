@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using GalaSoft.MvvmLight.Messaging;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System;
+using System.Windows.Media;
 
 namespace PORTAPP.UserSystem
 {
@@ -17,62 +19,89 @@ namespace PORTAPP.UserSystem
     {
         private readonly WineDataDomain.IUserRepository _userRepo;
         private readonly WineDataDomain.IWineRepository _wineRepo;
+        private readonly IUserState _userState;
         private readonly WineCatagory.WineCatagoryHandler catagoryHandler;
 
         /// <summary>
         /// Initializes a new instance of the RegisterWindowVM class.
         /// </summary>
-        public RegisterWindowVM(WineDataDomain.IUserRepository userRepo, WineDataDomain.IWineRepository wineRepo)
+        public RegisterWindowVM(WineDataDomain.IUserRepository userRepo, 
+                                WineDataDomain.IWineRepository wineRepo, 
+                                IUserState userState)
         {
-            //inject repo
-            _userRepo = userRepo;
-            _wineRepo = wineRepo;
+
+            if (IsInDesignMode)
+            {
+                UserName = "Test";
+                Password = "123";
+                Email = "ABC@hotmail.com";
+            }
+            else
+            {
+                //inject repo
+                _userRepo = userRepo;
+                _wineRepo = wineRepo;
+                _userState = userState;
 
 
-            //Create catagory handler and pass wineRepo dependancy to it.
-            catagoryHandler = new WineCatagory.WineCatagoryHandler(wineRepo);
+                //Create catagory handler and pass wineRepo dependancy to it.
+                catagoryHandler = new WineCatagory.WineCatagoryHandler(wineRepo);
 
 
-            //receive register action upon receiving register notification from LogWindow
-            Messenger.Default.Register<NotificationMessage>
-                (this, 
-                "FromLogWindow_ToRegisterWindowVM_regMsg",
-                m =>
+                //receive register action upon receiving register notification from LogWindow
+                Messenger.Default.Register<NotificationMessageAction<bool>>
+                    (this,
+                    "FromLogWindow_ToRegisterWindowVM_regMsg",
+                    m =>
                     {
-                        if(m.Notification == "Perform Register"){
-                            ExecuteRegister();
+                        if (m.Notification == "Perform Register")
+                        {
+                            executeRegister(m);
                         }
                     });
 
-            //load from database the user info to avoid same username
-            _userRepo.GetAllUserData(
-                (users, e) =>
-                {
-                    if (e != null)
+
+                //Messenger.Default.Register<string>
+                //    (this,
+                //    "FromRegWindow_ToRegWindowVM_preferenceStr",
+                //    s =>
+                //    {
+
+                //    });
+
+                //load from database the user info to avoid same username
+                _userRepo.GetAllUserData(
+                    (users, e) =>
                     {
-                        MessageBox.Show(e.Message);
-                    }
-                    else
-                    {
-                        Users = new ObservableCollection<WineDataDomain.User>(users);
-                    }
-                });
+                        if (e != null)
+                        {
+                            MessageBox.Show(e.Message);
+                        }
+                        else
+                        {
+                            Users = new ObservableCollection<WineDataDomain.User>(users);
+                        }
+                    });
 
-            //initialize PreferenceList
-            PreferenceList = new ObservableCollection<Preference>();
+                //initialize DataBase PreferenceList
+                PreferenceList = new ObservableCollection<Preference>();
 
-            //load from database the wine name and catagories to suggest
-            //when filling in the preference field.
-            //TODO: wine 
-            PopulatePreferenceList();
+                //initialize User PreferenceItems
+                UserPreferences = new ObservableCollection<Preference>();
 
+
+                //load from database the wine name and catagories to suggest
+                //when filling in the preference field.
+                //TODO: wine 
+                populatePreferenceList();
+            }
 
         }
 
 
         #region private methods
 
-        private void PopulatePreferenceList()
+        private void populatePreferenceList()
         {
             if (PreferenceList == null)
             {
@@ -90,14 +119,174 @@ namespace PORTAPP.UserSystem
 
         }
 
-        private void ExecuteRegister()
+        private string convertPreferenceToString()
+        {
+            string prefStr = string.Empty;
+
+            if(UserPreferences.Count == 0)
+            {
+                MessageBox.Show("DEBUG: Expect non preference be handled by validation()");
+            }
+            foreach(Preference p in UserPreferences)
+            {
+                prefStr += p.VarietalName + ",";
+            }
+
+            return prefStr;
+        }
+
+        private void clearFields()
+        {
+            UserName = "";
+            Password = "";
+            Email = "";
+            UserPreferences.Clear();
+            //TODO: More fields needs to be cleared
+        }
+
+        private void executeRegister(NotificationMessageAction<bool> callbackAction)
         {
             //TODO: exe register
+            var newUser = new WineDataDomain.User()
+            {
+                UserName = this.UserName,
+                PassWord = this.Password,
+                Preference = convertPreferenceToString(),
+                RegDate = DateTime.Now,
+                PicUrl = this.PicUrl,
+                ZipCode = this.ZipCode
+
+            };
+
+            _userRepo.CreateNewUser(
+                newUser, 
+                (b, e) =>
+                    {
+                        if(b != true)
+                        {
+                            MessageBox.Show("Register Failed " + e.Message);
+                            clearFields();
+
+                            //pass back to log window the failure message
+                            callbackAction.Execute(false);
+                            return;
+
+                        }
+                        else
+                        {
+                            MessageBox.Show("Register Successfully!");
+                            clearFields();
+
+                            //pass back the successful message
+                            callbackAction.Execute(true);
+                            return;
+                        }
+                    });
+
+            //redirect to the main page logged in
+            _userState.getUserState().IsLoggedIn = true;
+            _userState.getUserState().LoggedInUserName = this.UserName;
+            
         }
 
         #endregion
 
         #region properities
+
+        /// <summary>
+        /// The <see cref="ZipCode" /> property's name.
+        /// </summary>
+        public const string ZipCodePropertyName = "ZipCode";
+
+        private int _zipCode = 0;
+
+        /// <summary>
+        /// Sets and gets the ZipCode property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public int ZipCode
+        {
+            get
+            {
+                return _zipCode;
+            }
+
+            set
+            {
+                if (_zipCode == value)
+                {
+                    return;
+                }
+
+                _zipCode = value;
+                RaisePropertyChanged(ZipCodePropertyName);
+            }
+        }
+
+
+        /// <summary>
+        /// The <see cref="PicUrl" /> property's name.
+        /// </summary>
+        public const string PicUrlPropertyName = "PicUrl";
+
+        private ImageSource _myProperty;
+
+        /// <summary>
+        /// Sets and gets the PicUrl property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public ImageSource PicUrl
+        {
+            get
+            {
+                return _myProperty;
+            }
+
+            set
+            {
+                if (_myProperty == value)
+                {
+                    return;
+                }
+
+                
+                _myProperty = value;
+                RaisePropertyChanged(PicUrlPropertyName);
+            }
+        }
+
+
+        /// <summary>
+        /// The <see cref="UserPreferences" /> property's name.
+        /// </summary>
+        public const string UserPreferencesPropertyName = "UserPreferences";
+
+        private ObservableCollection<Preference> _userPreferences  ;
+
+        /// <summary>
+        /// Sets and gets the UserPreferences property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public ObservableCollection<Preference> UserPreferences
+        {
+            get
+            {
+                return _userPreferences;
+            }
+
+            set
+            {
+                if (_userPreferences == value)
+                {
+                    return;
+                }
+
+                
+                _userPreferences = value;
+                RaisePropertyChanged(UserPreferencesPropertyName);
+            }
+        }
+
 
         /// <summary>
         /// The <see cref="PreferenceList" /> property's name.

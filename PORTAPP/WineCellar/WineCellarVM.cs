@@ -15,6 +15,7 @@ namespace PORTAPP.WineCellar
         /// </summary>
         public WineCellarVM()
         {
+            
         }
 
         public string Name

@@ -65,6 +65,10 @@ namespace PORTAPP.ViewModel
             SimpleIoc.Default.Register<LogWindowVM>();
 
             SimpleIoc.Default.Register<UserSystem.RegisterWindowVM>();
+
+            SimpleIoc.Default.Register<SearchEngine.SearchPageVM>();
+            
+
             #endregion
 
 
@@ -230,6 +234,22 @@ namespace PORTAPP.ViewModel
                 return ServiceLocator.Current.GetInstance<UserSystem.RegisterWindowVM>();
             }
         }
+
+
+        /// <summary>
+        /// Gets the SearchPage property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public SearchEngine.SearchPageVM SearchPage
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<SearchEngine.SearchPageVM>();
+            }
+        }
+
 
         /// <summary>
         /// Cleans up all the resources.

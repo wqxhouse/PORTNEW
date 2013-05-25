@@ -6,6 +6,7 @@ using System.ServiceModel;
 using System.Data.SqlClient;
 using System.Data.EntityClient;
 using System.Data;
+using System.Windows;
 
 //TODO: Password needs encreption and salt 
 
@@ -196,13 +197,15 @@ namespace ServiceDataLib
                 callback(false, new FaultException(string.Format("BUG:Database has multiple user with the same name, need to fix")));
             }
         }
-    
 
-        public void CreateNewUser(WineDataDomain.User user, Action<bool,Exception> callback)
+
+        public void CreateNewUser(WineDataDomain.User user, Action<bool, Exception> callback)
         {
+            /*
             if (user == null)
             {
                 callback(false, new FaultException(string.Format("NullUserNotAllowed")));
+                return;
             }
             
             //verify if user is existed
@@ -211,6 +214,7 @@ namespace ServiceDataLib
             if(isExisted)
             {
                 callback(false, new FaultException(string.Format("Newly Registered User already existed")));
+                return;
             }
 
             User.CreateUser
@@ -222,10 +226,24 @@ namespace ServiceDataLib
                     user.RegDate, 
                     "192.168.0.1" //This is just for the first release
                 );
+
+            try
+            {
+                //save changes
+                _usersContext.SaveChanges();
+            }
+            catch (SqlException e)
+            {
+                callback(false, e);
+            }
+
             //TODO: Implement more according to Domain
             callback(true, null);
         }
-
+            */
+            MessageBox.Show(user.UserName + " " + user.PassWord + " " + user.Email + " " + user.Preference);
+            callback(false, new Exception("Da sb"));
+        }
         
     }
 }

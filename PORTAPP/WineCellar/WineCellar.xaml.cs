@@ -1,4 +1,6 @@
 ﻿using System.Windows;
+using WineSearchBar;
+using System.Threading;
 
 namespace PORTAPP.WineCellar
 {
@@ -13,6 +15,13 @@ namespace PORTAPP.WineCellar
         public WineCellar()
         {
             InitializeComponent();
+           
         }
+
+        
+
+
     }
+
+
 }

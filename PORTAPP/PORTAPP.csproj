@@ -112,6 +112,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Telerik\RadControls for WPF Q1 2013\Binaries\WPF40\Telerik.Windows.Controls.dll</HintPath>
     </Reference>
+    <Reference Include="Telerik.Windows.Controls.ImageEditor" />
     <Reference Include="Telerik.Windows.Controls.Input, Version=2013.1.403.40, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL" />
     <Reference Include="TransitionEffects">
       <HintPath>..\ReferenceDLL\TransitionEffects.dll</HintPath>
@@ -139,6 +140,7 @@
       <DependentUpon>CommentBoard.xaml</DependentUpon>
     </Compile>
     <Compile Include="CommentBoard\CommentBoardVM.cs" />
+    <Compile Include="Converter\ImageConverter.cs" />
     <Compile Include="Design\DesignPageRepository.cs" />
     <Compile Include="Design\DesignUserRepository.cs" />
     <Compile Include="Design\DesignUserState.cs" />
@@ -152,6 +154,13 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SearchEngine\SearchBar.xaml.cs">
+      <DependentUpon>SearchBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SearchEngine\SearchPage.xaml.cs">
+      <DependentUpon>SearchPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SearchEngine\SearchPageVM.cs" />
     <Compile Include="Skins\EffectTransition.cs" />
     <Compile Include="UserSystem\IUserState.cs" />
     <Compile Include="UserSystem\Preference.cs" />
@@ -212,6 +221,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainWindow.xaml">
+      <SubType>Form</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SearchEngine\SearchBar.xaml">
+      <SubType>Form</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SearchEngine\SearchPage.xaml">
       <SubType>Form</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -282,6 +299,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SearchBarControl\SearchBarControl.csproj">
+      <Project>{4664416F-E74C-467A-A175-F9DB5FA82302}</Project>
+      <Name>SearchBarControl</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ServiceDataLib\ServiceDataLib.csproj">
       <Project>{DF9A4370-74D1-45D5-B959-BAF9D0875849}</Project>
       <Name>ServiceDataLib</Name>

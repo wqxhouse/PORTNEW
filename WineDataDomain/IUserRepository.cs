@@ -14,5 +14,7 @@ namespace WineDataDomain
 
         void IsExistedUser(string username, Action<bool, Exception> callback);
         void IsExistedUser(string username, string password, Action<bool, Exception> callback);
+
+        void CreateNewUser(WineDataDomain.User user, Action<bool, Exception> callback);
     }
 }

@@ -64,14 +64,25 @@ namespace PORTAPP
             {
                 if (regWindow.DialogResult == true)
                 {
-                    Messenger.Default.Send<NotificationMessage>
-                        (new NotificationMessage("Perform Register"), "FromLogWindow_ToRegisterWindowVM_regMsg");
-
+                    bool isSucessful = false;
+                    Messenger.Default.Send<NotificationMessageAction<bool>> 
+                        (new NotificationMessageAction<bool>(
+                            "Perform Register", b => { isSucessful = b; }),       
+                            "FromLogWindow_ToRegisterWindowVM_regMsg");
+                    if (isSucessful)
+                    {
+                        ExecuteAppLoggedIn();
+                    }
+                    else
+                    {
+                        //do nothing and go back to reg window
+                    }
                 }
 
             };
 
-
+            //make log window pop up at the center of the log window
+            regWindow.Owner = this; 
             regWindow.ShowDialog();
         }
 

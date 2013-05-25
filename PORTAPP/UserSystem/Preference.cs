@@ -32,10 +32,10 @@ namespace PORTAPP.UserSystem
                     wineType_iconPath = new Uri("C:\\Users\\Wqxhouse\\Documents\\GitHub\\PORTNEW\\PORTAPP\\UserSystem\\PreferenceIcons\\RedWine_2.png", UriKind.Absolute);
                     break;
                 case 1:
-                    wineType_iconPath = new Uri("/PreferenceIcons/WhiteWine.png", UriKind.RelativeOrAbsolute);
+                    wineType_iconPath = new Uri("C:\\Users\\Wqxhouse\\Documents\\GitHub\\PORTNEW\\PORTAPP\\UserSystem\\PreferenceIcons\\WhiteWine_2.png", UriKind.Absolute);
                     break;
                 case 2:
-                    wineType_iconPath = new Uri("/PreferenceIcons/RoseWine.png", UriKind.RelativeOrAbsolute);
+                    wineType_iconPath = new Uri("C:\\Users\\Wqxhouse\\Documents\\GitHub\\PORTNEW\\PORTAPP\\UserSystem\\PreferenceIcons\\RoseWine_2.png", UriKind.Absolute);
                     break;
                 case 3:
                     wineType_iconPath = new Uri("/PreferenceIcons/ChampagneWine.png", UriKind.RelativeOrAbsolute);

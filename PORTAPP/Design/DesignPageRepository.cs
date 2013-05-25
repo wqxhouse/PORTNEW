@@ -18,8 +18,9 @@ namespace PORTAPP.Design
 
         }
 
-        public void GetUserPages(string username, Action<IEnumerable<WineDataDomain.JournalPage>, Exception> callback)
+        public void GetUserPages(int w, int h, int wInput, int hInput, string username, Action<IEnumerable<WineDataDomain.JournalPage>, Exception> callback)
         {
+            /*
             var pageCollection =
                 new DeferrableObservableCollection<WineDataDomain.JournalPage>();
 
@@ -69,6 +70,7 @@ namespace PORTAPP.Design
 
 
             callback(pageCollection, null);
+             */
         }
 
 
@@ -107,10 +109,6 @@ namespace PORTAPP.Design
 
         }
 
-        public void GetUserPages(int tWidth, int tHeight, int wWidth, int wHeight, string username, Action<IEnumerable<WineDataDomain.JournalPage>, Exception> callback)
-        {
-            throw new NotImplementedException();
-        }
 
         public void UpdateUserJournal(string username, IEnumerable<WineDataDomain.Journal> journalCollectionModified, Action<bool, Exception> callback)
         {

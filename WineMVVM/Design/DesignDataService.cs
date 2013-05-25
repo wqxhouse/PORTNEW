@@ -32,5 +32,11 @@ namespace WineMVVM.Background.Design
         {
             throw new NotImplementedException();
         }
+
+
+        public void CreateNewUser(WineDataDomain.User user, Action<bool, Exception> callback)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

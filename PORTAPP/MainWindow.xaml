@@ -13,6 +13,7 @@
         xmlns:transition="clr-namespace:PORTAPP.Skins"
         xmlns:transitionEffects="clr-namespace:TransitionEffects;assembly=TransitionEffects"
         xmlns:visualWrapper="clr-namespace:VisualTargetDemo;assembly=UIThreading"
+        WindowStartupLocation="CenterScreen"
         DataContext="{Binding Main, Source={StaticResource Locator}}"
         xmlns:view="clr-namespace:PORTAPP" Height="600" Width="800">
 

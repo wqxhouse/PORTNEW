@@ -100,11 +100,13 @@ namespace PORTAPP.WineJournal
             int backTextHeight = (int)(p.ActualHeight);
             int backTextWidth = (int)(p.ActualWidth);
 
+            MessageBox.Show(backTextHeight.ToString() + " " + backTextWidth.ToString());
+
             FontFamily fontFamily = new FontFamily("Georgia");
             double fontDpiSize = 16;
             double fontHeight = Math.Ceiling(fontDpiSize * fontFamily.LineSpacing);
             double fontWidth = MeasureTextWidth("G", 16, "Georgia");
-            //MessageBox.Show(backTextHeight + " " +  backTextWidth + " " + (int)fontHeight + " " + (int)fontWidth);
+            MessageBox.Show(backTextHeight + " " +  backTextWidth + " " + (int)fontHeight + " " + (int)fontWidth);
             setVMPageProperity(backTextHeight, backTextWidth, (int)fontHeight, (int)fontWidth);
 
             //Messenger.Default.Send<string>

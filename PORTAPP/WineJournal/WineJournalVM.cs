@@ -59,10 +59,10 @@ namespace PORTAPP.WineJournal
 
                     });
                 */
-                repo.GetUserPages(240,
-                               240,
-                               22,
+                _repo.GetUserPages(296,
+                               263,
                                11,
+                               19,
                                currentUser,
                         (pages, e) =>
                         {

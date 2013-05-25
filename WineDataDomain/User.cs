@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Security.Principal;
+using System.Windows.Media;
 
 namespace WineDataDomain
 {
@@ -13,10 +14,10 @@ namespace WineDataDomain
         public string PassWord { get; set; }
         public string Email { get; set; }
         public DateTime RegDate { get; set; }
-        public int Preference { get; set; }
+        public string Preference { get; set; }
         public DateTime DateOfBirth { get; set; }
-        public string ZipCode { get; set; }
-        public string PicUrl { get; set; }
+        public int ZipCode { get; set; }
+        public ImageSource PicUrl { get; set; }
 
         public User DeepCopy()
         {
@@ -27,7 +28,11 @@ namespace WineDataDomain
                 PassWord = this.PassWord,
                 Email = this.Email,
                 //struct can be deepcopied
-                RegDate = this.RegDate
+                RegDate = this.RegDate,
+                Preference = this.Preference,
+                DateOfBirth = this.DateOfBirth,
+                ZipCode = this.ZipCode,
+                PicUrl = this.PicUrl
             };
         }
 
