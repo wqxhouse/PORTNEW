@@ -6,6 +6,7 @@ using System.Threading;
 using System.Windows.Input;
 using System.Windows.Media;
 using VisualTargetDemo;
+using System.Windows.Controls;
 
 namespace PORTAPP
 {
@@ -32,10 +33,11 @@ namespace PORTAPP
             busyVM = new BusyIndicator.BusyClass();
             busyIndicator.Child = InitIndicatorThread();
 
-            Messenger.Default.Register<PropertyChangedMessage<IPageViewModel>>(this, InitViews);
+            
+            Messenger.Default.Register<PropertyChangedMessage<IPageViewModel>>(this, changeViews);
 
 
-            #region Process JournalEditing
+            #region Subscribe and Process JournalEditing
             Messenger.Default.Register<WineDataDomain.JournalPage>(this, "To_MainWindow_WinePresenter",
                 (journalPage) =>
                 {
@@ -44,14 +46,18 @@ namespace PORTAPP
                     Messenger.Default.Send<WineDataDomain.JournalPage>(journalPage, "ToJournalEditorVM_journalPage");
 
                     //attach presenter
+                    busyVM.IsBusy = true;
+                    busyVM.BusyContent = "Loading JournalEditor";
                     presenter.Content = new WineJournal.JournalEditor();
+                    busyVM.IsBusy = false;
                 });
 
 
             #endregion
 
 
-
+            //initialize start page
+            initViews();
         }
 
         //multithread for UI
@@ -82,27 +88,46 @@ namespace PORTAPP
 
         private FrameworkElement CreateIndicatorElement()
         {
+            
             BusyIndicator.BusyView bv = new BusyIndicator.BusyView(busyVM);
             bv.BeginInit();
             bv.EndInit();
             return bv;
+           
         }
 
 
-        private void InitViews(PropertyChangedMessage<IPageViewModel> msg)
+        private void initViews()
+        {
+            busyVM.IsBusy = true;
+            busyVM.BusyContent = "Loading Recommendations";
+
+            Mouse.OverrideCursor = Cursors.Wait;
+            try
+            {
+                presenter.Content = new Recommendation.RecommendationMain();
+            }
+            finally
+            {
+                Mouse.OverrideCursor = null;
+            }
+            busyVM.IsBusy = false;
+        }
+
+        private void changeViews(PropertyChangedMessage<IPageViewModel> msg)
         {
             var vm = msg.NewValue;
 
-            if (vm is WineCellar.WineCellarVM)
+            if (vm is Recommendation.RecommendationMainVM)
             {
 
                 busyVM.IsBusy = true;
-                busyVM.BusyContent = "Loading WineCellar";
+                busyVM.BusyContent = "Loading Recommendations";
 
                 Mouse.OverrideCursor = Cursors.Wait;
                 try
                 {
-                    presenter.Content = new WineCellar.WineCellar();
+                    presenter.Content = new Recommendation.RecommendationMain();
                 }
                 finally
                 {
@@ -120,6 +145,8 @@ namespace PORTAPP
                 try
                 {
                     presenter.Content = new WineCellar.WineRack();
+                    
+                    
                 }
                 finally
                 {

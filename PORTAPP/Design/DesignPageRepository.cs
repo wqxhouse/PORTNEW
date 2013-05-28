@@ -18,7 +18,7 @@ namespace PORTAPP.Design
 
         }
 
-        public void GetUserPages(int w, int h, int wInput, int hInput, string username, Action<IEnumerable<WineDataDomain.JournalPage>, Exception> callback)
+        public void GetUserPages(string username, Action<IEnumerable<WineDataDomain.JournalPage>, Exception> callback)
         {
             /*
             var pageCollection =

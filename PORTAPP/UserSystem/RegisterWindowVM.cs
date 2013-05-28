@@ -105,7 +105,10 @@ namespace PORTAPP.UserSystem
         {
             if (PreferenceList == null)
             {
-                MessageBox.Show("DEBUG: PreferenceList not initialzed");
+                MessageBox.Show("DEBUG: PreferenceList not pre-initialzed, initializing...");
+
+                //initialize DataBase PreferenceList
+                PreferenceList = new ObservableCollection<Preference>();
             }
 
             var association = catagoryHandler.GetWineTypeToVarietals();

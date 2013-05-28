@@ -35,8 +35,8 @@
 
 
     <Grid>
-        <DockPanel d:IsLocked="True">
-            <Border DockPanel.Dock="Top" BorderBrush="Black" BorderThickness="0,0,1,0" d:IsLocked="True">
+        <DockPanel>
+            <Border DockPanel.Dock="Top" BorderBrush="Black" BorderThickness="0,0,1,0">
                 <ItemsControl ItemsSource="{Binding PageViewModels}" Height="70">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -58,11 +58,11 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </Border>
-            <Grid d:IsLocked="True"></Grid>
+            <Grid/>
 
-            <Grid d:IsLocked="True">
+            <Grid>
                 <!--<ContentControl Content="{Binding CurrentPageViewModel}" />-->
-                <shared:TransitionPresenter x:Name="presenter" d:IsLocked="True">
+                <shared:TransitionPresenter x:Name="presenter">
                     <shared:TransitionPresenter.Transition>
                         <transition:EffectTransition>
                             <transition:EffectTransition.Effect>
@@ -74,7 +74,10 @@
                 
             </Grid>
         </DockPanel>
-        <visualWrapper:VisualWrapper x:Name="busyIndicator" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+       
+            <visualWrapper:VisualWrapper x:Name="busyIndicator" />
+    
+        
     </Grid>
 
 

@@ -98,5 +98,57 @@ namespace PORTAPP.Design
         {
             throw new NotImplementedException();
         }
+
+
+        public void GetWinesByRatingsDecending(Action<IEnumerable<WineDataDomain.Wine>, Exception> callback)
+        {
+            List<WineDataDomain.Wine> col = new List<WineDataDomain.Wine>
+            {
+                new WineDataDomain.Wine
+                {
+                    WineName = "Gary_Moscato",
+                    Rating = 7,
+                    Price = 200,
+                    Description = "Lorem ipsum dolor sit amet, purus nulla id venenatis et, porttitor phasellus venenatis lacus auctor dictum, faucibus turpis sapien eu lorem, leo quis amet wisi turpis quisque, posuere aliquet. Sapien amet vestibulum vel",
+                    WineType = "RedWine", 
+                    WineVarietal = "Gary Grape"
+                },
+                new WineDataDomain.Wine
+                {
+                    WineName = "Bazinga",
+                    Rating = 1,
+                    Price = 44.4,
+                    Description = "Lorem ipsum dolor sit amet, purus nulla id venenatis et, porttitor phasellus venenatis lacus auctor dictum, faucibus turpis sapien eu lorem, leo quis amet wisi turpis quisque, posuere aliquet. Sapien amet vestibulum vel",
+                    WineType = "WhiteWine",
+                    WineVarietal = "Super Grape"
+                },
+                new WineDataDomain.Wine
+                {
+                    WineName = "WiniCulture",
+                    Rating = 10,
+                    Price = 88888.8,
+                    Description = "Lorem ipsum dolor sit amet, purus nulla id venenatis et, porttitor phasellus venenatis lacus auctor dictum, faucibus turpis sapien eu lorem, leo quis amet wisi turpis quisque, posuere aliquet. Sapien amet vestibulum vel",
+                    WineType = "RoseWine",
+                    WineVarietal = "Leeann Grape",
+                    WinePicLarge = "/PORTAPP;component/Resources/Images/background02.jpg"
+                },
+                new WineDataDomain.Wine
+                {
+                    WineName = "Thinkpad_Helix",
+                    Rating = 8,
+                    Price = 1500,
+                    Description = "Lorem ipsum dolor sit amet, purus nulla id venenatis et, porttitor phasellus venenatis lacus auctor dictum, faucibus turpis sapien eu lorem, leo quis amet wisi turpis quisque, posuere aliquet. Sapien amet vestibulum vel",
+                    WineType = "Sake",
+                    WineVarietal = "Wen Grape"
+                },
+
+            };
+
+            var sorted = from w in col
+                         orderby w.Rating descending
+                         select w;
+
+            callback(sorted, null);
+        }
     }
 }

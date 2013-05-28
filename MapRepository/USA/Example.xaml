@@ -1,0 +1,50 @@
+<UserControl x:Class="Telerik.Windows.Examples.Map.Shapefile.UnitedStates.Example"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:example="clr-namespace:Telerik.Windows.Examples.Map.Shapefile"
+    xmlns:telerikQuickStart="clr-namespace:Telerik.Windows.Controls.QuickStart;assembly=QuickStart.Common"
+    HorizontalAlignment="Center" VerticalAlignment="Center"
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation">
+    <!--xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"-->
+
+    <UserControl.Resources>
+        <example:ShapefileViewModel x:Key="DataContext" Region="USA/usa_states" />
+    </UserControl.Resources>
+
+    <!--<telerikQuickStart:QuickStart.ExampleHeader>
+        <TextBlock Text="Map of Unites States of America" Margin="8" />
+    </telerikQuickStart:QuickStart.ExampleHeader>-->
+
+    <Grid x:Name="LayoutRoot" Width="784" Height="484">
+
+        <telerik:RadMap x:Name="RadMap1"
+                    Background="#D9E1FF"
+                    BorderBrush="Black"
+                    BorderThickness="1"
+                    UseDefaultLayout="False"
+                    MouseClickMode="None" 
+                    MouseDoubleClickMode="None"
+                    ZoomLevel="4"
+                    Center="36.8174363084084, -97.3212482126264"
+                    MinZoomLevel="4" 
+                    MaxZoomLevel="5">
+            <telerik:RadMap.Provider>
+                <telerik:EmptyProvider />
+            </telerik:RadMap.Provider>
+            <telerik:InformationLayer x:Name="InformationLayer">
+                <telerik:InformationLayer.Reader>
+                    <telerik:MapShapeReader Source="{Binding Source={StaticResource DataContext}, Path=ShapefileSourceUri}" 
+                                            DataSource="{Binding Source={StaticResource DataContext}, Path=ShapefileDataSourceUri}"
+                                            ToolTipFormat="STATE_NAME" />
+                </telerik:InformationLayer.Reader>
+                <telerik:InformationLayer.ShapeFill>
+                    <telerik:MapShapeFill Fill="#FFF7DE" Stroke="#5A636B" StrokeThickness="1" />
+                </telerik:InformationLayer.ShapeFill>
+                <telerik:InformationLayer.HighlightFill>
+                    <telerik:MapShapeFill Fill="#F7E7BD" Stroke="#5A636B" StrokeThickness="1" />
+                </telerik:InformationLayer.HighlightFill>
+            </telerik:InformationLayer>
+        </telerik:RadMap>
+
+    </Grid>
+</UserControl>

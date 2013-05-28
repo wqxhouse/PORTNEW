@@ -9,7 +9,7 @@ namespace WineDataDomain
     {
         //TODO:
         void GetAllWine(Action<IEnumerable<WineDataDomain.Wine>, Exception> callback);
-
+        void GetWinesByRatingsDecending(Action<IEnumerable<WineDataDomain.Wine>, Exception> callback);
         
         //Catagory part
         void GetWineTypeCatagory(Action<IEnumerable<WineDataDomain.Refinement>, Exception> callback);
@@ -18,6 +18,8 @@ namespace WineDataDomain
         void GetWineCountryCatagory(Action<IEnumerable<WineDataDomain.Refinement>, Exception> callback);
 
         void GetWineVarietalsCatagoryByWineType(string wineType, Action<IEnumerable<WineDataDomain.Refinement>, Exception> callback);
+
+       
 
     }
 }

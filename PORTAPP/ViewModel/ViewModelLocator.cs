@@ -62,8 +62,9 @@ namespace PORTAPP.ViewModel
             #endregion
 
             #region lazy-loaded VMs
-            SimpleIoc.Default.Register<LogWindowVM>();
+            SimpleIoc.Default.Register<Recommendation.RecommendationMainVM>();
 
+            SimpleIoc.Default.Register<LogWindowVM>();
             SimpleIoc.Default.Register<UserSystem.RegisterWindowVM>();
 
             SimpleIoc.Default.Register<SearchEngine.SearchPageVM>();
@@ -247,6 +248,21 @@ namespace PORTAPP.ViewModel
             get
             {
                 return ServiceLocator.Current.GetInstance<SearchEngine.SearchPageVM>();
+            }
+        }
+
+
+        /// <summary>
+        /// Gets the RecommendationMain property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public Recommendation.RecommendationMainVM  RecommendationMain
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<Recommendation.RecommendationMainVM>();
             }
         }
 

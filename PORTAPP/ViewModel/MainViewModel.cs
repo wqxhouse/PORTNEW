@@ -51,7 +51,7 @@ namespace PORTAPP.ViewModel
 
 
             // Add available pages
-            PageViewModels.Add(ServiceLocator.Current.GetInstance<WineCellar.WineRackVM>());
+            PageViewModels.Add(ServiceLocator.Current.GetInstance<Recommendation.RecommendationMainVM>());
             PageViewModels.Add(ServiceLocator.Current.GetInstance<WineCellar.WineCellarVM>());
             PageViewModels.Add(ServiceLocator.Current.GetInstance<WineJournal.WineJournalVM>());
             PageViewModels.Add(ServiceLocator.Current.GetInstance<CommentBoard.CommentBoardVM>());

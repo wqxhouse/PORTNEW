@@ -57,12 +57,11 @@ namespace PORTAPP.WineJournal
                             Pages.Add(p);
                         }
 
-                    });
+                    });   
                 */
-                _repo.GetUserPages(296,
-                               263,
-                               11,
-                               19,
+
+                
+                _repo.GetUserPages(
                                currentUser,
                         (pages, e) =>
                         {
@@ -77,7 +76,7 @@ namespace PORTAPP.WineJournal
                                 Pages.Add(p);
                             }
                         });
-
+                
 
                 #region buggy SendPage Property from view
                 //Pages = new DeferrableObservableCollection<WineDataDomain.JournalPage>();
@@ -122,33 +121,33 @@ namespace PORTAPP.WineJournal
            
         }
 
-        private void InitPageFromDatabase(string currentUser)
-        {
+        //private void InitPageFromDatabase(string currentUser)
+        //{
 
-            //MessageBox.Show("Hello");
+        //    //MessageBox.Show("Hello");
             
-            //need to separate the logic of text processing and query
+        //    //need to separate the logic of text processing and query
             
-            _repo.GetUserPages(_pageSettings.PageWidth,
-                               _pageSettings.PageHeight,
-                               _pageSettings.TextHeight,
-                               _pageSettings.TextHeight,
-                               currentUser,
-                (pages, e) =>
-                {
-                    if (e != null)
-                    {
-                        MessageBox.Show(e.Message);
-                    }
+        //    _repo.GetUserPages(_pageSettings.PageWidth,
+        //                       _pageSettings.PageHeight,
+        //                       _pageSettings.TextHeight,
+        //                       _pageSettings.TextHeight,
+        //                       currentUser,
+        //        (pages, e) =>
+        //        {
+        //            if (e != null)
+        //            {
+        //                MessageBox.Show(e.Message);
+        //            }
 
-                    Pages = new DeferrableObservableCollection<WineDataDomain.JournalPage>();
-                    foreach (WineDataDomain.JournalPage p in pages)
-                    {
-                        Pages.Add(p);
-                    }
+        //            Pages = new DeferrableObservableCollection<WineDataDomain.JournalPage>();
+        //            foreach (WineDataDomain.JournalPage p in pages)
+        //            {
+        //                Pages.Add(p);
+        //            }
 
-                });
-        }
+        //        });
+        //}
 
 
 

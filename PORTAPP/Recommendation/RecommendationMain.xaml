@@ -1,0 +1,716 @@
+﻿<UserControl x:Class="PORTAPP.Recommendation.RecommendationMain"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ignore="http://www.ignore.com"
+        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+        xmlns:tileview="clr-namespace:Telerik.Windows.Controls.TileView;assembly=Telerik.Windows.Controls.Navigation"
+        mc:Ignorable="d ignore"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        DataContext="{Binding RecommendationMain, Source={StaticResource Locator}}">
+
+    <UserControl.Resources>
+
+        
+        <tileview:TileToFluideStateConverter x:Key="tileConverter" />
+
+        <Style x:Key="maximizeToggleStyle" TargetType="telerik:RadToggleButton">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="MinWidth" Value="17" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="telerik:RadToggleButton">
+                        <Grid Background="Transparent">
+                           
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="FocusStates">
+                                    <VisualState x:Name="Focused" />
+                                    <VisualState x:Name="Unfocused" />
+                                </VisualStateGroup>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Disabled" />
+                                    <VisualState x:Name="Normal" />
+                                    <VisualState x:Name="MouseOver">
+                                        <Storyboard>
+                                            <DoubleAnimation Duration="0" Storyboard.TargetName="RestoreIcon"  Storyboard.TargetProperty="Opacity" To="1" />
+                                            <DoubleAnimation Duration="0" Storyboard.TargetName="CollapseIcon"  Storyboard.TargetProperty="Opacity" To="1" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <DoubleAnimation Duration="0" Storyboard.TargetName="RestoreIcon"  Storyboard.TargetProperty="Opacity" To="1" />
+                                            <DoubleAnimation Duration="0" Storyboard.TargetName="CollapseIcon"  Storyboard.TargetProperty="Opacity" To="1" />
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                                <VisualStateGroup x:Name="CheckStates">
+                                    <VisualState x:Name="Checked">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Restore"
+												Storyboard.TargetProperty="Visibility">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Collapsed</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Collapse"
+												Storyboard.TargetProperty="Visibility">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Visible</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Unchecked">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Restore"
+												Storyboard.TargetProperty="Visibility">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Visible</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Collapse"
+												Storyboard.TargetProperty="Visibility">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Collapsed</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Indeterminate" />
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            
+                            <Grid x:Name="Restore" Background="Transparent">
+                                <ToolTipService.ToolTip>
+                                    <ToolTip telerik:LocalizationManager.ResourceKey="TileViewItemMaximizeText" />
+                                </ToolTipService.ToolTip>
+                                <Path x:Name="RestoreIcon" Data="M0,0.99999809 L1,0.99999809 L1,9 L9,9 L9,9.9999981 L0,9.9999981 z M1.999999,0 L9.999999,0 L9.999999,8 L1.999999,8 z"
+                                  Fill="{telerik:Windows8Resource ResourceKey=MainBrush}"  RenderTransformOrigin="0.5,0.5" Stretch="Fill"
+                                  StrokeThickness="0"  Width="10" Opacity="0.7" Height="10">
+                                    <Path.RenderTransform>
+                                        <RotateTransform  Angle="-180" />
+                                    </Path.RenderTransform>
+                                </Path>
+                            </Grid>
+                            <Grid Width="10" Height="2" x:Name="Collapse" Visibility="Collapsed" Background="Transparent">
+                                <ToolTipService.ToolTip>
+                                    <ToolTip telerik:LocalizationManager.ResourceKey="TileViewItemMinimizeText" />
+                                </ToolTipService.ToolTip>
+                                <Rectangle x:Name="CollapseIcon" Opacity="0.7" Fill="{telerik:Windows8Resource ResourceKey=MainBrush}" />
+                            </Grid>
+                        </Grid>
+                       
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+
+        <!--TileViewItemHeader-->
+        <Style x:Key="TileViewItemHeaderStyle" TargetType="tileview:TileViewItemHeader">
+            <Setter Property="Background" Value="{telerik:Windows8Resource ResourceKey=AccentBrush}" />
+            <Setter Property="Foreground" Value="{telerik:Windows8Resource ResourceKey=MainBrush}" />
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="tileview:TileViewItemHeader">
+                        <Grid HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}">
+                            
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="TileStates">
+                                    <VisualState x:Name="Maximized">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MaximizeToggleButton"
+																	   Storyboard.TargetProperty="IsChecked"
+																	   Duration="0">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <sys:Boolean>True</sys:Boolean>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Restored">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MaximizeToggleButton"
+																	   Storyboard.TargetProperty="IsChecked"
+																	   Duration="0">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <sys:Boolean>False</sys:Boolean>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                           
+
+                            <Border Padding="10 0 7 0" Background="{TemplateBinding Background}">
+                                <Grid MinHeight="28">
+                                    <Border x:Name="GripBarElement"
+										Background="Transparent">
+                                        <ContentPresenter x:Name="HeaderElement"
+													  ContentTemplate="{TemplateBinding ContentTemplate}"
+													  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+													  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+													 
+                                            ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                             />
+                                    </Border>
+                                    <telerik:RadToggleButton x:Name="MaximizeToggleButton"
+														 
+                                        
+                                        Command="{x:Static tileview:TileViewCommands.ToggleTileState}"
+                                       
+                                        Style="{StaticResource maximizeToggleStyle}" />
+                                </Grid>
+                            </Border>
+                        </Grid>
+                        
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+
+
+
+        <!--TileViewItem-->
+        <Style x:Key="RadTileViewItemStyle" TargetType="telerik:RadTileViewItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="VerticalContentAlignment" Value="Stretch" />
+            <Setter Property="BorderBrush" Value="{telerik:Windows8Resource ResourceKey=BasicBrush}" />
+            <Setter Property="Background" Value="{telerik:Windows8Resource ResourceKey=MainBrush}" />
+            <Setter Property="HeaderStyle" Value="{StaticResource TileViewItemHeaderStyle}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Foreground" Value="{telerik:Windows8Resource ResourceKey=MarkerBrush}" />
+            
+            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+            
+            <Setter Property="Padding" Value="7" />
+            
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="telerik:RadTileViewItem">
+                        <Grid>
+                            
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal" />
+                                    <VisualState x:Name="Disabled">
+                                        <Storyboard>
+                                            <DoubleAnimation Duration="0" Storyboard.TargetName="outerContainer"
+                                                         Storyboard.TargetProperty="Opacity" To="0.5" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="MouseOver" />
+                                </VisualStateGroup>
+                                <VisualStateGroup x:Name="SelectionStates">
+                                    <VisualState x:Name="Selected">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SelectedItem"
+												Storyboard.TargetProperty="Visibility" Duration="0">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Visible</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Unselected" />
+                                </VisualStateGroup>
+                                <VisualStateGroup x:Name="MouseOverDraggingStates">
+                                    <VisualState x:Name="MouseOverDragging">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MouseOverBorder"
+																	   Storyboard.TargetProperty="Visibility"
+																	   Duration="0">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Visible</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="MouseNotOverDragging" />
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            
+                            <!-- Border with white background -->
+                            <Border x:Name="outerContainer"
+								Margin="{TemplateBinding Padding}"
+                                Background="{TemplateBinding Background}"
+								BorderBrush="{TemplateBinding BorderBrush}"
+								BorderThickness="{TemplateBinding BorderThickness}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <!-- Content presenter for hosting the content -->
+                                    <ContentPresenter x:Name="ContentElement" Grid.Row="1"
+										Content="{TemplateBinding Content}"
+										ContentTemplate="{TemplateBinding ContentTemplate}"
+										
+                                        ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                        />
+                                        <Grid x:Name="ContentCacheHost" Grid.Row="1" />
+                                        <tileview:TileViewItemHeader x:Name="HeaderPart"
+																 Content="{TemplateBinding Header}"
+																 ContentTemplate="{TemplateBinding HeaderTemplate}"
+																 Style="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HeaderStyle, Mode=TwoWay}" 
+																
+                                            ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+                                             />
+                                </Grid>
+                            </Border>
+
+
+                            <Grid x:Name="SelectedItem" Visibility="Collapsed"  Margin="-1">
+                                <Border  Margin="{TemplateBinding Padding}" BorderBrush="{telerik:Windows8Resource ResourceKey=AccentBrush}" BorderThickness="2" />
+                            </Grid>
+                            <Border x:Name="MouseOverBorder"
+								Visibility="Collapsed"
+								Background="{telerik:Windows8Resource ResourceKey=StrongBrush}"
+								Opacity="0.2" />
+                        </Grid>
+                       
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+        <!--TileView-->
+        <Style x:Key="RadTileViewStyle" TargetType="telerik:RadTileView">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="FontFamily" Value="{telerik:Windows8Resource ResourceKey=FontFamily}" />
+            <Setter Property="FontSize" Value="{telerik:Windows8Resource ResourceKey=FontSize}" />
+            
+            <Setter Property="SnapsToDevicePixels" Value="True"></Setter>
+            
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+            <Setter Property="AllowDrop" Value="True" />
+            <Setter Property="Padding" Value="7" />
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <telerik:TileViewPanel />
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="telerik:RadTileView">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                          
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal" />
+                                    <VisualState x:Name="Disabled">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="DisabledVisual"
+												Storyboard.TargetProperty="Visibility" Duration="0">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Visible</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="MouseOver" />
+                                </VisualStateGroup>
+                                <VisualStateGroup x:Name="Docking">
+                                    <VisualState x:Name="DockTop">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MaximizeAreaTop"
+												Storyboard.TargetProperty="Visibility" Duration="0">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Visible</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MaximizeAreaBottom"
+												Storyboard.TargetProperty="Visibility" Duration="0">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Collapsed</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MaximizeAreaLeft"
+												Storyboard.TargetProperty="Visibility" Duration="0">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Collapsed</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MaximizeAreaRight"
+												Storyboard.TargetProperty="Visibility" Duration="0">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Collapsed</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="DockLeft">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MaximizeAreaTop"
+												Storyboard.TargetProperty="Visibility" Duration="0">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Collapsed</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MaximizeAreaBottom"
+												Storyboard.TargetProperty="Visibility" Duration="0">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Collapsed</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MaximizeAreaLeft"
+												Storyboard.TargetProperty="Visibility" Duration="0">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Visible</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MaximizeAreaRight"
+												Storyboard.TargetProperty="Visibility" Duration="0">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Collapsed</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="DockRight">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MaximizeAreaTop"
+												Storyboard.TargetProperty="Visibility" Duration="0">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Collapsed</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MaximizeAreaBottom"
+												Storyboard.TargetProperty="Visibility" Duration="0">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Collapsed</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MaximizeAreaLeft"
+												Storyboard.TargetProperty="Visibility" Duration="0">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Collapsed</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MaximizeAreaRight"
+												Storyboard.TargetProperty="Visibility" Duration="0">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Visible</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="DockBottom">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MaximizeAreaTop"
+												Storyboard.TargetProperty="Visibility" Duration="0">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Collapsed</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MaximizeAreaBottom"
+												Storyboard.TargetProperty="Visibility" Duration="0">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Visible</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MaximizeAreaLeft"
+												Storyboard.TargetProperty="Visibility" Duration="0">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Collapsed</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MaximizeAreaRight"
+												Storyboard.TargetProperty="Visibility" Duration="0">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Collapsed</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="HideMaximizeArea">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MaximizeAreaTop"
+												Storyboard.TargetProperty="Visibility" Duration="0">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Collapsed</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MaximizeAreaBottom"
+												Storyboard.TargetProperty="Visibility" Duration="0">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Collapsed</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MaximizeAreaLeft"
+												Storyboard.TargetProperty="Visibility" Duration="0">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Collapsed</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MaximizeAreaRight"
+												Storyboard.TargetProperty="Visibility" Duration="0">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Collapsed</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                           
+                            <Border Background="{TemplateBinding Background}" Grid.ColumnSpan="2" Grid.RowSpan="2"
+								BorderThickness="{TemplateBinding BorderThickness}"
+								BorderBrush="{TemplateBinding BorderBrush}">
+                                <ScrollViewer x:Name="ScrollViewer" BorderThickness="0" Background="Transparent"
+									telerik:StyleManager.Theme="Windows8"
+                                CanContentScroll="True"
+                                    
+                                    HorizontalScrollBarVisibility="{Binding (ScrollViewer.HorizontalScrollBarVisibility), RelativeSource={RelativeSource TemplatedParent}}"
+								VerticalScrollBarVisibility="{Binding (ScrollViewer.VerticalScrollBarVisibility), RelativeSource={RelativeSource TemplatedParent}}">
+                                    <ItemsPresenter />
+                                </ScrollViewer>
+                            </Border>
+                            <Rectangle x:Name="DisabledVisual" Fill="{telerik:Windows8Resource ResourceKey=MainBrush}" Opacity="0.5" Grid.ColumnSpan="2"
+								Grid.RowSpan="2" Visibility="Collapsed" />
+                            <Border x:Name="MaximizeAreaTop" Visibility="Collapsed" Grid.ColumnSpan="2" Grid.Row="0"
+								Background="{telerik:Windows8Resource ResourceKey=StrongBrush}" Opacity="0.2" />
+                            <Border x:Name="MaximizeAreaBottom" Visibility="Collapsed" Grid.ColumnSpan="2" Grid.Row="1"
+								Background="{telerik:Windows8Resource ResourceKey=StrongBrush}" Opacity="0.2" />
+                            <Border x:Name="MaximizeAreaLeft" Visibility="Collapsed" Grid.RowSpan="2" Grid.Column="0"
+								Background="{telerik:Windows8Resource ResourceKey=StrongBrush}" Opacity="0.2" />
+                            <Border x:Name="MaximizeAreaRight" Visibility="Collapsed" Grid.RowSpan="2" Grid.Column="1"
+								Background="{telerik:Windows8Resource ResourceKey=StrongBrush}" Opacity="0.2" />
+                        </Grid>
+                        
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+        <!--Header-->
+        <Style x:Key="TileItemHeaderStyle" TargetType="tileview:TileViewItemHeader"
+				BasedOn="{StaticResource TileViewItemHeaderStyle}">
+            <Setter Property="Foreground" Value="#FFFFFF" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontFamily" Value="Segoe UI" />
+        </Style>
+        <Style TargetType="telerik:RadTileViewItem" BasedOn="{StaticResource RadTileViewItemStyle}">
+            <Setter Property="Padding" Value="3" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="HeaderStyle" Value="{StaticResource TileItemHeaderStyle}" />
+        </Style>
+        <Style TargetType="telerik:RadTileView" BasedOn="{StaticResource RadTileViewStyle}">
+            <Setter Property="PreservePositionWhenMaximized" Value="True" />
+            <Setter Property="telerik:TileViewPanel.IsVirtualized" Value="True" />
+            <Setter Property="IsAutoScrollingEnabled" Value="True" />
+            <Setter Property="TileStateChangeTrigger" Value="SingleClick" />
+            <Setter Property="MinimizedColumnWidth" Value="308" />
+            <Setter Property="MinimizedRowHeight" Value="193" />
+            <Setter Property="RowHeight" Value="187" />
+            <Setter Property="ColumnWidth" Value="277" />
+            <Setter Property="ColumnsCount" Value="4" />
+        </Style>
+        
+        <DataTemplate x:Key="contentTemplate" >
+            <telerik:RadFluidContentControl ContentChangeMode="Manual"
+			                                State="Normal"
+			                                TransitionDuration="0:0:.5">
+                <telerik:RadFluidContentControl.Content>
+                    <Border Background="Black">
+                        <Grid Margin="20 10">
+                            <StackPanel>
+                                <TextBlock Margin="0 0 0 5"
+								           FontFamily="Segoe UI"
+								           FontSize="24"
+								           FontWeight="Light"
+								           Foreground="#fff"
+								           Text="WineName" />
+                                <TextBlock FontSize="14" 
+										   Foreground="{telerik:Windows8Resource ResourceKey= AccentBrush}"
+								           Text="{Binding WineName}" />
+                                <Border Height="2"
+								        Margin="0 5" 
+										Background="{telerik:Windows8Resource ResourceKey= AccentBrush}" />
+                                <TextBlock Margin="0 0 0 5"
+								           FontFamily="Segoe UI"
+								           FontSize="24"
+								           FontWeight="Light"
+								           Foreground="#fff"
+								           Text="Price" />
+                                <TextBlock FontSize="14" 
+										   Foreground="{telerik:Windows8Resource ResourceKey=  AccentBrush}"
+								           Text="{Binding Price}" />
+                            </StackPanel>
+                            <Image HorizontalAlignment="Right"
+							       VerticalAlignment="Bottom"
+							       Source="{Binding WinePicSmall}"
+							       Stretch="None" />
+                        </Grid>
+                    </Border>
+                </telerik:RadFluidContentControl.Content>
+                <telerik:RadFluidContentControl.LargeContent>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="360" />
+                            <ColumnDefinition Width="160" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.ColumnSpan="3"
+						       Source="{Binding WinePicLarge}"
+						       Stretch="None" />
+                        <StackPanel Margin="35 205 0 0" Orientation="Horizontal">
+                            <TextBlock FontSize="30"
+							           Foreground="#80FF0000"
+							           Text="{Binding WineName}" />
+                            <TextBlock FontSize="30"
+							           Foreground="#80FF0000"
+							           Text=" Trip" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="1"
+						            Margin="15 155 0 0"
+						            Orientation="Horizontal">
+                            <TextBlock FontFamily="Segoe UI"
+							           FontSize="14"
+							           Foreground="#80FF0000"
+							           Text="{Binding WineVarietal}" />
+                            <TextBlock FontFamily="Segoe UI"
+							           FontSize="14"
+							           Foreground="#80FF0000"
+							           Text="@trips.com" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="2" Margin="70 50 0 0">
+                            <TextBlock Margin="0 0 0 5"
+							           FontFamily="Segoe UI"
+							           FontSize="14"
+									   Foreground="{telerik:Windows8Resource ResourceKey= AccentBrush}"
+							           Text="2011 Oct 28th, 2011 Nov 3th" />
+                            <TextBlock FontFamily="Segoe UI"
+							           FontSize="14" 
+									   Foreground="{telerik:Windows8Resource ResourceKey= AccentBrush}"
+							           Text="1011 Nov 11th, 2011 Dec 2nd" />
+                            <TextBlock Margin="0 72 0 0"
+							           FontFamily="Segoe UI"
+							           FontSize="14"
+									   Foreground="{telerik:Windows8Resource ResourceKey= AccentBrush}"
+							           Text="{Binding Duration}" />
+                            <TextBlock Margin="0 74 0 0"
+							           FontFamily="Segoe UI"
+							           FontSize="14"
+									   Foreground="{telerik:Windows8Resource ResourceKey= AccentBrush}"
+							           Text="{Binding Price}" />
+                            <telerik:RadRating Margin="-22 210 0 0"
+							                   NumberOfItemsToGenerate="8"
+							                   Precision="Exact"
+							                   Value="{Binding Rating}" />
+                        </StackPanel>
+                    </Grid>
+                </telerik:RadFluidContentControl.LargeContent>
+            </telerik:RadFluidContentControl>
+        </DataTemplate>
+        <DataTemplate x:Key="headerTemplate">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding WineName}" />
+                <TextBlock Text=" Wine" />
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Grid>
+        <Border Background="#e0dfdd"
+				CornerRadius="7">
+            <telerik:RadTileView Name="tileView"
+                                Margin="10"
+		                        MinimizedColumnWidth="200"
+                                MinimizedRowHeight="200"
+		                        ContentTemplate="{StaticResource contentTemplate}"
+		                        IsItemDraggingEnabled="True"
+		                        ItemsSource="{Binding RecItems}"
+		                        ItemTemplate="{StaticResource headerTemplate}"
+		                        MaximizeMode="One"
+		                        PreservePositionWhenMaximized="True"
+		                        TileStateChanged="tileView1_TileStateChanged"
+		                        TileStateChangeTrigger="DoubleClick" />
+        </Border>
+    </Grid>
+</UserControl>
