@@ -84,6 +84,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files\Laurent Bugnion (GalaSoft)\Mvvm Light Toolkit\Binaries\WPF4\GalaSoft.MvvmLight.Extras.WPF4.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Expression.Interactions" />
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files\Laurent Bugnion (GalaSoft)\Mvvm Light Toolkit\Binaries\WPF4\Microsoft.Practices.ServiceLocation.dll</HintPath>
@@ -141,7 +142,10 @@
       <DependentUpon>CommentBoard.xaml</DependentUpon>
     </Compile>
     <Compile Include="CommentBoard\CommentBoardVM.cs" />
+    <Compile Include="Converter\DomainViewPrefConverter.cs" />
     <Compile Include="Converter\ImageConverter.cs" />
+    <Compile Include="Converter\SimilarityConverter.cs" />
+    <Compile Include="Converter\UpperCaseStringConverter.cs" />
     <Compile Include="Design\DesignPageRepository.cs" />
     <Compile Include="Design\DesignUserRepository.cs" />
     <Compile Include="Design\DesignUserState.cs" />
@@ -171,7 +175,12 @@
     </Compile>
     <Compile Include="SearchEngine\SearchPageVM.cs" />
     <Compile Include="Skins\EffectTransition.cs" />
+    <Compile Include="UserSystem\FriendMatching.xaml.cs">
+      <DependentUpon>FriendMatching.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserSystem\FriendMatchingVM.cs" />
     <Compile Include="UserSystem\IUserState.cs" />
+    <Compile Include="UserSystem\MatchedUser.cs" />
     <Compile Include="UserSystem\Preference.cs" />
     <Compile Include="UserSystem\RegisterWindow.xaml.cs">
       <DependentUpon>RegisterWindow.xaml</DependentUpon>
@@ -241,6 +250,10 @@
       <SubType>Form</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="SearchEngine\SearchBarResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SearchEngine\SearchPage.xaml">
       <SubType>Form</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -248,6 +261,10 @@
     <Page Include="Skins\MainSkin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserSystem\FriendMatching.xaml">
+      <SubType>Form</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserSystem\RegisterWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -310,6 +327,16 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="Resources\Cursor\Thor-busy.ani" />
+    <None Include="Resources\Cursor\Thor-horizontal.ani" />
+    <None Include="Resources\Cursor\Thor-link.ani" />
+    <None Include="Resources\Cursor\Thor-move.ani" />
+    <None Include="Resources\Cursor\Thor-resize-1.ani" />
+    <None Include="Resources\Cursor\Thor-resize-2.ani" />
+    <None Include="Resources\Cursor\thor-shadow.crs" />
+    <None Include="Resources\Cursor\Thor-vertical.ani" />
+    <None Include="Resources\Cursor\Thor-work.ani" />
+    <None Include="Resources\Cursor\thor.crs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SearchBarControl\SearchBarControl.csproj">
@@ -354,6 +381,25 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\background02.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Cursor\alter.cur" />
+    <Resource Include="Resources\Cursor\readme.txt" />
+    <Resource Include="Resources\Cursor\Thor-hand.cur" />
+    <Resource Include="Resources\Cursor\Thor-help.cur" />
+    <Resource Include="Resources\Cursor\Thor-normal.cur" />
+    <Resource Include="Resources\Cursor\Thor-precision.cur" />
+    <Resource Include="Resources\Cursor\Thor-text.cur" />
+    <Resource Include="Resources\Cursor\Thor-unav.cur" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\MainFrame\MAIN_Background.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\MainFrame\MAIN_Logo_small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\MainFrame\MAIN_Logo_Normal.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

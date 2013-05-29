@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Practices.ServiceLocation;
 using GalaSoft.MvvmLight.Messaging;
+using System.Windows.Input;
 
 namespace PORTAPP.ViewModel
 {
@@ -28,7 +29,6 @@ namespace PORTAPP.ViewModel
 
         public MainViewModel(UserSystem.IUserState userState)
         {
-           
             _userState = userState;
 
             #region Receive userState update message
@@ -61,6 +61,7 @@ namespace PORTAPP.ViewModel
             CurrentPageViewModel = PageViewModels[0];
 
             
+
         }
 
         #region Properties / Commands

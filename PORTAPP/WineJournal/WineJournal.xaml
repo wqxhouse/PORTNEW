@@ -9,7 +9,6 @@
         xmlns:System_ComponentModel="clr-namespace:System.ComponentModel;assembly=PresentationFramework" 
         x:Class="PORTAPP.WineJournal.WineJournal"
         mc:Ignorable="d ignore"
-        Height="600" Width="800"
         >
 
     <UserControl.Resources>
@@ -236,8 +235,8 @@
              StretchDirection="Both">-->
         <Grid>
             <Border Background="{StaticResource CoverBackground}" BorderBrush="{StaticResource CoverBorderBrush}" BorderThickness="1" CornerRadius="5"
-						Padding="8">
-                <views:Book Name="book" HotspotExtent="100" IsFirstPageFront="False" Width="600" Height="400" PageDepth="8" MouseDoubleClick="book_MouseDoubleClick"
+						Padding="8" Width="620" Height="400">
+                <views:Book Name="book" HotspotExtent="100" IsFirstPageFront="False" PageDepth="8" MouseDoubleClick="book_MouseDoubleClick"
 					ItemsSource="{Binding Pages}" ItemContainerStyleSelector="{StaticResource BookPageStyleSelector}"  />
             </Border>
         </Grid>

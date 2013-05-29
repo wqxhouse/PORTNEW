@@ -232,13 +232,13 @@ namespace PORTAPP.UserSystem
         /// </summary>
         public const string PicUrlPropertyName = "PicUrl";
 
-        private ImageSource _myProperty;
+        private string _myProperty;
 
         /// <summary>
         /// Sets and gets the PicUrl property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
-        public ImageSource PicUrl
+        public string PicUrl
         {
             get
             {

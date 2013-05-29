@@ -59,6 +59,8 @@ namespace PORTAPP.ViewModel
             SimpleIoc.Default.Register<WineJournal.JournalEditorVM>(true);
 
             SimpleIoc.Default.Register<UserSystem.UserPanelVM>();
+
+            SimpleIoc.Default.Register<UserSystem.FriendMatchingVM>();
             #endregion
 
             #region lazy-loaded VMs
@@ -266,6 +268,22 @@ namespace PORTAPP.ViewModel
             }
         }
 
+
+
+
+        /// <summary>
+        /// Gets the FriendMatching property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public UserSystem.FriendMatchingVM  FriendMatching
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<UserSystem.FriendMatchingVM>();
+            }
+        }
 
         /// <summary>
         /// Cleans up all the resources.

@@ -11,7 +11,6 @@
         DataContext="{Binding RecommendationMain, Source={StaticResource Locator}}">
 
     <UserControl.Resources>
-
         
         <tileview:TileToFluideStateConverter x:Key="tileConverter" />
 
@@ -696,21 +695,19 @@
         </DataTemplate>
     </UserControl.Resources>
 
-    <Grid>
-        <Border Background="#e0dfdd"
-				CornerRadius="7">
-            <telerik:RadTileView Name="tileView"
-                                Margin="10"
-		                        MinimizedColumnWidth="200"
-                                MinimizedRowHeight="200"
-		                        ContentTemplate="{StaticResource contentTemplate}"
-		                        IsItemDraggingEnabled="True"
-		                        ItemsSource="{Binding RecItems}"
-		                        ItemTemplate="{StaticResource headerTemplate}"
-		                        MaximizeMode="One"
-		                        PreservePositionWhenMaximized="True"
-		                        TileStateChanged="tileView1_TileStateChanged"
-		                        TileStateChangeTrigger="DoubleClick" />
-        </Border>
-    </Grid>
+    
+        
+    <telerik:RadTileView Name="tileView"
+                        ScrollViewer.VerticalScrollBarVisibility="Disabled"
+		                MinimizedColumnWidth="200"
+                        MinimizedRowHeight="200"
+		                ContentTemplate="{StaticResource contentTemplate}"
+		                IsItemDraggingEnabled="True"
+		                ItemsSource="{Binding RecItems}"
+		                ItemTemplate="{StaticResource headerTemplate}"
+		                MaximizeMode="One"
+		                PreservePositionWhenMaximized="True"
+		                TileStateChanged="tileView1_TileStateChanged"
+		                TileStateChangeTrigger="DoubleClick" />
+     
 </UserControl>

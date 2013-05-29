@@ -17,7 +17,7 @@ namespace WineDataDomain
         public string Preference { get; set; }
         public DateTime DateOfBirth { get; set; }
         public int ZipCode { get; set; }
-        public ImageSource PicUrl { get; set; }
+        public string PicUrl { get; set; }
 
         public User DeepCopy()
         {

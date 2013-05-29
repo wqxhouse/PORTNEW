@@ -43,8 +43,8 @@ namespace PORTAPP.UserSystem
             dlg.Filter = "All Image Files | *.*";
             if (dlg.ShowDialog() == true)
             {
-                image.Source = new BitmapImage(new Uri(dlg.FileName, UriKind.Absolute));
-                detailVM.PicUrl = image.Source;
+                //image.Source = new BitmapImage(new Uri(dlg.FileName, UriKind.Absolute));
+                detailVM.PicUrl = dlg.FileName;
             }
         }
 

@@ -1,0 +1,12 @@
+﻿[Arrow]
+Path=Thor-normal.cur
+
+[Help]
+Path=Thor-help.cur
+
+[AppStarting]
+Path=Thor-work.ani
+
+[NWPen]
+Path=Thor-hand.cur
+

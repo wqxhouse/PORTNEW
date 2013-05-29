@@ -21,11 +21,24 @@ namespace PORTAPP
 
         private static AutoResetEvent s_event = new AutoResetEvent(false);
 
+
+        Cursor cur;
+
         /// <summary>
         /// Initializes a new instance of the MainWindow class.
         /// </summary>
         public MainWindow()
         {
+            #region Cursor Handling
+            CursorConverter cc = new CursorConverter();
+            cur = cc.ConvertFromString(@"C:\Users\Wqxhouse\Documents\GitHub\PORTNEW\PORTAPP\Resources\Cursor\Thor-normal.cur") as Cursor;
+            if (cur != null)
+            {
+                Mouse.OverrideCursor = cur;
+            } 
+            #endregion
+
+
             InitializeComponent();
 
             mainVM = (ViewModel.MainViewModel)DataContext;
@@ -109,7 +122,7 @@ namespace PORTAPP
             }
             finally
             {
-                Mouse.OverrideCursor = null;
+                Mouse.OverrideCursor = cur;
             }
             busyVM.IsBusy = false;
         }
@@ -131,7 +144,7 @@ namespace PORTAPP
                 }
                 finally
                 {
-                    Mouse.OverrideCursor = null;
+                    Mouse.OverrideCursor = cur;
                 }
                 busyVM.IsBusy = false;
             }
@@ -150,7 +163,7 @@ namespace PORTAPP
                 }
                 finally
                 {
-                    Mouse.OverrideCursor = null;
+                    Mouse.OverrideCursor = cur;
                 }
 
                 busyVM.IsBusy = false;
@@ -170,7 +183,7 @@ namespace PORTAPP
                 }
                 finally
                 {
-                    Mouse.OverrideCursor = null;
+                    Mouse.OverrideCursor = cur;
                 }
 
                 busyVM.IsBusy = false;
@@ -188,7 +201,7 @@ namespace PORTAPP
                 }
                 finally
                 {
-                    Mouse.OverrideCursor = null;
+                    Mouse.OverrideCursor = cur;
                 }
 
                 busyVM.IsBusy = false;
@@ -196,6 +209,11 @@ namespace PORTAPP
             }
 
 
+        }
+
+        private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            DragMove();
         }
 
 

@@ -15,28 +15,228 @@
         xmlns:visualWrapper="clr-namespace:VisualTargetDemo;assembly=UIThreading"
         WindowStartupLocation="CenterScreen"
         DataContext="{Binding Main, Source={StaticResource Locator}}"
-        xmlns:view="clr-namespace:PORTAPP" Height="600" Width="800">
+        xmlns:view="clr-namespace:PORTAPP" Height="630" Width="830"
+        xmlns:srb="clr-namespace:WineSearchBar;assembly=SearchBarControl"
+        
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        
+        AllowsTransparency="True"
+        Background="Transparent">
+    
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary 
+                  Source="/SearchEngine/SearchBarResources.xaml">
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
 
-    <!--<Window.Resources>
-        <DataTemplate DataType="{x:Type cellar:WineCellarVM}">
-            <cellar:WineCellar />
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type cellar:WineRackVM}">
-            <cellar:WineRack />
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type journal:WineJournalVM}">
-            <journal:WineJournal />
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type comment:CommentBoardVM}">
-            <comment:CommentBoard />
-        </DataTemplate>
+            <LinearGradientBrush x:Key="Icon.Fill" LinearGradientBrush.StartPoint="0.5,0" LinearGradientBrush.EndPoint="0.5,1" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                <GradientStop GradientStop.Color="#FFAD499C" GradientStop.Offset="1" />
+                <GradientStop GradientStop.Color="#FF79256B" />
+            </LinearGradientBrush>
 
-    </Window.Resources>-->
+            <Style x:Key="LeftNavigationSeparatorStyle" TargetType="{x:Type Rectangle}">
+                <Setter Property="Rectangle.Fill">
+                    <Setter.Value>
+                        <LinearGradientBrush EndPoint="1.071, 0.346" StartPoint="0.285, 0.742">
+                            <GradientStopCollection>
+                                <GradientStop Color="#FFC6C6C6" Offset="0.241" />
+                                <GradientStop Color="#4CFFFFFF" Offset="0.86" />
+                                <GradientStop Offset="0.233" />
+                            </GradientStopCollection>
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+                
+                <Setter Property="Rectangle.OpacityMask">
+                    <Setter.Value>
+                        <LinearGradientBrush EndPoint="0.5, 1" StartPoint="0.5, 0">
+                            <GradientStopCollection>
+                                <GradientStop Color="#FF000000" Offset="0.2" />
+                                <GradientStop Offset="1" />
+                                <GradientStop Color="#99545454" Offset="0.638" />
+                            </GradientStopCollection>
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="AllControlsButtonStyle" Style.TargetType="{x:Type Button}" >
+                <Setter Setter.Property="Control.FontWeight" Setter.Value="Bold" />
+                <Setter Setter.Property="Control.FontFamily" Setter.Value="Arial" />
+                <Setter Setter.Property="Control.Foreground" Setter.Value="#FF3D4350" />
+                <Setter Setter.Property="Control.FontSize" Setter.Value="9.333" />
+                <Setter Setter.Property="FrameworkElement.Cursor" Setter.Value="Hand" />
+                <Setter Setter.Property="Control.VerticalContentAlignment" Setter.Value="Center" />
+                <Setter Setter.Property="Control.HorizontalContentAlignment" Setter.Value="Stretch" />
+                <Setter Setter.Property="Control.Template">
+                    <Setter.Value>
+
+                        <ControlTemplate ControlTemplate.TargetType="{x:Type Button}">
+                            <Grid Background="#00FFFFFF" OpacityMask="Black">
+                        		<Grid.ColumnDefinitions>
+                        			<ColumnDefinition Width="Auto" />
+                        			<ColumnDefinition Width="*" />
+                        		</Grid.ColumnDefinitions>
+                        	
+                        		<!--<Path Grid.Column="0" Margin="7" 
+                        			Stroke="{StaticResource Icon.Fill}" 
+                        			Data="M1,1L4,4 7,1" Width="8" Height="5" 
+                        			VerticalAlignment="Center" StrokeThickness="1.8" 
+                        			StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" RenderTransformOrigin="0.5,0.5" >
+                        			<Path.RenderTransform>
+                        				<TransformGroup>
+                        					<ScaleTransform/>
+                        					<SkewTransform/>
+                        					<RotateTransform Angle="-90"/>
+                        					<TranslateTransform/>
+                        				</TransformGroup>
+                        			</Path.RenderTransform>
+                        		</Path>-->
+                        		<ContentPresenter x:Name="contentPresenter" Grid.Column="1" RecognizesAccessKey="True" 
+                        			HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                        			VerticalAlignment="{TemplateBinding VerticalContentAlignment}" OpacityMask="{DynamicResource ContentControl.Background}" />
+                        	</Grid>   
+							
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Storyboard x:Key="TextBlinking" AutoReverse="False" RepeatBehavior="Forever">
+            	<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="accessText">
+            		<EasingColorKeyFrame KeyTime="0:0:0.3" Value="#97003EFF">
+            			<EasingColorKeyFrame.EasingFunction>
+            				<BackEase EasingMode="EaseOut" Amplitude="3"/>
+            			</EasingColorKeyFrame.EasingFunction>
+            		</EasingColorKeyFrame>
+            		<EasingColorKeyFrame KeyTime="0:0:0.6" Value="#FF772469"/>
+            	</ColorAnimationUsingKeyFrames>
+            </Storyboard>
 
 
-    <Grid>
-        <DockPanel>
-            <Border DockPanel.Dock="Top" BorderBrush="Black" BorderThickness="0,0,1,0">
+        </ResourceDictionary>
+
+    </Window.Resources>
+	<Window.Triggers>
+		<EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="button">
+			<BeginStoryboard x:Name="TextBlinking_BeginStoryboard" Storyboard="{StaticResource TextBlinking}"/>
+		</EventTrigger>
+		<EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="button">
+			<StopStoryboard BeginStoryboardName="TextBlinking_BeginStoryboard"/>
+		</EventTrigger>
+		<EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="WineCellarBtn">
+			<BeginStoryboard x:Name="TextBlinking_BeginStoryboard1" Storyboard="{StaticResource TextBlinking}"/>
+		</EventTrigger>
+		<EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="WineCellarBtn">
+			<StopStoryboard BeginStoryboardName="TextBlinking_BeginStoryboard"/>
+		</EventTrigger>
+		<EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="WineJournalBtn">
+			<BeginStoryboard x:Name="TextBlinking_BeginStoryboard2" Storyboard="{StaticResource TextBlinking}"/>
+		</EventTrigger>
+		<EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="WineJournalBtn">
+			<StopStoryboard BeginStoryboardName="TextBlinking_BeginStoryboard"/>
+		</EventTrigger>
+		<EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="WinaryTourBtn">
+			<BeginStoryboard x:Name="TextBlinking_BeginStoryboard3" Storyboard="{StaticResource TextBlinking}"/>
+		</EventTrigger>
+		<EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="WinaryTourBtn">
+			<StopStoryboard BeginStoryboardName="TextBlinking_BeginStoryboard"/>
+		</EventTrigger>
+	</Window.Triggers>
+
+    <Grid MouseLeftButtonDown="Grid_MouseLeftButtonDown">
+        <!--<Image x:Name="AppBackGround" Source="/PORTAPP;component/Resources/MainFrame/MAIN_Background.png" />-->
+            
+        
+        <Rectangle x:Name="AppBackground" Fill="#FFF5F5F5" Margin="10" RadiusX="5" RadiusY="5"   Stretch="Fill">
+            <Rectangle.Effect>
+                <DropShadowEffect BlurRadius="14" Color="#FF5D7183" Opacity="0.5" ShadowDepth="0" />
+            </Rectangle.Effect>
+        </Rectangle>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+
+
+            <!-- Logo -->  
+
+            <Image x:Name="Logo" HorizontalAlignment="Left" Width="170"
+                   Margin="11,15,0,6"
+                   Source="/PORTAPP;component/Resources/MainFrame/MAIN_Logo_Normal.png" />
+            
+            <!-- Search Bar-->
+            <Grid x:Name="SearchComponent" Width="200" Height="50" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="9,20,24,10" VerticalAlignment="Center" >
+                <srb:SearchBox HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="100.2,0,15,0">
+                    <srb:SearchBox.GroupDescriptions>
+                        <PropertyGroupDescription PropertyGroupDescription.PropertyName="ExampleGroup.Control" />
+                    </srb:SearchBox.GroupDescriptions>
+                    <srb:SearchBox.ResultEmptyContentTemplate>
+                        <DataTemplate>
+                            <TextBlock FrameworkElement.Margin="20 15" TextBlock.Text="No Examples Found" FrameworkElement.Style="{StaticResource SubtitleTextStyle}" />
+                        </DataTemplate>
+                    </srb:SearchBox.ResultEmptyContentTemplate>
+
+                    <srb:SearchBox.ResultGroupStyle>
+                        <GroupStyle>
+                            <GroupStyle.ContainerStyle>
+                                <Style Style.TargetType="{x:Type GroupItem}">
+                                    <Setter Setter.Property="Control.Template">
+                                        <Setter.Value>
+                                            <ControlTemplate ControlTemplate.TargetType="{x:Type GroupItem}">
+                                                <Grid>
+                                                    <Image FrameworkElement.VerticalAlignment="Top" FrameworkElement.HorizontalAlignment="Left" FrameworkElement.Width="16" FrameworkElement.Height="16" FrameworkElement.Margin="2" Image.Source="{Binding Name,Converter={StaticResource ControlToIconConverter},ConverterParameter=16x16}" />
+                                                    <TextBlock FrameworkElement.Margin="22 2 2 2" FrameworkElement.VerticalAlignment="Top" TextBlock.Foreground="{StaticResource Text.Title}" TextBlock.FontWeight="Bold" TextBlock.Text="{Binding Name.Text}" />
+                                                    <ItemsPresenter FrameworkElement.Margin="0 22 0 0" />
+                                                </Grid>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </GroupStyle.ContainerStyle>
+                            <GroupStyle.Panel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel />
+                                </ItemsPanelTemplate>
+                            </GroupStyle.Panel>
+                        </GroupStyle>
+                    </srb:SearchBox.ResultGroupStyle>
+                    <srb:SearchBox.ResultItemContainerStyle>
+                        <Style Style.TargetType="{x:Type srb:ResultBoxItem}">
+                            <Setter Setter.Property="FrameworkElement.Cursor" Setter.Value="Hand" />
+                            <Setter Setter.Property="FrameworkElement.Margin" Setter.Value="0 -40 0 -40" />
+                            <Setter Setter.Property="Control.Background" Setter.Value="#00FFFFFF" />
+                            <Setter Setter.Property="Control.Template">
+                                <Setter.Value>
+                                    <ControlTemplate ControlTemplate.TargetType="{x:Type srb:ResultBoxItem}">
+                                        <Grid Grid.Name="Root" FrameworkElement.Margin="20 40 0 40" Panel.Background="{TemplateBinding Control.Background}">
+                                            <TextBlock TextBlock.Name="Content" FrameworkElement.Margin="2 0" TextBlock.Text="{Binding Text}" />
+                                        </Grid>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Trigger.Property="srb:ResultBoxItem.IsHighlighted" Trigger.Value="True">
+                                                <Setter Setter.Value="{StaticResource ContentControl.Highlight}" Setter.Property="Control.Background" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </srb:SearchBox.ResultItemContainerStyle>
+                </srb:SearchBox>
+                
+            </Grid>
+
+            <!-- Navigation -->
+            
+            
+            
+            <!--<Border  BorderBrush="White" BorderThickness="0,0,1,0" Height="84">
                 <ItemsControl ItemsSource="{Binding PageViewModels}" Height="70">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -57,27 +257,239 @@
 
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-            </Border>
-            <Grid/>
+            </Border>-->
 
-            <Grid>
-                <!--<ContentControl Content="{Binding CurrentPageViewModel}" />-->
-                <shared:TransitionPresenter x:Name="presenter">
-                    <shared:TransitionPresenter.Transition>
-                        <transition:EffectTransition>
-                            <transition:EffectTransition.Effect>
-                                <transitionEffects:BloodTransitionEffect />
-                            </transition:EffectTransition.Effect>
-                        </transition:EffectTransition>
-                    </shared:TransitionPresenter.Transition>
-                </shared:TransitionPresenter>
-                
+            <Rectangle x:Name="UpperShadow" Grid.ColumnSpan="2" Height="5"  Stretch="Fill" VerticalAlignment="Bottom" Margin="10,0" >
+                <Rectangle.Fill>
+                    <LinearGradientBrush EndPoint="0.5, 1" StartPoint="0.5, 0">
+                        <GradientStopCollection>
+                            <GradientStop />
+                            <GradientStop Color="#33000000" Offset="1" />
+                        </GradientStopCollection>
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+            
+            <Rectangle x:Name="NavBackground" Grid.ColumnSpan="2" Grid.Row="1"   Stretch="Fill" Margin="10,0" Fill="White" />
+            
+            <StackPanel x:Name="NavigationBar" Grid.Row="1" CanHorizontallyScroll="False" 
+                        CanVerticallyScroll="False" 
+                        Margin="10,0,0,0" Orientation="Horizontal" d:LayoutOverrides="GridBox"  >
+
+                <Path Margin="7" 
+                    Stroke="{StaticResource Icon.Fill}" 
+                    Data="M1,1L4,4 7,1" Width="8" Height="5" 
+                    VerticalAlignment="Center" StrokeThickness="1.8" 
+                    StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" RenderTransformOrigin="0.5,0.5" >
+                    <Path.RenderTransform>
+                        <TransformGroup>
+                        	<ScaleTransform/>
+                        	<SkewTransform/>
+                        	<RotateTransform Angle="-90"/>
+                        	<TranslateTransform/>
+                        </TransformGroup>
+                    </Path.RenderTransform>
+                </Path>
+
+                <Button x:Name="button" 
+            		BorderThickness="1, 1, 1, 1"
+            		Focusable="True" 
+            		Foreground="#FF000000"
+            		
+            		HorizontalContentAlignment="Stretch" 
+            		VerticalContentAlignment="Stretch"
+            		
+            		Style="{StaticResource AllControlsButtonStyle}" 
+                    >
+
+            		<!--<Button.Background>
+            			<LinearGradientBrush EndPoint="0, 1">
+            				<LinearGradientBrush.GradientStops>
+            					<GradientStopCollection>
+            						<GradientStop Color="#FFF3F3F3" />
+            						<GradientStop Color="#FFEBEBEB" Offset="0.5" />
+            						<GradientStop Color="#FFDDDDDD" Offset="0.5" />
+            						<GradientStop Color="#FFCDCDCD" Offset="1" />
+            					</GradientStopCollection>
+            				</LinearGradientBrush.GradientStops>
+            			</LinearGradientBrush>
+            		</Button.Background>-->
+                    
+            		<Border Background="#00FFFFFF" Padding="2,0,10,2" BorderThickness="15,0,4,0" >
+            			<!--<Grid Height="16" Width="120" Margin="0,6,0,3">-->
+
+            				<TextBlock    
+            					Margin="-12,2,-12,0"
+            					VerticalAlignment="Center"
+            					BaselineOffset="12.697"
+            					Foreground="#FF772469" FontWeight="Normal"   ><InlineUIContainer>
+                                   
+            						<AccessText x:Name="accessText" Text="_Recommendation" FontFamily="Comic Sans MS" FontWeight="Normal" FontSize="16"/>
+            					</InlineUIContainer></TextBlock>
+
+            			<!--</Grid>-->
+            		</Border>
+            	</Button>
+
+                <Rectangle Style="{StaticResource LeftNavigationSeparatorStyle}" Width="24" Stretch="Fill"/>
+
+                <Button x:Name="WineCellarBtn" 
+            		BorderThickness="1, 1, 1, 1"
+            		Focusable="True" 
+            		Foreground="#FF000000"
+            		
+            		HorizontalContentAlignment="Stretch" 
+            		VerticalContentAlignment="Stretch"
+            		
+            		Style="{StaticResource AllControlsButtonStyle}" 
+                    >
+
+                    
+
+                    <Border Background="#00FFFFFF" Padding="2,0,10,2" BorderThickness="15,0,4,0" >
+                        <!--<Grid Height="16" Width="120" Margin="0,6,0,3">-->
+
+                            <TextBlock    
+            					Margin="-17,2,-12,0"
+            					VerticalAlignment="Center"
+            					BaselineOffset="12.697"
+            					Foreground="#FF772469" FontWeight="Normal"   ><InlineUIContainer>
+                                   
+            						<AccessText x:Name="CellarBtnText" Text="My wine _cellar" FontFamily="Comic Sans MS" FontWeight="Normal" FontSize="16"/>
+            					</InlineUIContainer></TextBlock>
+
+                        <!--</Grid>-->
+                    </Border>
+                </Button>
+
+
+                <Rectangle Style="{StaticResource LeftNavigationSeparatorStyle}" Width="24" Stretch="Fill"/>
+
+                <Button x:Name="WineJournalBtn" 
+            		BorderThickness="1, 1, 1, 1"
+            		Focusable="True" 
+            		Foreground="#FF000000"
+            		
+            		HorizontalContentAlignment="Stretch" 
+            		VerticalContentAlignment="Stretch"
+            		
+            		Style="{StaticResource AllControlsButtonStyle}" 
+                    >
+
+
+
+                    <Border Background="#00FFFFFF" Padding="2,0,10,2" BorderThickness="15,0,4,0" >
+                        <!--<Grid Height="16" Width="120" Margin="0,6,0,3">-->
+
+                            <TextBlock    
+            					Margin="-15,2,-12,0"
+            					VerticalAlignment="Center"
+            					BaselineOffset="12.697"
+            					Foreground="#FF772469" FontWeight="Normal"   ><InlineUIContainer>
+                                   
+            						<AccessText x:Name="JournalBtn_txt" Text="My wine _journal" FontFamily="Comic Sans MS" FontWeight="Normal" FontSize="16"/>
+            					</InlineUIContainer></TextBlock>
+
+                        <!--</Grid>-->
+                    </Border>
+                </Button>
+
+
+                <Rectangle Style="{StaticResource LeftNavigationSeparatorStyle}" Width="24" Stretch="Fill"/>
+
+                <Button x:Name="WinaryTourBtn" 
+            		BorderThickness="1, 1, 1, 1"
+            		Focusable="True" 
+            		Foreground="#FF000000"
+            		
+            		HorizontalContentAlignment="Stretch" 
+            		VerticalContentAlignment="Stretch"
+            		
+            		Style="{StaticResource AllControlsButtonStyle}" 
+                    >
+
+
+
+                    <Border Background="#00FFFFFF" Padding="2,0,10,2" BorderThickness="15,0,4,0" >
+                        <!--<Grid Height="16" Width="120" Margin="0,6,0,3">-->
+
+                            <TextBlock    
+            					Margin="0,2,-5,0"
+            					VerticalAlignment="Center"
+            					BaselineOffset="12.697"
+            					Foreground="#FF772469" FontWeight="Normal"   ><InlineUIContainer>
+                                   
+            						<AccessText x:Name="Tour_txt" Text="Plan a winary _tour" FontFamily="Comic Sans MS" FontWeight="Normal" FontSize="16" Margin="-15,0,0,0"/>
+            					</InlineUIContainer></TextBlock>
+
+                        <!--</Grid>-->
+                    </Border>
+                </Button>
+
+
+            </StackPanel>
+
+
+            <Grid x:Name="GridSeparator" UIElement.IsHitTestVisible="False" Grid.Row="1" Margin="5,0,5,-7">
+                <Rectangle Rectangle.Name="Shadow" FrameworkElement.Height="10" FrameworkElement.Margin="0 0 0 -10" FrameworkElement.VerticalAlignment="Bottom">
+                    <UIElement.OpacityMask>
+                        <LinearGradientBrush LinearGradientBrush.EndPoint="1,0.5" LinearGradientBrush.StartPoint="0,0.5">
+                            <GradientStop GradientStop.Color="White" />
+                            <GradientStop GradientStop.Offset="0.25" GradientStop.Color="#4C000000" />
+                            <GradientStop GradientStop.Color="#4C000000" GradientStop.Offset="0.75" />
+                            <GradientStop GradientStop.Color="White" GradientStop.Offset="1" />
+                        </LinearGradientBrush>
+                    </UIElement.OpacityMask>
+                    <Shape.Fill>
+                        <LinearGradientBrush LinearGradientBrush.EndPoint="0.5,1" LinearGradientBrush.StartPoint="0.5,0">
+                            <GradientStop GradientStop.Color="#4C000000" GradientStop.Offset="0" />
+                            <GradientStop GradientStop.Offset="0.6" />
+                        </LinearGradientBrush>
+                    </Shape.Fill>
+                </Rectangle>
+                <Path Path.Name="LeftCorner" Margin="-5,0,0,-10" Path.Data="M0,0L5,0 5,5z" FrameworkElement.HorizontalAlignment="Left" Width="10" Height="10" VerticalAlignment="Bottom" Fill="#FF3F0035" Stretch="Fill" />
+                <Path Path.Name="RightCorner" Margin="0,0,-5,-10" Path.Data="M0,0L5,0 0,5z" FrameworkElement.HorizontalAlignment="Right" Width="10" Height="10" VerticalAlignment="Bottom" Fill="#FF3F0035" Stretch="Fill" />
+                <Rectangle Rectangle.Name="Ribbon" Margin="-5,0" Height="7" VerticalAlignment="Bottom">
+                	<Rectangle.Fill>
+                		<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                			<GradientStop Color="#FF400636" Offset="0"/>
+                			<GradientStop Color="#FF79256B" Offset="1"/>
+                		</LinearGradientBrush>
+                	</Rectangle.Fill>
+                </Rectangle>
             </Grid>
-        </DockPanel>
-       
+
+
+            <Border x:Name="ModulePresenter" Grid.Row="2">
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+					  Margin="15,12,15,15">
+                    <Border CornerRadius="5,5,5,5" BorderThickness="1,1,1,1" BorderBrush="#FFAAB9C0">
+                        <Border.Effect>
+                            <DropShadowEffect ShadowDepth="2" Opacity="0.5" BlurRadius="7" />
+                        </Border.Effect>
+                    </Border>
+                    <!--<ContentControl Content="{Binding CurrentPageViewModel}" />-->
+                    
+                    <ContentControl x:Name="presenter" Margin="8,8,4,4" />
+                    
+                    <!--<shared:TransitionPresenter x:Name="presenter" Margin="6">
+                        <shared:TransitionPresenter.Transition>
+                            <transition:EffectTransition>
+                                <transition:EffectTransition.Effect>
+                                    <transitionEffects:BloodTransitionEffect />
+                                </transition:EffectTransition.Effect>
+                            </transition:EffectTransition>
+                        </shared:TransitionPresenter.Transition>
+                    </shared:TransitionPresenter>-->
+
+                </Grid>
+            </Border>
+
+
             <visualWrapper:VisualWrapper x:Name="busyIndicator" />
-    
-        
+
+
+        </Grid>
     </Grid>
 
 

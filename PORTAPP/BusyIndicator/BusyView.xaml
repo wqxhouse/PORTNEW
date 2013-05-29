@@ -6,7 +6,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              >
-    <telerik:RadBusyIndicator MinHeight="600" MinWidth="800"
+    <telerik:RadBusyIndicator MinHeight="630" MinWidth="830"
             IsBusy="{Binding IsBusy}" BusyContent="{Binding BusyContent}" 
             telerik:StyleManager.Theme="Windows8" />
 </UserControl>
