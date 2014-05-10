@@ -1,5 +1,18 @@
 ## [Viniculture](github.com/wqxhouse/PORTNEW) - An online wine management center
 =======================================================================
+
+## BRIEF DESCRIPTION
+
+- "ViniCulture" is a program that helps users find wines, manage their personal wine collections, and even expand their palate and appetite for wine. There are over 600 kinds of wines in the program database, giving the user a wide range of choices to discover and learn about. The program consists of four main components: wine recommendations, wine cellar, wine journal and wine tour.
+
+- In the recommendation portion, users are shown the highest recommended wines (based on ratings collected from wine.com) to give them a taste of which wines are popular at the time. The user can manually switch between the various featured wines to view more information about each one.
+
+- In the cellar portion, any wine can be added into a user's personal cellar. To facilitate organization and ease of use, the user can create and delete multiple racks to categorize and sort their collections.
+
+- In the journal portion, the user can write about their experiences or thoughts about wine. The software is able to generate a list of journal entries organized by the entry date, making it easy for the user to browse through and search for previous journal entries.
+
+- In the winery tour portion, the user can plan a route between various wineries in California. The system automatically displays pins representing locations of various existing wineries in California. The user has the option of selecting as many wineries as they want, and the system will generate an optimal path to tour these wineries.
+
  
 ## GENERAL USAGE NOTES
 
@@ -51,11 +64,3 @@ Note that, for convenience, we separate each Module (UserSystem, WineJournal, et
 Structure: (folders)
 PORTNEW is the outmost folder.
 PORTNEW \ PORTAPP 
-
-## BRIEF_DESCRIPTION
-
-- "ViniCulture" is a program that helps users find wines, manage their personal wine collections, and even expand their palate and appetite for wine. There are over 600 kinds of wines in the program database, giving the user a wide range of choices to discover and learn about. The program consists of four main components: wine recommendations, wine cellar, wine journal and wine tour.
-- In the recommendation portion, users are shown the highest recommended wines (based on ratings collected from wine.com) to give them a taste of which wines are popular at the time. The user can manually switch between the various featured wines to view more information about each one.
-- In the cellar portion, any wine can be added into a user's personal cellar. To facilitate organization and ease of use, the user can create and delete multiple racks to categorize and sort their collections.
-- In the journal portion, the user can write about their experiences or thoughts about wine. The software is able to generate a list of journal entries organized by the entry date, making it easy for the user to browse through and search for previous journal entries.
-- In the winery tour portion, the user can plan a route between various wineries in California. The system automatically displays pins representing locations of various existing wineries in California. The user has the option of selecting as many wineries as they want, and the system will generate an optimal path to tour these wineries.
